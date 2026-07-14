@@ -1,0 +1,281 @@
+{
+  "question_number": 11,
+  "topic": "Input concepts (Scanner and File classes)",
+  "questions": [
+    {
+      "source": "Invitational A • 2023",
+      "stem": "What is output by the code segment to the right?",
+      "choices": {
+        "A": "MICH",
+        "B": "MII",
+        "C": "MICHI",
+        "D": "CHGAN",
+        "E": "MICHIGAN"
+      },
+      "answer": "D",
+      "explanation": "D Each of the four t.next() statements access a different String within the Scanner String. The second one, \"CH\", is the initial value of st. The fourth one, \"GAN\", is added to the end of String st.",
+      "code": "Scanner t = new Scanner(\"MI CH I GAN\");\nt.next();\nString st = t.next();\nt.next();\nst += t.next();\nout.print(st);"
+    },
+    {
+      "source": "Invitational A • 2024",
+      "stem": "What is output by the code segment to the right?",
+      "choices": {
+        "A": "70",
+        "B": "68",
+        "C": "59",
+        "D": "45",
+        "E": "35"
+      },
+      "answer": "A",
+      "explanation": "A M \"grabs\" the first value (12) from the Scanner String. Then, three values are \"passed by.\" M will be the sum of the original 12 plus 56 plus 2 = 70 UIL Computer Science Written Test – 2024 Invitational A",
+      "code": "String St = \"12 23 34 45 56 67\";\nScanner Bob = new Scanner(St);\nint M = Bob.nextInt();\nBob.next(); Bob.next(); Bob.next();\nM = M + Bob.nextInt() + 2;\nout.print(M);"
+    },
+    {
+      "source": "Invitational A • 2025",
+      "stem": "Which of the following packages contains the File class?",
+      "choices": {
+        "A": "java.lang.*",
+        "B": "java.awt.*",
+        "C": "java.util.*",
+        "D": "java.io.*",
+        "E": "None of the above."
+      },
+      "answer": "D",
+      "explanation": "D File class is in the java.io package"
+    },
+    {
+      "source": "Invitational A • 2026",
+      "stem": "Which standard Scanner method could not read the value 129 as input from a file?",
+      "choices": {
+        "A": "nextLine()",
+        "B": "next()",
+        "C": "nextInt()",
+        "D": "nextDouble()",
+        "E": "nextByte()"
+      },
+      "answer": "E",
+      "explanation": "E nextByte() can only read values between −127 and 128"
+    },
+    {
+      "source": "Invitational B • 2023",
+      "stem": "What is output by the code segment to the right?",
+      "choices": {
+        "A": "3684",
+        "B": "12243648",
+        "C": "361224",
+        "D": "363648",
+        "E": "3636"
+      },
+      "answer": "D",
+      "explanation": "D St = \"12 24 36 48\"; The Scanner go accesses the String St. The first two go.nextInt() calls treat the inputs as integers and thus adds 12 + 24 to get 36 The next two go.next() calls treat the inputs as Strings and thus adds \"36\"+\"48\" = \"3648\" So, we get 363648 as the output",
+      "code": "String St = \"12 24 36 48\";\nScanner go = new Scanner(St);\nout.print(go.nextInt() + go.nextInt());\nout.print(go.next() + go.next());"
+    },
+    {
+      "source": "Invitational B • 2024",
+      "stem": "What is output by the code segment to the right?",
+      "choices": {
+        "A": "7",
+        "B": "8",
+        "C": "9",
+        "D": "12",
+        "E": "57"
+      },
+      "answer": "B",
+      "explanation": "B String St = \"12 0 5 3 2 8 7 6 9 4 0 1\"; Scanner Sc = new Scanner(St); int T = 0; x=1 skip 12 T=Math.max(0,0) T=0 x=2 skip 5 T=Math.max(0,3) T=3 x=3 skip 2 T=Math.max(3,8) T=8 x=4 skip 7 T=Math.max(8,6) T=8 x=5 skip 9 T=Math.max(8,4) T=8",
+      "code": "String St = \"12 0 5 3 2 8 7 6 9 4 0 1\";\nScanner Sc = new Scanner(St);\nint T = 0;\nfor (int x=1; x<=5; x++)\n   {\n     Sc.next();\n     T = Math.max(T, Sc.nextInt());\n   }\nout.print(T);"
+    },
+    {
+      "source": "Invitational B • 2025",
+      "stem": "Assume that the program for the code to the right is compiled and ran from the directory /usr/uil/inv_b/written, and assume that there is another file located at /usr/uil/inv_b/written/in/q11.txt. You may assume that the only other files that exist are those that are necessary to run and compile Java on an Operating System. What is output by the code to the right?",
+      "choices": {
+        "A": "File 1 exists! File 2 exists!",
+        "B": "File 1 exists! File 2 does not exist...",
+        "C": "File 1 does not exist... File 2 exists!",
+        "D": "File 1 does not exist... File 2 does not exist...",
+        "E": "line 1 will cause a runtime error (IOException).",
+        "F": "line 2 will cause a runtime error (IOException)."
+      },
+      "answer": "B",
+      "explanation": "B Java can use both absolute and relative pathing; however, since the paths included in both line 1 and line 2 do not begin with a '/' or a drive letter, the default behavior is to use relative pathing. Since we are told that the base path of the program is /usr/uil/inv_b/written and we know that the file /usr/uil/inv_b/written/in/q11.txt exists, the first file’s path will resolve to /usr/uil/inv_b/written + in/q11.txt = /usr/uil/inv_b/written/in/q11.txt, which exists. However, the same cannot be said for the second since the path it will resolve to is /usr/uil/inv_b/written + q11.txt = /usr/uil/inv_b/written/q11.txt which we are not explicitly told exists.",
+      "code": "File f1 = new File(\"in/q11.txt\"); // line 1\nif(f1.exists()) {\n   out.println(\"File 1 exists!\");\n} else {\n   out.println(\"File 1 does not exist...\");\n}\nFile f2 = new File(\"q11.txt\"); // line 2\nif(f2.exists()) {\n   out.println(\"File 2 exists!\");\n} else {\n   out.println(\"File 2 does not exist...\");\n}"
+    },
+    {
+      "source": "Invitational B • 2026",
+      "stem": "Assume a file exists at path dir/nums.txt and it contains exactly: 7 010 8 09 What is output by the code on the next page?",
+      "choices": {
+        "A": "dir|nums.txt|30",
+        "B": "dir|nums.txt|31",
+        "C": "dir|nums.txt|32",
+        "D": "dir|nums.txt|33",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "C",
+      "explanation": "C useRadix(8) makes nextInt() read 7 and 010 as octal (7 and 8) while nextInt(10) reads 8 and 09 as decimal (8 and 9), and getParent()/getName() produce dir and nums.txt, so it prints dir|nums.txt|32."
+    },
+    {
+      "source": "District • 2023",
+      "stem": "What is output by the code segment to the right?",
+      "choices": {
+        "A": "ABCDEFGH",
+        "B": "BCGHJK",
+        "C": "BCGHJKO",
+        "D": "ADEFILMN",
+        "E": "ADEFI"
+      },
+      "answer": "B",
+      "explanation": "B St = \"A BC DEF GH I JK LMN O\"; The Scanner called B accesses the String St. Inside the loop, the first B.next() skips a value. The print statement prints the next. The loop iterates three times giving us BC,GH, and JK So, we get BCGHJK as the output",
+      "code": "String St = \"A BC DEF GH I JK LMN O\";\nScanner B = new Scanner(St);\nfor(int x=0; x<=2; x++)\n {\n     B.next();\n     out.print(B.next());\n }"
+    },
+    {
+      "source": "District • 2024",
+      "stem": "What is output by the code segment to the right?",
+      "choices": {
+        "A": "[7,6,2,0,2]",
+        "B": "[7,5,4,3,2]",
+        "C": "[7,4,5,3,2]",
+        "D": "[7,2,4,0,2]",
+        "E": "[1,4,0,2,2]"
+      },
+      "answer": "D",
+      "explanation": "D Fred starts at [7,5,8,3,9,1,4,0,2} Fred.set(5,2); [7,5,8,3,9,2,4,0,2} Fred.add(4,6); [7,5,8,3,6,9,2,4,0,2} for (int x=1; x<=5; x++) Fred.remove(1); Remove the 5,8,3,6,9 out.print(Fred); [7,2,4,0,2}",
+      "code": "ArrayList<Integer>Fred;\nFred = new ArrayList<Integer>();\nFred.add(7); Fred.add(5); Fred.add(8);\nFred.add(3); Fred.add(9); Fred.add(1);\nFred.add(4); Fred.add(0); Fred.add(2);\nFred.set(5,2);\nFred.add(4,6);\nfor (int x=1; x<=5; x++)\nFred.remove(1);\n out print(Fred);"
+    },
+    {
+      "source": "District • 2025",
+      "stem": "Which of the following packages contains the Scanner class?",
+      "choices": {
+        "A": "java.lang.*",
+        "B": "java.awt.*",
+        "C": "java.util.*",
+        "D": "java.io.*",
+        "E": "None of the above."
+      },
+      "answer": "C",
+      "explanation": "C Scanner class is in the java.util package"
+    },
+    {
+      "source": "District • 2026",
+      "stem": "Given a file \"data.txt\" containing the below data. What is output by the code to the right? Hello World 25 3.75",
+      "choices": {
+        "A": "Hello 25 28",
+        "B": "Hello World 25 28",
+        "C": "Hello 25 29",
+        "D": "World 25 28"
+      },
+      "answer": "A",
+      "explanation": "A file.next() reads \"Hello\", file.nextLine() consumes the rest of line one (\" World\"), file.nextInt() reads 25, file.nextDouble() reads 3.75, and (int)dec truncates to 3, so num + (int)dec = 25 + 3 = 28.",
+      "code": "Scanner file = new Scanner(\nnew File(\"data.txt\"));\nString word = file.next();\nfile.nextLine();\nint num = file.nextInt();\ndouble dec = file.nextDouble();\nfile.close();\nout.println(word + \" \" + num + \" \" +\n(num + (int)dec));"
+    },
+    {
+      "source": "Regional • 2023",
+      "stem": "What is output by the code segment to the right?",
+      "choices": {
+        "A": "2",
+        "B": "6",
+        "C": "12",
+        "D": "20",
+        "E": "28"
+      },
+      "answer": "D",
+      "explanation": "D \"Z 2 X 4 C 6 V 8 B 10\" The loop iterates 4 times. Each time, it reads the String first and does nothing with it. It then reads the integer and adds it to Hello 2+4+6+8 = 20 UIL Computer Science Written Test – 2023 Region",
+      "code": "String St = \"Z 2 X 4 C 6 V 8 B 10\";\nScanner B = new Scanner(St);\nint Hello = 0;\nfor(int x = 1; x <= 4; x++)\n{\nB.next();\nHello += B.nextInt();\n}\nout.print(Hello);"
+    },
+    {
+      "source": "Regional • 2024",
+      "stem": "What is output by the code segment to the right?",
+      "choices": {
+        "A": "F",
+        "B": "L",
+        "C": "M",
+        "D": "N",
+        "E": "P"
+      },
+      "answer": "D",
+      "explanation": "D This creates the ArrayList ['F','H','J','L','N'] The last element is 'N'",
+      "code": "ArrayList<Character>France;\nFrance = new ArrayList<Character>();\nFrance.add((char)70);\nfor(int x=1; x<5; x++)\nFrance.add((char)(France.get(x-1)+2));\nout.print(France.get(France.size()-1));"
+    },
+    {
+      "source": "Regional • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "Koie",
+        "B": "SB Th3",
+        "C": "Koie 8293m",
+        "D": "Th3",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "A",
+      "explanation": "A Scanner tracing, nextLine will get all data up to a \\n, next will grab all characters up to the next whitespace character.",
+      "code": "String k =\n     \"123\\nSB Th3\\tKoie 8293m\";\nScanner sc = new Scanner(k);\nsc.nextLine();\nsc.next();\nsc.next();\nout.println(sc.next());"
+    },
+    {
+      "source": "Regional • 2026",
+      "stem": "Which of the following interfaces does Scanner not implement?",
+      "choices": {
+        "A": "Closeable",
+        "B": "AutoCloseable",
+        "C": "Iterator",
+        "D": "Object",
+        "E": "Scanner implements all of the above."
+      },
+      "answer": "D",
+      "explanation": "D Object is a class, not an interface. Scanner extends Object but it does not implement it."
+    },
+    {
+      "source": "State • 2023",
+      "stem": "What is output by the code segment to the right?",
+      "choices": {
+        "A": "EAG",
+        "B": "ECG",
+        "C": "FBF",
+        "D": "FDJ",
+        "E": "BDF"
+      },
+      "answer": "D",
+      "explanation": "D String St = \"AB CD EF GH IJ\"; St += St; St =\"AB CD EF GH IJAB CD EF GH IJ\"; Notice no space between IJ and AB Scanner Sc = new Scanner(St); for(int x = 1; x <= 3; x++) The loop skips 2 strings then processes the 3rd, three times. { Sc.next(); EF CD IJ Sc.next(); Printing letter #1 in each gives us FDJ out.print(Sc.next().substring(1)); } UIL Computer Science Written Test – 2023 State",
+      "code": "String St = \"AB CD EF GH IJ\";\nSt += St;\nScanner Sc = new Scanner(St);\nfor(int x = 1; x <= 3; x++)\n{\n  Sc.next();\n  Sc.next();\n  out.print(Sc.next().substring(1));\n}"
+    },
+    {
+      "source": "State • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "SO VERY TIRED",
+        "B": "SO TIRED",
+        "C": "VERY TIRED",
+        "D": "VERY HUNGRY",
+        "E": "SO HUNGRY"
+      },
+      "answer": "E",
+      "explanation": "E int A = 4; int B = 7; int C = 8; if(A<B) out.print(\"SO \"); else out.print(\"VERY \"); if(C<B) out.print(\"TIRED \"); else out.print(\"HUNGRY \");",
+      "code": "int A = 4; int B = 7; int C = 8;\nout.print((A<B)?\"SO \":\"VERY \");\nout.print((C<B)?\"TIRED \":\"HUNGRY \");"
+    },
+    {
+      "source": "State • 2025",
+      "stem": "Which of the following could replace <1*> for the code to the right to compile without error?",
+      "choices": {
+        "A": "IOException",
+        "B": "FileNotFoundException",
+        "C": "Exception",
+        "D": "Only A or C.",
+        "E": "Any of the above will work."
+      },
+      "answer": "E",
+      "explanation": "E Only a FileNotFoundException is required, but FileNotFoundException extends IOException which extends Exception, so any of the 3 will work.",
+      "code": "public void scan()throws <1*>{\n     File f = new File(\"a.dat\");\n     Scanner sc = new Scanner(f);\n     sc.nextLine();\n     out.print(sc.nextLine());\n}"
+    },
+    {
+      "source": "State • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "12|5678",
+        "B": "12|168",
+        "C": "12|34134",
+        "D": "12|345678",
+        "E": "46|345678"
+      },
+      "answer": "D",
+      "explanation": "D sc.nextInt() reads 12 and stops – position is before the space. sc.nextLine() then consumes the rest of line 1: \" 34\". The remaining input is \"56 78\", so the two subsequent nextInt() calls return 56 and 78. Since + is left-associative and s is a String, the entire expression is string concatenation: \" 34\" + 56 + 78 = \" 345678\". The new Scanner reads that as one integer: 345678.",
+      "code": "Scanner sc = new Scanner(\"12 34\\n56 78\");\nint a = sc.nextInt();\nString s = sc.nextLine();\nScanner sc2 = new Scanner(s +\nsc.nextInt() + sc.nextInt());\nint x = 0;\nwhile (sc2.hasNextInt())\nx += sc2.nextInt();\nout.println(a + \"|\" + x);"
+    }
+  ]
+}

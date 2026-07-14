@@ -1,0 +1,281 @@
+{
+  "question_number": 6,
+  "topic": "Math class methods",
+  "questions": [
+    {
+      "source": "Invitational A • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "4.0",
+        "B": "6",
+        "C": "5.0",
+        "D": "5",
+        "E": "6"
+      },
+      "answer": "D",
+      "explanation": "D Math.floor(5.85) returns the value 5.0 (int) type casts that value as an integer 5",
+      "code": "out.print((int)Math.floor(5.85));"
+    },
+    {
+      "source": "Invitational A • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "6",
+        "B": "6.0",
+        "C": "7",
+        "D": "7.0",
+        "E": "49.0"
+      },
+      "answer": "D",
+      "explanation": "D Math.sqrt(40) = 6.32455 Math.ceil()rounds it up to the next highest \"integer\" and returns it as a double 7.0",
+      "code": "double T = Math.sqrt(40);\nout.print(Math.ceil(T));"
+    },
+    {
+      "source": "Invitational A • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "3",
+        "B": "2.5",
+        "C": "3.0",
+        "D": "2.0",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "C",
+      "explanation": "C Math.ceil returns next “whole” number as a double that is above the given value",
+      "code": "double a = 2.45;\nout.println(Math.ceil(a));"
+    },
+    {
+      "source": "Invitational A • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "-3.7",
+        "B": "3.7",
+        "C": "2.0",
+        "D": "2"
+      },
+      "answer": "B",
+      "explanation": "B Math.abs(-3.7) is 3.7; Math.max(2.0, 3.7) is 3.7.",
+      "code": "double a = -3.7;\ndouble b = 2.0;\ndouble c = Math.abs(a);\nout.println(Math.max(b, c));"
+    },
+    {
+      "source": "Invitational B • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "5",
+        "B": "5.0",
+        "C": "6",
+        "D": "6.0",
+        "E": "15"
+      },
+      "answer": "A",
+      "explanation": "A Math.sqrt(31) returns a value greater than 5.0 but less than 6.0 Math.floor() will round that value down to 5.0 (int) type casts that value as an integer 5",
+      "code": "double M = Math.sqrt(31);\n out.print((int)Math.floor(M));"
+    },
+    {
+      "source": "Invitational B • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "-89.1",
+        "B": "-90.0",
+        "C": "89.1",
+        "D": "90",
+        "E": "98"
+      },
+      "answer": "B",
+      "explanation": "B double T = Math.ceil(99.1); T = 100.0 double V = Math.sqrt(T); V = 10.0 out.print(V - T); V - T = -90.0",
+      "code": "double T = Math.ceil(99.1);\ndouble V = Math.sqrt(T);\nout.print(V - T);"
+    },
+    {
+      "source": "Invitational B • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "2",
+        "B": "2.0",
+        "C": "8",
+        "D": "8.0",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "B",
+      "explanation": "B num1 = 2 num2 = 8.0 Since we have a double as one of the arguments, this will force the compiler to use the version of the min method which takes in two doubles and produces a double. This causes the output to be 2.0 even though the input of 2 ended up being the number that was the minimum between 2 and 8.0.",
+      "code": "long num1 = Math.floorDiv(7, 3);\ndouble num2 = Math.pow(2, 3);\nout.println(Math.min(num1, num2));"
+    },
+    {
+      "source": "Invitational B • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "2147483648|5",
+        "B": "-2147483648|-2",
+        "C": "-2147483648|5",
+        "D": "2147483647|5"
+      },
+      "answer": "C",
+      "explanation": "C Math.abs(Integer.MIN_VALUE) overflows and stays -2147483648, while Math.floorMod(m, 7) returns the nonnegative remainder 5 (unlike m % 7, which would be -2).",
+      "code": "int m = Integer.MIN_VALUE;\nout.println(Math.abs(m) + \"|\" +\nMath.floorMod(m, 7));"
+    },
+    {
+      "source": "District • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "0",
+        "B": "7",
+        "C": "-7",
+        "D": "-7.0",
+        "E": "7.0"
+      },
+      "answer": "E",
+      "explanation": "E Math.pow(5,2) returns 25.0 Math.pow(2,5) returns 32.0 25.0 - 32.0 is -7.0 Math.abs(-7.0) returns the absolute value of -7.0 which is 7.0",
+      "code": "double H = Math.pow(5,2)-Math.pow(2,5);\nout.print(Math.abs(H));"
+    },
+    {
+      "source": "District • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "18",
+        "B": "21",
+        "C": "24",
+        "D": "28",
+        "E": "35"
+      },
+      "answer": "B",
+      "explanation": "B This adds the numbers 5, 7, and 9 to get 21.",
+      "code": "int T = 0;\nfor (int x=5; x<=10; x=x+2)\nT+=x;\nout.print(T);"
+    },
+    {
+      "source": "District • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "9",
+        "B": "8",
+        "C": "8.0",
+        "D": "9.0",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "D",
+      "explanation": "D Math.max(double x, double y) is called, which returns the larger value, but cast to a double since it is the integer value.",
+      "code": "int y = 9;\ndouble x = 8.0;\nout.print(Math.max(y,x));"
+    },
+    {
+      "source": "District • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "9267",
+        "B": "8367",
+        "C": "8377",
+        "D": "826-7"
+      },
+      "answer": "B",
+      "explanation": "B Math.floor(8.9) → 8.0 (rounds down to nearest integer) Math.ceil(2.1) → 3.0 (rounds up to nearest integer) Math.round(6.4) → 6 (rounds to nearest, 0.4 rounds down) Math.abs(-7) → 7 (absolute value)",
+      "code": "double a = Math.floor(8.9);\ndouble b = Math.ceil(2.1);\nlong c = Math.round(6.4);\nint d = Math.abs(-7);\nout.println((int)a + \"\" + (int)b + c + d);"
+    },
+    {
+      "source": "Regional • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "9",
+        "B": "8",
+        "C": "7",
+        "D": "6",
+        "E": "5"
+      },
+      "answer": "B",
+      "explanation": "B M = 8.94 M*M*M will be a number greater than 512 but less than 729 So the cube root is greater than 8 but less than 9. (int) casts the number to 8",
+      "code": "double M = Math.sqrt(80);\nout.print((int)Math.cbrt(M*M*M));"
+    },
+    {
+      "source": "Regional • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "32",
+        "B": "48",
+        "C": "55",
+        "D": "56",
+        "E": "62"
+      },
+      "answer": "D",
+      "explanation": "D int Num = (2000>>8)<<(25>>3); 7 << 3 56",
+      "code": "int Num = (2000>>8)<<(25>>3);\nout.print(Num);"
+    },
+    {
+      "source": "Regional • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "5",
+        "B": "6.0",
+        "C": "6",
+        "D": "There is no output due to a compile error.",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "D",
+      "explanation": "D Math.round(double) will return a long, so there is a compile error trying to store that value in an int.",
+      "code": "double g = 5.55;\nint i = Math.round(g);\nout.println(g);"
+    },
+    {
+      "source": "Regional • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "7 3.0",
+        "B": "7 4.0",
+        "C": "4 3.0",
+        "D": "7 3.6"
+      },
+      "answer": "A",
+      "explanation": "A Math.abs(-7) is 7, Math.round(3.6) rounds to 4, so Math.max(7, 4) is 7, then Math.floor(3.6) is 3.0 and Math.ceil(3.6) is 4.0, so Math.min(3.0, 4.0) is 3.0, printing 7 3.0.",
+      "code": "int a = -7;\ndouble b = 3.6;\nout.println(\nMath.max(Math.abs(a), Math.round(b))\n+ \" \" + Math.min(\nMath.floor(b), Math.ceil(b)\n));"
+    },
+    {
+      "source": "State • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "11",
+        "B": "12",
+        "C": "13",
+        "D": "14",
+        "E": "15"
+      },
+      "answer": "A",
+      "explanation": "A int H = 5; int J = (int)(Math.pow(H,3)); J = 125 int L = (int)(Math.sqrt(J)); L = (int)(11.18) = 11 out.print(L);",
+      "code": "int H = 5;\nint J = (int)(Math.pow(H,3));\nint L = (int)(Math.sqrt(J));\nout.print(L);"
+    },
+    {
+      "source": "State • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "18",
+        "B": "19",
+        "C": "20",
+        "D": "21",
+        "E": "22"
+      },
+      "answer": "C",
+      "explanation": "C One cool trick is to multiply the numbers \"under the radical\" then take the square root. So we are taking the square root of 10*5*2*2*2 or 400. The square root of 400 is",
+      "code": "double A = Math.sqrt(10);\ndouble B = Math.sqrt(5);\ndouble C = Math.sqrt(2);\nint D = (int)(A*B*C*C*C);\nout.print(D);"
+    },
+    {
+      "source": "State • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "4.00 4.00",
+        "B": "4.50 4.49",
+        "C": "4.50 4.50",
+        "D": "-3.50 -3.5",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "B",
+      "explanation": "B Math.nextAfter(a, b) will return the closest number to a in the direction of b (either positive or negative), so 4.49999999999… in this case.",
+      "code": "double c = 4.5;\nc = Math.nextAfter(c, -7);\nString s = \"\" + c;\ns = s.substring(0, 4);\nout.printf(\"%.2f %s\",c,s);"
+    },
+    {
+      "source": "State • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "2147483647",
+        "B": "-2147483648",
+        "C": "There is no output due to a runtime error.",
+        "D": "There is no output due to a compile error."
+      },
+      "answer": "C",
+      "explanation": "C https://docs.oracle.com/javase/8/docs/api/java/lang/Math.html#incrementExact-int-",
+      "code": "int x = 0;\nint count = 0;\nwhile(x <= Integer.MAX_VALUE) {\n    x = Math.incrementExact(x);\n    count++;\n}\nout.println(count);"
+    }
+  ]
+}

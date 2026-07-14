@@ -1,0 +1,285 @@
+{
+  "question_number": 3,
+  "topic": "Simple output (print, println, printf)",
+  "questions": [
+    {
+      "source": "Invitational A • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "OneTwo ThreeFour Five",
+        "B": "One TwoThree FourFive",
+        "C": "One TwoThreeFour Five",
+        "D": "OneTwo ThreeFourFive",
+        "E": "OneTwo Three FourFive"
+      },
+      "answer": "A",
+      "explanation": "A A new line is invoked after each println statement There will be a new line after \"Two\" and after \"Four\"",
+      "code": "out.print(\"One\");\nout.println(\"Two\");\nout.print(\"Three\");\nout.println(\"Four\");\nout.print(\"Five\");"
+    },
+    {
+      "source": "Invitational A • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "306 2 09",
+        "B": "2286 2 49",
+        "C": "306 2 49",
+        "D": "30 6 2 0 9",
+        "E": "36 2 49"
+      },
+      "answer": "C",
+      "explanation": "C The five operations will produce the following results: 22 + 8 = 30 3 * 2 = 6 7 / 3 = 2 4 % 11 = 4 12 - 3 = 9 There are no spaces between values on the same line. A new line will occur after the 6 and the 2. 306 2 49",
+      "code": "out.print(22 + 8);\nout.println(3 * 2);\nout.println(7 / 3);\nout.print(4 % 11);\nout.print(12 - 3);"
+    },
+    {
+      "source": "Invitational A • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "2.346",
+        "B": "2.34567",
+        "C": "2.34",
+        "D": "2.345",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "A",
+      "explanation": "A Printf is formatting output, “%.3f” rounds the decimal value to 3 places",
+      "code": "out.printf(\"%.3f\",2.34567);"
+    },
+    {
+      "source": "Invitational A • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "x = 5, y = 2.8",
+        "B": "x = 5, y = 2.7",
+        "C": "x = 5, y = 2.75",
+        "D": "x = %d, y = %.1f",
+        "E": "There is no output due to an error."
+      },
+      "answer": "A",
+      "explanation": "A %d prints 5; %.1f rounds 2.75 to one decimal place → 2.8; \\n moves to the next line.",
+      "code": "out.printf\n    (\"x = %d, y = %.1f\\n\", 5, 2.75);"
+    },
+    {
+      "source": "Invitational B • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "Blue Red GreenYellow PurpleOrange",
+        "B": "Blue Red Green Yellow PurpleOrange",
+        "C": "Blue Red Green YellowPurple Orange",
+        "D": "BlueRed GreenYellowPurpleOrange",
+        "E": "Blue Red GreenYellowPurple Orange"
+      },
+      "answer": "A",
+      "explanation": "A Since there are only print statements, new lines will only be invoked at the \\n new line escape character. So new lines will occur after Blue, Red, and Yellow",
+      "code": "out.print(\"Blue\\nRed\\nGreen\");\nout.print(\"Yellow\\nPurple\");\nout.print(\"Orange\");"
+    },
+    {
+      "source": "Invitational B • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "30AB AB ABAB",
+        "B": "30 3030 3030",
+        "C": "30 AB131 A1614B",
+        "D": "30 ABAB A1614B",
+        "E": "30 21A16 A16"
+      },
+      "answer": "C",
+      "explanation": "C int A = 14; int B = 16; out.println(A + B); Prints 30 then carriage return (next line) out.print(\"A\" + \"B\"); Prints AB but no carriage return out.println('A' + 'B'); Prints 131 (65+66) then carriage return. out.print(\"A\" + B); Prints A16 but no carriage return out.println(A + \"B\"); Prints 14B",
+      "code": "int A = 14;\nint B = 16;\nout.println(A + B);\nout.print(\"A\" + \"B\");\nout.println('A' + 'B');\nout.print(\"A\" + B);\nout.println(A + \"B\");"
+    },
+    {
+      "source": "Invitational B • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "\\%f = %f",
+        "B": "\\%f = 2.0",
+        "C": "The code fails to compile when it attempts to resolve the escape sequence \"\\%\".",
+        "D": "The code fails to compile since unused arguments are passed to the printf() function.",
+        "E": "The code fails to compile when it attempts to resolve the format conversion of \"%%\""
+      },
+      "answer": "C",
+      "explanation": "C The string \"\\\\\" is the escape sequence to print the character '\\', and \"%%\" is the format for printing the '%' character in formatted strings/outputs. Therefore, \"\\\\%%f\" resolves to the string \"\\%f\". Even though the string \"%f\" appears in the formatted string, note that this does not get filled with a floating-point number – this only happens in the format specifier string, which gets resolved from left-to-right. Some websites might incorrectly make reference to \"\\%\" being an alternative way to print a '%' within a printf statement; however, this has never been an actual feature of Java and will cause a compile-time error since \"\\%\" is not one of the approved escape sequences.",
+      "code": "out.printf(\"\\\\%%f = \\%f\", 2, 'c');"
+    },
+    {
+      "source": "Invitational B • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "\"2\\n2.5\\\"",
+        "B": "\"2\\n2.5\\\\\"",
+        "C": "\"2\\n2.5\\\\\"\"",
+        "D": "\"2\\n2.5\\\\\"\\\"",
+        "E": "Compile-time error"
+      },
+      "answer": "B",
+      "explanation": "B The code prints a quote, then 10/4 as 2, then the literal characters \\n, then 10/4.0 as 2.5, then two backslashes from \\\\\\\\, then a final quote from \\\", giving \"2\\n2.5\\\\\"",
+      "code": "out.print(\"\\\"\");\nout.printf(\"%d\", 10/4);\nout.print(\"\\\\n\");\nout.printf(\"%.1f\", 10/4.0);\nout.print(\"\\\\\\\\\");\nout.printf(\"%s\", \"\\\"\");"
+    },
+    {
+      "source": "District • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "5.6 Five SixSeven Eight",
+        "B": "5.6Five SixSeven Eight",
+        "C": "5.7Five SixSeven Eight",
+        "D": "5.7 Five SixSevenEight",
+        "E": "5.7 Five SixSeven Eight"
+      },
+      "answer": "E",
+      "explanation": "E out.printf(\"%.1f\\n\",A); This prints A formatted with one decimal place (rounded) followed by a carriage return out.print(\"Five\\nSix\"); On the next line, this prints \"Five\" on the next line, then \"Six\" on the following line because of the \"\\n\" out.println(\"Seven\\nEight\"); This prints \"Seven\" next to \"Six.\" The \\n sends \"Eight \" to the last line.",
+      "code": "double A = 5.678;\nout.printf(\"%.1f\\n\",A);\nout.print(\"Five\\nSix\");\nout.println(\"Seven\\nEight\");"
+    },
+    {
+      "source": "District • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "011 11 24",
+        "B": "1411 10 24",
+        "C": "1471 11 1",
+        "D": "1471 10 24",
+        "E": "1671 10 12"
+      },
+      "answer": "D",
+      "explanation": "D int A = 14; int B = 16; int C = 9; int D = 9; out.print(A % B); Prints 14 out.print(B % C); Prints 7 out.println(A / D); Prints 1 then carriage return (next line) out.print(C / D); Prints 1 out.println(D % C); Prints 0 then carriage return (next line) out.println(A + B / C + D); Prints 24 then carriage return (next line)",
+      "code": "int A = 14;\nint B = 16;\nint C = 9;\nint D = 9;\nout.print(A % B);\nout.print(B % C);\nout.println(A / D);\nout.print(C / D);\nout.println(D % C);\nout.println(A + B / C + D);"
+    },
+    {
+      "source": "District • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "abcde",
+        "B": "abc",
+        "C": "ABCDE",
+        "D": "ABC",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "C",
+      "explanation": "C printf is formatting output, “%3S”, greater than 3 columns so 3 is ignored, S means capitalized.",
+      "code": "out.printf(\"%3S\",\"abcde\");"
+    },
+    {
+      "source": "District • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "Val: 5 and 3.50 Path: C:\\\\temp",
+        "B": "Val: 5 and 3.5 Path: C:\\temp",
+        "C": "Val: 5 and 3.5 Path: C:\\temp",
+        "D": "Val: 5 and 3.5 Path: C:\\\\temp"
+      },
+      "answer": "C",
+      "explanation": "C Simple printing with escape sequences and printf.",
+      "code": "int x = 5;\ndouble y = 3.5;\nout.print(\"Val: \");\nout.printf(\"%d and %.1f\\n\", x, y);\nout.println(\"Path: C:\\\\temp\");"
+    },
+    {
+      "source": "Regional • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "\\12.121212121212\\\\ nn12",
+        "B": "\\12.121212120000\\\\ nn12",
+        "C": "12.12\\\\nnn12",
+        "D": "\\12.12\\\\ nn12",
+        "E": "\\12 121212120000\\\\nn12"
+      },
+      "answer": "B",
+      "explanation": "B You will be printing 12.12121212 and 12 with the format defined by String St. \\\\ gives us one \\ %.12f prints the double with 12 decimal places. That gives us 12.121212120000 \\\\\\\\ produces \\\\ \\n provides a new line. nn gives us, well nn %d formats 12 Thus… \\12.121212120000\\\\ nn12",
+      "code": "double March = 12.12121212;\nString St =\"\\\\%.12f\\\\\\\\\\nnn%d\";\nout.printf(St,March,(int)March);"
+    },
+    {
+      "source": "Regional • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "14 0 14 2",
+        "B": "2 0 2 2",
+        "C": "14 1 14 2",
+        "D": "14 0 -14 2",
+        "E": "14 0 -8 2"
+      },
+      "answer": ") A",
+      "explanation": "A int A = 14; int B = 16; int C = 14;int D = -22; out.println(A % B); Prints 14 out.println(A % C); Prints 0 out.println(A % D); Prints 14 out.println(B % C); Prints 2",
+      "code": "int A = 14;\nint B = 16;\nint C = 14;\nint D = -22;\nout.println(A % B);\nout.println(A % C);\nout.println(A % D);\nout.println(B % C);"
+    },
+    {
+      "source": "Regional • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "true",
+        "B": "false",
+        "C": "TRUE",
+        "D": "FALSE",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "C",
+      "explanation": "C %B will output FALSE if the parameter is null or the literal false, otherwise it will output TRUE.",
+      "code": "out.printf(\"%B\",-17);"
+    },
+    {
+      "source": "Regional • 2026",
+      "stem": "How many lines of output are generated by the code to the right? Lines containing only a newline character do not count. The following code produced only one line of output for example. out.println(\"Hello World\");",
+      "choices": {
+        "A": "8 Lines",
+        "B": "9 Lines",
+        "C": "10 Lines",
+        "D": "11 Lines",
+        "E": "12 Lines"
+      },
+      "answer": "B",
+      "explanation": "println(s) prints hi and there as lines 1 and 2, respectively (the \\n inside the string is real, and println adds another newline after). printf(\"%s\\n%s\\n\", \"one\", \"two\\nthree\") produces one (line 3), two (line 4), and three (line 5) since the \\n embedded in \"two\\nthree\" is also a real newline. print(\"a\\n\\nb\") gives a (line 6), a blank line (line 7), and b (starting line 8) with no trailing newline. println(\"x\\ny\") appends x to line 8 making it bx, then y becomes line 9, with println adding a newline. Finally printf(\"end%s\", \"\\n\") prints end as line 10 with a trailing newline – giving 10 total.",
+      "code": "String s = \"hi\\nthere\";\nout.println(s);\nout.printf(\"%s\\n%s\\n\", \"one\", \"two\\nthree\");\nout.print(\"a\\n\\nb\");\nout.println(\"x\\ny\");\nout.printf(\"end%s\", \"\\n\");"
+    },
+    {
+      "source": "State • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "68-13.60-c",
+        "B": "68-13.00-c",
+        "C": "68-13.60-D",
+        "D": "68-13.00-D",
+        "E": "54.40-D"
+      },
+      "answer": "D",
+      "explanation": "D int May = 68; May = 68 double State = May / 5; State = 13.00000 String St =\"%d-%.2f-%c\"; Creates the format integer-2-decimal double-character out.printf(St, May, State, May); 68-13.00-D",
+      "code": "int May = 68;\ndouble State = May / 5;\nString St =\"%d-%.2f-%c\";\nout.printf(St, May, State, May);"
+    },
+    {
+      "source": "State • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "MNO",
+        "B": "MN",
+        "C": "NOP",
+        "D": "NO",
+        "E": "LMNOP"
+      },
+      "answer": "D",
+      "explanation": "D Alphabet = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\" Z = Alphabet.substring(10,15) = \"KLMNO\" Z.substring(3) = \"NO\"",
+      "code": "String Alpha = \"ABCDEFGHIJKLM\";\n                  = \"NOPQRSTUVWXYZ\";\nString Beta\nString Alphabet = Alpha+Beta;\nString Z = Alphabet.substring(10,15);\nout.print(Z.substring(3));"
+    },
+    {
+      "source": "State • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "1.2YEPZ",
+        "B": "1.2YepY",
+        "C": "1.3YEPY",
+        "D": "1.3YepZ",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "C",
+      "explanation": "C %c will output a character with the ASCII value given. The number before the $ in a printf term denotes which of the following objects will be output by the term, it is 1-indexed.",
+      "code": "String s = \"Yep\";\nint i = 89;\ndouble d = 1.25;\nout.printf(\"%3$.1f%1$S%2$c\",s,i,d);"
+    },
+    {
+      "source": "State • 2026",
+      "stem": "What is output by the code to the right? The next line is a ruler that can be used for your convenience. 01234567890123456789012345678901234567890",
+      "choices": {
+        "A": "[ 42|-003.14|Hello]",
+        "B": "[42 |-003.14|Hello]",
+        "C": "[ 42| -3.14|Hello]",
+        "D": "[42 | -3.14|Hello]",
+        "E": "[42 |-003.14|HelloWorld]"
+      },
+      "answer": "B",
+      "explanation": "B https://alvinalexander.com/programming/printf-format-cheat-sheet/",
+      "code": "int x = 42;\ndouble y = -3.14;\nString s = \"HelloWorld\";\nout.printf(\"[%-8d|%07.2f|%.5s]%n\",\n         x, y, s);"
+    }
+  ]
+}

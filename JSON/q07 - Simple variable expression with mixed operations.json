@@ -1,0 +1,286 @@
+{
+  "question_number": 7,
+  "topic": "Simple variable expression with mixed operations",
+  "questions": [
+    {
+      "source": "Invitational A • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "78",
+        "B": "67.5",
+        "C": "67",
+        "D": "92",
+        "E": "70"
+      },
+      "answer": "B",
+      "explanation": "B In the expression x / a + y * y since a is a double, x/a will yield a double value 3.5 3.5 + 64 = 67.5",
+      "code": "int x = 7;\nint y = 8;\ndouble a = 2.0;\nout.print(x / a + y * y);"
+    },
+    {
+      "source": "Invitational A • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "25",
+        "B": "26.0",
+        "C": "26.5",
+        "D": "27.0",
+        "E": "27"
+      },
+      "answer": "B",
+      "explanation": "B double T = 21 / 2;; T will have the value of 10.0 7.5 + 8.5 + 10.0 = 26.0",
+      "code": "double R = 7.5;\ndouble S = 8.5;\ndouble T = 21 / 2;\nout.print(R + S + T);"
+    },
+    {
+      "source": "Invitational A • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "212",
+        "B": "112",
+        "C": "1212",
+        "D": "211",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "A",
+      "explanation": "A i++ returns value of i, THEN increments, so value returned is one less than actual value",
+      "code": "int i = 10;\nif(i++ == 11)\n     out.print(1);\nelse if(i++ == 11);\n     out.print(2);\nout.println(i);"
+    },
+    {
+      "source": "Invitational A • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "10",
+        "B": "11",
+        "C": "12",
+        "D": "9",
+        "E": "13"
+      },
+      "answer": "D",
+      "explanation": "D + 2 ∗3 →4 + 6 = 10; then −1 →10 −1 = 9.",
+      "code": "int x = 4;\nx = x + 2 * 3;\nx = x - 1;\nout.println(x);"
+    },
+    {
+      "source": "Invitational B • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "6.4",
+        "B": "3.2",
+        "C": "6.2",
+        "D": "6.0",
+        "E": "6"
+      },
+      "answer": "C",
+      "explanation": "C Even though A is a double, the evaluation begins with integer operations. 8*4 is 32, then 32/10 is 3 using integer division. Next add 1 (another integer) to get 4 before a double is finally introduced giving us 6.2",
+      "code": "double T = 2.2;\ndouble A = 8 * 4 / 10 + 1 + T ;\nout.print(A);"
+    },
+    {
+      "source": "Invitational B • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "6",
+        "B": "6.0",
+        "C": "4",
+        "D": "4.0",
+        "E": "3"
+      },
+      "answer": "E",
+      "explanation": "E double L = 29 / 10; L = 2.0 double M = L * 2.0; M = 4.0 double P = M + 1 / 2; P = 4.0 ( 1 / 2 = 0) double Q = P - 0.2; Q = 3.8 int A = (int) Q; A = 3 out.print(A);",
+      "code": "double L = 29 / 10;\ndouble M = L * 2.0;\ndouble P = M + 1 / 2;\ndouble Q = P - 0.2;\nint A = (int) Q;\nout.print(A);"
+    },
+    {
+      "source": "Invitational B • 2025",
+      "stem": "Assuming that indented lines are continuations of the previous line, what is output by the code to the right?",
+      "choices": {
+        "A": "10 10 11",
+        "B": "10 11 11",
+        "C": "10 11 12",
+        "D": "12 10 11",
+        "E": "12 11 11"
+      },
+      "answer": "E",
+      "explanation": "E Note that this tests the difference between the pre- and post-increment operator. The pre- increment operator performs the increment and then returns the new value. The post increment operator returns the existing value and then performs the increment. In either operator, the original value is incremented.",
+      "code": "int alpha = 10;\nint beta = ++alpha;\nint gamma = alpha++;\nout.println(alpha + \" \" + beta\n     + \" \" + gamma);"
+    },
+    {
+      "source": "Invitational B • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "5.0",
+        "B": "6.0",
+        "C": "7.0",
+        "D": "8.0",
+        "E": "6"
+      },
+      "answer": "D",
+      "explanation": "D It becomes 4*6/8=3.0, then +2, and subtracting (6-9=-3) adds 3, giving 8.0.",
+      "code": "int a = 4, b = 7, c = 3;\ndouble r = a++ * --b / (double)(c += a) +\n(a % 3) - (b-- - ++c);\nout.println(r);"
+    },
+    {
+      "source": "District • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "1",
+        "B": "1.0",
+        "C": "1.5",
+        "D": "1.75",
+        "E": "2.0"
+      },
+      "answer": "C",
+      "explanation": "C The key to the problem is that U has the value of 3.0. 70/20 performs integer division, then the value is handed to U as a double.. (3.0 + 3.0) is 6.0 6.0 / 4 is 1.5 as real number division takes place",
+      "code": "double U = 70 / 20;\ndouble T = (U +  U) / 4;\nout.print(T);"
+    },
+    {
+      "source": "District • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "2",
+        "B": "4",
+        "C": "8",
+        "D": "10",
+        "E": "16"
+      },
+      "answer": "B",
+      "explanation": "B double A = Math.floor(8.7); A = 8.0 double B = Math.ceil(A - 0.1); B = 8 double C = Math.sqrt(A + B); C = 4 int D = (int) C; D = 4 out.print(D);",
+      "code": "double A = Math.floor(8.7);\ndouble B = Math.ceil(A - 0.1);\ndouble C = Math.sqrt(A + B);\nint D = (int) C;\n out.print(D);"
+    },
+    {
+      "source": "District • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "22 32",
+        "B": "20 30",
+        "C": "21 31",
+        "D": "19 29",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "B",
+      "explanation": "B Simple tracing problem, trace out each value during each iteration of the loop.",
+      "code": "int i = 0, ii = 10, n = 0;\nfor(;i <= ii;) {\n     ii++;\n     i += ii / 10;\n     n++;\n}\nout.println(n+\" \"+ii);"
+    },
+    {
+      "source": "District • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "89",
+        "B": "88",
+        "C": "90",
+        "D": "91",
+        "E": "88"
+      },
+      "answer": "A",
+      "explanation": "A Order of operations.",
+      "code": "int a = 26 & 21 + 3;\nint b = 67 | 420 / 69;\na ^= b - 13 / 2;\nout.println(a);"
+    },
+    {
+      "source": "Regional • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "5",
+        "B": "45",
+        "C": "50",
+        "D": "60",
+        "E": "75"
+      },
+      "answer": "D",
+      "explanation": "D U = 40 (240%100) I = 15 (40 % 25) L = 5 (15 % 10) 40+15+5 = 60",
+      "code": "int U = 240 % 100;\nint I = U % 25;\nint L = I % 10;\nout.print(U + I + L);"
+    },
+    {
+      "source": "Regional • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "2",
+        "B": "3",
+        "C": "4",
+        "D": "5",
+        "E": "6"
+      },
+      "answer": ") B",
+      "explanation": "B double A = Math.floor(8.7); A = 8.0 double A = Math.sqrt(250); A is more than 15, less than 16 double B = Math.cbrt(A); B is more than 3, less than 4 double C = Math.ceil(B); C=4.0 out.print((int)C); 4",
+      "code": "double A = Math.sqrt(250);\ndouble B = Math.cbrt(A);\ndouble C = Math.ceil(B);\n out.print((int)C);"
+    },
+    {
+      "source": "Regional • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "1211",
+        "B": "1311",
+        "C": "310",
+        "D": "1310",
+        "E": "210"
+      },
+      "answer": "D",
+      "explanation": "D Simple if else solution, but || and && short circuit if the first expression guarantees the entire expression is false, and i++ will return the original value then increment it afterwards.",
+      "code": "int i = 9;\nif(i < 10 || i++ > 10)\n     out.print(1);\nif(i < 10 && i++ > 10)\n     out.print(2);\nelse\n     out.print(3);\nout.print(i);"
+    },
+    {
+      "source": "Regional • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "5",
+        "B": "6",
+        "C": "3",
+        "D": "7",
+        "E": "13"
+      },
+      "answer": "D",
+      "explanation": "D a & b is 0110 & 0011 = 0010 = 2, so flag = (2 > 1) = true; 'C' has ASCII value 67 = 0100_0011, and & 0x0F masks to the lower 4 bits giving 0000_0011 = 3; since flag is true the ternary picks a ^ b = 0110 ^ 0011 = 0101 = 5; finally 3 | 5 = 0011 | 0101 = 0111 = 7. The main traps are forgetting that char has an ASCII value that can be used in bitwise ops, and that & 0x0F is a common masking trick to grab the lower nibble.",
+      "code": "int a = 6;\nint b = 3;\nchar c = 'C';\nboolean flag = (a & b) > 1;\nint result = (c & 0x0F) |\n(flag ? a ^ b : a & b);\nout.println(result);"
+    },
+    {
+      "source": "State • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "50",
+        "B": "52",
+        "C": "54",
+        "D": "56",
+        "E": "58"
+      },
+      "answer": "E",
+      "explanation": "E int A = 10; int B = 25; int Z = A + B % A * A - B / A; 10 + 25 % 10 * 10 - 25 / 10 10 + 5 * 10 - 25 / 10 10 + 50 - 25 / 10 10 + 50 - 2 60 - 2 = 58 UIL Computer Science Written Test – 2023 State",
+      "code": "int A = 10;\nint B = 25;\nint Z = A + B % A * A - B / A;\nout.print(Z);"
+    },
+    {
+      "source": "State • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "12 10 11",
+        "B": "9 9 9",
+        "C": "10 11 8",
+        "D": "10 10 10",
+        "E": "10 9 10"
+      },
+      "answer": "E",
+      "explanation": "E int A = 11; int B = 10; int C = 12; The consequence on the left in each case is attached to the if. The statement on the right is not a consequence, it will happen anyway. A B C 11 10 12 if(A>C) A++; B--; false 11 9 12 if(A>B) B++; C--; true 11 10 11 if(B>C) C++; A--; false 10 10 11 if(C>B) A++; B--; true 11 9 11 if(B>A) B++; C--; false 11 9 10 if(C>A) C++; A--; false 10 9 10",
+      "code": "int A = 11; int B = 10; int C = 12;\nif(A>C) A++; B--;\nif(A>B) B++; C--;\nif(B>C) C++; A--;\nif(C>B) A++; B--;\nif(B>A) B++; C--;\nif(C>A) C++; A--;\nout.print(A+\" \"+B+\" \"+C);"
+    },
+    {
+      "source": "State • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "12-7",
+        "B": "13-7",
+        "C": "2-7",
+        "D": "13-6",
+        "E": "3-6"
+      },
+      "answer": "D",
+      "explanation": "D Double boolean operators (||, &&), will short-circuit (if the first value is false for an &&, the second will not be evaluated because it is impossible for the expression to be true. Similar for the first value of a || expression being true). Single boolean operators do not so this.",
+      "code": "int i = -7;\nif(i < 0 | i++ > -10)\n     out.print(1);\nif(i > 0 && i-- < 10)\n     out.print(2);\nelse out.print(3);\nout.print(i);"
+    },
+    {
+      "source": "State • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "48",
+        "B": "191",
+        "C": "159",
+        "D": "253",
+        "E": "155"
+      },
+      "answer": "C",
+      "explanation": "C First, decode the literals: 0b1010_1100 = 172, 0xF3 = 243, and 073 is octal (not decimal) = 59. Then, apply Java's precedence rules. The full chain from high to low is: % * / → + - → << >> >>> → & → ^ → |. So the expression groups as (a & b) ^ c | (a >> (2 + 1))",
+      "code": "int a = 0b1010_1100;\nint b = 0xF3;\nint c = 073;\nout.println(a & b ^ c | a >> 2 + 1);"
+    }
+  ]
+}

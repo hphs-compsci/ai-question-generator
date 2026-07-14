@@ -1,0 +1,285 @@
+{
+  "question_number": 15,
+  "topic": "ArrayList (generics only)",
+  "questions": [
+    {
+      "source": "Invitational A • 2023",
+      "stem": "What is output by the code segment to the right?",
+      "choices": {
+        "A": "[11, 22, 33, 44, 55, 66]",
+        "B": "[44, 55, 66]",
+        "C": "[11, 55, 66]",
+        "D": "[22, 55, 66]",
+        "E": "[22, 44, 66]"
+      },
+      "answer": "C",
+      "explanation": "C Here is the progression of list. [ ] [11] [11, 22] [11] [11, 33] [11, 33, 44] [11, 44] [11, 44, 55] [11, 44, 55, 66] [11, 55, 66]",
+      "code": "ArrayList<Integer> list;\nlist = new ArrayList<Integer>();\nlist.add(11);\nlist.add(22);\nlist.remove(1);\nlist.add(33);\nlist.add(44);\nlist.remove(1);\nlist.add(55);\nlist.add(66);\nlist.remove(1);\nout.println(list);"
+    },
+    {
+      "source": "Invitational A • 2024",
+      "stem": "What is output by the code segment to the right?",
+      "choices": {
+        "A": "[36, 48, 60, 72, 84, 96]",
+        "B": "[48, 60, 72, 84, 96]",
+        "C": "[24, 36, 48, 60, 72, 84]",
+        "D": "[0, 12, 24, 36, 48, 60, 72, 84, 96]",
+        "E": "[96, 12, 24, 36, 48, 60, 72, 84, 96]"
+      },
+      "answer": "B",
+      "explanation": "B numbers.add(96); [96] for(int x=0; x<=100; x=x+12) numbers.add(x); [96,0,12,24,36,48,60,72,84,96] for(int x=1; x<=5; x=x+1) numbers.remove(0); This removes the first 5 elements out.println(numbers); [48,60,72,84,96]",
+      "code": "ArrayList<Integer> numbers;\nnumbers = new ArrayList<Integer>();\nnumbers.add(96);\nfor(int x=0; x<=100; x=x+12)\nnumbers.add(x);\nfor(int x=1; x<=5; x=x+1)\nnumbers.remove(0);\n out.println(numbers);"
+    },
+    {
+      "source": "Invitational A • 2025",
+      "stem": "What is the output by the code to the right?",
+      "choices": {
+        "A": "[B, C, D]",
+        "B": "[D, C, A]",
+        "C": "[A, C, D]",
+        "D": "[D, B, A]",
+        "E": "There is no output due to a compile error."
+      },
+      "answer": "C",
+      "explanation": "C add to the end, Arraylists are 0-indexed. Trace it out.",
+      "code": "ArrayList<String> a;\na = new ArrayList<String>();\na.add(\"A\");\na.add(\"B\");\na.add(\"C\");\na.remove(1);\na.add(\"D\");\nout.println(a);"
+    },
+    {
+      "source": "Invitational A • 2026",
+      "stem": "Which of the following correctly declares and creates an ArrayList that stores String objects?",
+      "choices": {
+        "A": "ArrayList list = new ArrayList<String>();",
+        "B": "ArrayList<String> list = new ArrayList<String>();",
+        "C": "ArrayList<String> list = new ArrayList<string>();",
+        "D": "ArrayList<String> list = new ArrayList<int>();",
+        "E": "None of the above."
+      },
+      "answer": "B",
+      "explanation": "B Both sides should use String as the type parameter; int cannot be used as a generic type argument."
+    },
+    {
+      "source": "Invitational B • 2023",
+      "stem": "What is output by the code segment to the right?",
+      "choices": {
+        "A": "[12, 10, 14, 16, 10]",
+        "B": "[10, 12, 10, 14, 16, 10]",
+        "C": "[12, 12, 14, 16, 10]",
+        "D": "[10, 12, 12, 14, 16, 10]",
+        "E": "[10, 12, 14, 16, 10]"
+      },
+      "answer": "D",
+      "explanation": "D Here is the progression of messi. [ ] [10] [10,12] [10,12,12] [10,12,12,14] [12,12,14] [12,12,14,16] [12,12,14,16,10] [10,12,12,14,16,10]",
+      "code": "ArrayList<Integer> messi;\nmessi = new ArrayList<Integer>();\nmessi.add(10);\nmessi.add(12);\nmessi.add(messi.get(1));\nmessi.add(14);\nmessi.remove(0);\nmessi.add(16);\nmessi.add(10);\nmessi.add(0,messi.get(0)-2);\n out.println(messi);"
+    },
+    {
+      "source": "Invitational B • 2024",
+      "stem": "What is output by the code segment to the right?",
+      "choices": {
+        "A": "2",
+        "B": "3",
+        "C": "6",
+        "D": "12",
+        "E": "20"
+      },
+      "answer": "E",
+      "explanation": "E int[] List = {1,2,3,4,5,6,7}; Stuff = [] x=1 Stuff = [2] x=2 Stuff = [2,6] x=3 Stuff = [2,6,12] x=4 Stuff = [2,6,12,20] x=5 Stuff = [2,6,12,20,30] x=6 Stuff = [2,6,12,20,30,42] out.print(Stuff.get(3)); Print 20 UIL Computer Science Written Test – 2024 Invitational B",
+      "code": "ArrayList<Integer> Stuff;\nStuff = new ArrayList<Integer>();\nint[] List = {1,2,3,4,5,6,7};\nfor(int x=1; x<List.length; x++)\n   Stuff.add(List[x-1]*List[x]);\nout.print(Stuff.get(3));"
+    },
+    {
+      "source": "Invitational B • 2025",
+      "stem": "Which of the following can replace <?*> so that the code to the right compiles and produces the output \"[2.3, 1]\"?",
+      "choices": {
+        "A": "Integer",
+        "B": "Double",
+        "C": "Comparable",
+        "D": "? extends Comparable",
+        "E": "None of the above."
+      },
+      "answer": "C",
+      "explanation": "C Selecting Integer causes the add(2.3) to error and selecting Double causes the add(1) to error. Both Integer and Double extend the Comparable interface. While wildcards (?) can be used within the first set of generics, they cannot be used within the second when instantiating an object.",
+      "code": "ArrayList< <?*> > ratings;\nratings = new ArrayList< <?*> >();\nratings.add(2.3); ratings.add(1);\nout.println(ratings);"
+    },
+    {
+      "source": "Invitational B • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "27",
+        "B": "29",
+        "C": "31",
+        "D": "39",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "E",
+      "explanation": "E v.remove(1) removes index 1 of the subList (printing 2), then modifying a directly invalidates v’s expected modification count so the v.size() call throws a ConcurrentModificationException.",
+      "code": "ArrayList<Integer> a = new\nArrayList<>();\na.add(0); a.add(1); a.add(2);\na.add(1); a.add(0);\nList<Integer> v = a.subList(1, 4);\nout.print(v.remove(1));\na.remove((Integer)1);\nout.print(v.size());"
+    },
+    {
+      "source": "District • 2023",
+      "stem": "What is output by the code segment to the right?",
+      "choices": {
+        "A": "[11, 22, 33, 55]",
+        "B": "[11, 55, 44, 22]",
+        "C": "[55, 22, 33, 22]",
+        "D": "[44, 22, 33, 11]",
+        "E": "[44, 55, 11, 22]"
+      },
+      "answer": "E",
+      "explanation": "E Here is the progression of eagle. [ ] [11] [22,11] [22,11,33] [44,22,11,33] [44,22,11,33,22] [44,55,11,33,22] [44,55,11,22]",
+      "code": "ArrayList<Integer> eagle;\neagle = new ArrayList<Integer>();\neagle.add(11);\neagle.add(0,22);\neagle.add(33);\neagle.add(0,44);\neagle.add(eagle.get(1));\neagle.set(1,55);\neagle.remove(3);\nout.print(eagle);"
+    },
+    {
+      "source": "District • 2024",
+      "stem": "What is output by the code segment shown on the right?",
+      "choices": {
+        "A": "5",
+        "B": "8",
+        "C": "10",
+        "D": "16",
+        "E": "20"
+      },
+      "answer": "C",
+      "explanation": "C Heat = \"5 1 2 9 2 6 7 4 1 7\"; int T = Sc.nextInt(); for (int x=0; x<=T; x++) Sc.next(); T += Sc.nextInt() + Sc.nextInt(); T=5 skip 6 1,2,9,2,6,7 Add 4 and 1 to T out.print(T);",
+      "code": "String Heat;\nHeat = \"5 1 2 9 2 6 7 4 1 7\";\nScanner Sc = new Scanner(Heat);\nint T = Sc.nextInt();\nfor (int x=0; x<=T; x++)\nSc.next();\nT += Sc.nextInt() + Sc.nextInt();\n out print(T);"
+    },
+    {
+      "source": "District • 2025",
+      "stem": "What is the output by the code to the right?",
+      "choices": {
+        "A": "[-17, 451, 1]",
+        "B": "[212, 451, -17]",
+        "C": "[1, 451, -17]",
+        "D": "[-17, 451, 212]",
+        "E": "There is no output due to a compile error."
+      },
+      "answer": "C",
+      "explanation": "C Add to the end, ArrayLists are 0-indexed. Trace it out. Removing 1 will remove the object at index 1, not the Object 1 itself.",
+      "code": "ArrayList<Integer> a;\na = new ArrayList<Integer>();\na.add(1);\na.add(212);\na.add(451);\na.remove(1);\na.add(-17);\nout.println(a);"
+    },
+    {
+      "source": "District • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "15 3",
+        "B": "20 3",
+        "C": "15 4",
+        "D": "30 3",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "A",
+      "explanation": "A Starting with [10, 20, 30], add(1, 15) inserts at index 1 giving [10, 15, 20, 30], remove(2) removes index 2 giving [10, 15, 30], set(0, 5) replaces index 0 giving [5, 15, 30], so get(1) returns 15 and size() returns 3.",
+      "code": "ArrayList<Integer> list =\n        new ArrayList<>();\nlist.add(10);\nlist.add(20);\nlist.add(30);\nlist.add(1, 15);\nlist.remove(2);\nlist.set(0, 5);\nout.println(list.get(1) + \" \" +\n             list.size());"
+    },
+    {
+      "source": "Regional • 2023",
+      "stem": "What is output by the code segment to the right?",
+      "choices": {
+        "A": "[10, 30, 50, 70, 90]",
+        "B": "[60, 70, 80, 90, 100]",
+        "C": "[20, 40, 60, 80, 100]",
+        "D": "[20, 30, 40, 50, 60]",
+        "E": "[10, 20, 40, 50, 70]"
+      },
+      "answer": "A",
+      "explanation": "A After the first loop, keys begins with [10,20,30,40,50,60,70,80,90,100] In the second loop, we begin at position 1 and delete items that are evenly divisible by 10 (all of the numbers in the list are evenly divisible by 10). But, when we delete the 20, the items move back one position, so we miss the 20 and delete the 30 on the next step. This process continues. [10,30,50,70,90]",
+      "code": "ArrayList<Integer> keys;\nkeys = new ArrayList<Integer>();\nfor(int x = 10; x<=100; x+=10)\nkeys.add(x);\nfor(int x = 1; x<= 5; x++)\nif (keys.get(x)%10 == 0)\nkeys.remove(x);\nout.print(keys);"
+    },
+    {
+      "source": "Regional • 2024",
+      "stem": "What is output by the code segment to the right?",
+      "choices": {
+        "A": "37",
+        "B": "48",
+        "C": "52",
+        "D": "54",
+        "E": "219"
+      },
+      "answer": "D",
+      "explanation": "D String Pan; Pan = \"8 C 6 A 7 B\"; Scanner Sc = new Scanner(Pan); int T = Sc.nextInt(); T = 8 while(Sc.hasNext()) { String M = Sc.next(); T += Integer.parseInt(M,16); T = 8 + 12 + 6 + 10 + 7 + 11 } out.print(T); 54",
+      "code": "String Pan;\nPan = \"8 C 6 A 7 B\";\nScanner Sc = new Scanner(Pan);\nint T = Sc.nextInt();\nwhile(Sc.hasNext())\n{\nString M = Sc.next();\nT += Integer.parseInt(M,16);\n}\n out print(T);"
+    },
+    {
+      "source": "Regional • 2025",
+      "stem": "What is output by the line marked //q15 in the code to the right?",
+      "choices": {
+        "A": "[GHIJK, LMNOP]",
+        "B": "[GHIJK, LMNOP, WXYZ]",
+        "C": "[ABC, DEF, QRS, TUV]",
+        "D": "[ABC, DEF, QRS, TUV, WXYZ]",
+        "E": "There is no output due to an infinite loop."
+      },
+      "answer": "B",
+      "explanation": "B The removeIf does exactly what it sounds like, and the list will contain all of the elements with length greater than or equal to 4.",
+      "code": "ArrayList<String> a;\na = new ArrayList<String>();\na.add(\"ABC\");a.add(\"DEF\");\na.add(\"GHIJK\");a.add(\"LMNOP\");\na.add(\"QRS\");a.add(\"TUV\");\na.add(\"WXYZ\");\na.removeIf(s -> s.length() < 4);\nout.println(a); //q15\na.forEach(s ->{\n     for (int i = 0; i < s.length(); i += 2)\n           out.print(s.charAt(i));\n}); //q16"
+    },
+    {
+      "source": "Regional • 2026",
+      "stem": "What is the largest possible sum of values in the list?",
+      "choices": {
+        "A": "4950",
+        "B": "5050",
+        "C": "2475",
+        "D": "2525",
+        "E": "0"
+      },
+      "answer": "A",
+      "explanation": "A The largest possible sum occurs when the random() call equates to 0 every iteration, repeatedly removing 0 from the list. The sum is then the sum of 1 through 99 which can be computed with the formula \u000f + 1\u0013/2 = 99 ⋅100/2 = 4950.",
+      "code": "List<Integer> list = new ArrayList<>();\nfor (int i = 0; i < 100; i++) {\nlist.add(i);\nint value =\n(int)(Math.random() * list.size());\nInteger t = Integer.valueOf(value);\nlist.remove(t);\n}"
+    },
+    {
+      "source": "State • 2023",
+      "stem": "What is output by the code segment to the right?",
+      "choices": {
+        "A": "[10, 20, 30, 40, 50]",
+        "B": "[50, 40, 30, 20, 10]",
+        "C": "[10, 10, 20, 20, 30]",
+        "D": "[50, 50, 40, 40, 30]",
+        "E": "[1, 0, 2, 0, 3]"
+      },
+      "answer": "B",
+      "explanation": "B ArrayList<Integer> soup; soup = new ArrayList<Integer>(); for(int x = 1; x<=5; x++) { soup.add(x); soup.add(0,x*10); soup.remove(soup.size()-1); } out.print(soup); Iteration 1: [] then [1] then [10, 1] then [10] Iteration 2: [10] then [10,2] then [20,10, 2] then [20,10] Iteration 3: [20,10] then [20,10,3] then [30,20,10, 3] then [30,20,10] Iteration 4: [30,20,10] then [30,20,10,4] then [40,30,20,10, 4] then [40,30,20,10] Iteration 5: [40,30,20,10] then [40,30,20,10,5] then [50,40,30,20,10, 5] then [50,40,30,20,10]",
+      "code": "ArrayList<Integer> soup;\nsoup = new ArrayList<Integer>();\nfor(int x = 1; x<=5; x++)\n  {\n      soup.add(x);\n      soup.add(0,x*10);\n      soup.remove(soup.size()-1);\n  }\nout.print(soup);"
+    },
+    {
+      "source": "State • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "12",
+        "B": "13",
+        "C": "14",
+        "D": "48",
+        "E": "54"
+      },
+      "answer": "A",
+      "explanation": "A Each item in A is compared to each item in B to see if they have the same tens digit. This happens 12 times",
+      "code": "int C = 0;\nint[]A = {0,1,10,11,100,101,111};\nint[]B = {22,21,20,12,11,10,2,1,0};\nfor(int x : A)\n   for(int y : B)\n     if(y/10==x/10)\n        C++;\nout.print(C);"
+    },
+    {
+      "source": "State • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "[Ironhide, RC, Bumblebee, RC, Optimus]",
+        "B": "[Ironhide, RC, RC, Optimus]",
+        "C": "[Ironhide, RC, Optimus]",
+        "D": "[Ironhide, Bumblebee, RC, Optimus]",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "C",
+      "explanation": "C Simple ArrayList tracing, an ArrayList of Strings contains() method will use .equals() to compare, not == so the actual content will be compared, not the memory addresses.",
+      "code": "ArrayList<String> a;\na = new ArrayList<String>();\na.add(\"Bumblebee\");\na.add(\"Optimus\");\na.add(1,\"RC\");\na.set(0, \"Ironhide\");\nif(!a.contains(new String(\"RC\")))\n     a.add(1, \"RC\");\nout.println(a);"
+    },
+    {
+      "source": "State • 2026",
+      "stem": "What is the largest possible sum of values in the list?",
+      "choices": {
+        "A": "4 [127, 128, 127] [127, 128]",
+        "B": "0 [127, 128, 127] [127, 128]",
+        "C": "2 [127, 127] [127, 128]",
+        "D": "2 [127, 128, 127] [127, 128]",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "D",
+      "explanation": "D The == on Integer objects compares references, not values. Java caches Integer objects for values -128 through 127. So a.get(0) == b.get(0) compares two Integer(127) objects that are the same cached instance → true. But a.get(1) == b.get(1) compares two Integer(128) objects that are distinct heap allocations → false. Indices 0 and 2 match; 1 and 3 don't. s = 2. a.remove(0): removes by index, returns Integer 127. a = [128, 127, 128]. a.add(127) appends it. a = [128, 127, 128, 127]. a.remove(Integer.valueOf(128)): removes by value — first occurrence only. a = [127, 128, 127]. b.subList(0, 2).clear(): structural modification through the subList view removes indices 0–1. b = [127, 128].",
+      "code": "ArrayList<Integer> a = new ArrayList<>(\nList.of(127, 128, 127, 128));\nArrayList<Integer> b = new ArrayList<>(\nList.of(127, 128, 127, 128));\nint s = 0;\nfor (int i = 0; i < a.size(); i++)\nif (a.get(i) == b.get(i)) s++;\na.add(a.remove(0));\na.remove(Integer.valueOf(128));\nb.subList(0, 2).clear();\nout.println(s + \" \" + a + \" \" + b);"
+    }
+  ]
+}

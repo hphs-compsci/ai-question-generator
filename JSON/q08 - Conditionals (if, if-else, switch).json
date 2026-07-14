@@ -1,0 +1,286 @@
+{
+  "question_number": 8,
+  "topic": "Conditionals (if, if/else, switch)",
+  "questions": [
+    {
+      "source": "Invitational A • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "MRVVRM",
+        "B": "VRM",
+        "C": "RVRM",
+        "D": "VVRM",
+        "E": "V"
+      },
+      "answer": "D",
+      "explanation": "D R = 7 and V =9, so W will have the value of 2 The first if has a false condition and will cause no output The second also has a false condition, but its else will print a V The third if has a true condition and will print VRM",
+      "code": "int R = 7;\nint V = 9;\nint W = V - R;\nif(R > V)\n   out.print(\"M\");\nif(2 + R < V)\n   out.print(\"R\");\nelse\n   out.print(\"V\");\nif(W + R == V)\n   out.print(\"VRM\");"
+    },
+    {
+      "source": "Invitational A • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "5",
+        "B": "67",
+        "C": "7",
+        "D": "567",
+        "E": "6"
+      },
+      "answer": "E",
+      "explanation": "E int M = 5; if(M > 10) This if is false { out.print(M); Line not executed M++; Line not executed } if(M < 3) This if is false out.print(M); Line not executed M++; This line IS executed: M now is 6 if(M == 7) This if is false out.print(M); Line not executed out.print(M); 6 is printed",
+      "code": "int M = 5;\nif(M > 10)\n{\nout.print(M);\nM++;\n}\nif(M < 3)\nout.print(M);\nM++;\nif(M == 7)\nout.print(M);\n out.print(M);"
+    },
+    {
+      "source": "Invitational A • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "864",
+        "B": "-14",
+        "C": "513",
+        "D": "14",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "D",
+      "explanation": "D Simple order of operations problem",
+      "code": "int a = 17 - 8 * 3;\nint b = a + 11 / 2;\nout.println(a * b);"
+    },
+    {
+      "source": "Invitational A • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "D",
+        "B": "C",
+        "C": "A",
+        "D": "B",
+        "E": "ABC"
+      },
+      "answer": "D",
+      "explanation": "D 85 is not ≥90 but is ≥80, so the second branch runs → \"B\".",
+      "code": "int score = 85;\nif(score >= 90) {\n   out.println(\"A\");\n} else if(score >= 80) {\n   out.println(\"B\");\n} else {\n    out.println(\"C\");\n}"
+    },
+    {
+      "source": "Invitational B • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "B",
+        "B": "BCDEF",
+        "C": "BCDEFG",
+        "D": "F",
+        "E": "FG"
+      },
+      "answer": "E",
+      "explanation": "E 20 % 7 is 6 So case \"6\" is invoked. Because there are no break statements, the output will begin with F and keep doing all the inputs through the end of the switch statement.",
+      "code": "int Q = 20 % 7;\nswitch (Q)\n{\ncase 1:out.print(\"A\");\ncase 2:out.print(\"B\");\ncase 3:out.print(\"C\");\ncase 4:out.print(\"D\");\ncase 5:out.print(\"E\");\ncase 6:out.print(\"F\");\ndefault:out.print(\"G\");\n}"
+    },
+    {
+      "source": "Invitational B • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "8",
+        "B": "11",
+        "C": "12",
+        "D": "17",
+        "E": "23"
+      },
+      "answer": "D",
+      "explanation": "D int B = 11; B = 11 if(B > 10) B += 5; B = 16 else B *= 2; if(B < 14) B /= 2; else B++; B = 17 out.print(B); UIL Computer Science Written Test – 2024 Invitational B",
+      "code": "int B = 11;\nif(B > 10)\n   B += 5;\nelse\n   B *= 2;\nif(B < 14)\n   B /= 2;\nelse\n   B++;\nout.print(B);"
+    },
+    {
+      "source": "Invitational B • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "none",
+        "B": "Cum Laude",
+        "C": "Magna Cum Laude",
+        "D": "Summa Cum Laude",
+        "E": "There is no output due to a compile error."
+      },
+      "answer": "E",
+      "explanation": "E Note that only convertible int values, Strings or enum variables are permitted to be the argument of a switch statement. Thus, a compile-time error occurs.",
+      "code": "double gpa = 3.961;\nString latinHonors = \"none\";\nswitch(gpa) {\n    case 3.731: {\n        latinHonors = \"Cum Laude\";\n        break;\n    }\n    case 3.886: {\n        latinHonors = \"Magna Cum Laude\";\n        break;\n    }\n    case 3.976: {\n        latinHonors = \"Summa Cum Laude\";\n        break;\n    }\n}\nout.println(latinHonors);"
+    },
+    {
+      "source": "Invitational B • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "AC4",
+        "B": "AD4",
+        "C": "BC4",
+        "D": "BD4",
+        "E": "AE4"
+      },
+      "answer": "A",
+      "explanation": "A It enters case 1 with x=2, increments to 3 so adds A, falls through to case 2 where x++==3 adds C and leaves x=4, printing AC4.",
+      "code": "int x = 1;\nString s = \"\";\nswitch (x++) {\ncase 1:\nif (++x == 3) s += \"A\";\nelse s += \"B\";\ncase 2:\nif (x++ == 3) s += \"C\";\nelse s += \"D\";\nbreak;\ndefault:\ns += \"E\";\n}\nout.println(s + x);"
+    },
+    {
+      "source": "District • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "3",
+        "B": "4",
+        "C": "5",
+        "D": "19",
+        "E": "25"
+      },
+      "answer": "C",
+      "explanation": "C The first if is true so T becomes 9 Since T is 9 now, the second if is false, the else makes T the value of 4. Now T is 4, so the final if is true causing one to be added to T. T finishes the adventure at 5.",
+      "code": "int T = 12;\nif (T > 10)\n    T = T - 3;\nif (T == 12)\n    T *= 2;\nelse\n    T /= 2;\nif (T - 10 < 0)\n    T++;\nelse\n    T--;\nout.print(T);"
+    },
+    {
+      "source": "District • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "14",
+        "B": "15",
+        "C": "16",
+        "D": "17",
+        "E": "18"
+      },
+      "answer": "D",
+      "explanation": "D int A = 5; A=5 int B = A - 1; B=4 int C = B + 2; C=6 if (A > B) true C++; C=7 if (C < A) false B++; if (B < C) true A++; A=6 out.print(A + B + C); 17 UIL Computer Science Written Test – 2024 District",
+      "code": "int A = 5;\nint B = A - 1;\nint C = B + 2;\nif (A > B)\nC++;\nif (C < A)\nB++;\nif (B < C)\nA++;\nout.print(A + B + C);"
+    },
+    {
+      "source": "District • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "101",
+        "B": "8",
+        "C": "36",
+        "D": "6",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "B",
+      "explanation": "B Simple order of operations problem",
+      "code": "int a = 34 + 21 & 9;\nint b = a | 39 % 7;\na ^= b * 9 / 5;\nout.println(a);"
+    },
+    {
+      "source": "District • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "B",
+        "B": "B1",
+        "C": "B12",
+        "D": "C2",
+        "E": "A12"
+      },
+      "answer": "C",
+      "explanation": "C First, the if-else chain: x > 5 is true (7 > 5), so we enter the inner if. y > 5 is false (3 > 5), so result = \"B\". Then, the switch: result is \"B\", matching case \"B\". It assigns result += \"1\" making it \"B1\". There's no break, so fall-through occurs to case \"C\", which assigns result += \"2\" making it \"B12\". The break then exits the switch.",
+      "code": "int x = 7;\nint y = 3;\nString result = \"\";\nif (x > 5)\nif (y > 5)\nresult = \"A\";\nelse\nresult = \"B\";\nelse if (x > 3)\nresult = \"C\";\nelse\nresult = \"D\";\nswitch (result) {\ncase \"A\":\ncase \"B\":\nresult += \"1\";\ncase \"C\":\nresult += \"2\";\nbreak;\ndefault:\nresult += \"3\";\n}\nout.println(result);"
+    },
+    {
+      "source": "Regional • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "10 2 4",
+        "B": "11 10 11",
+        "C": "10 10 10",
+        "D": "11 10 10",
+        "E": "10 10 11"
+      },
+      "answer": "D",
+      "explanation": "D D=10 R=2 P=4 P becomes 10 since 10+2>4 R becomes 10 since 10+10>2 D becomes 11 since 10+10>10 It prints 11 10 10",
+      "code": "int D = 10;\nint R = 2;\nint P = 4;\nif (D + R > P)\nP = D;\nelse\nD = P;\nif (D + P > R)\nR = D;\nelse\nD = R;\nif (P + R > D)\nD++;\nelse\nD--;\nout print(D + \" \" + P + \" \" + R);"
+    },
+    {
+      "source": "Regional • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "20",
+        "B": "24",
+        "C": "25",
+        "D": "30",
+        "E": "32"
+      },
+      "answer": "C",
+      "explanation": "C int A = 5; int B = 3; int C = 7; Only the last else is triggered since A is not greater than C. 15 + 3 + 7 = 25 UIL Computer Science Written Test – 2024 Regional",
+      "code": "int A = 5; int B = 3; int C = 7;\nif(A>C)\nif(B>C)\nif(B>A)\nB=A+C;\nelse\nC=A+B;\nelse\nA=B+C;\nelse\nA=A*3;\n out.print(A+B+C);"
+    },
+    {
+      "source": "Regional • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "727",
+        "B": "81",
+        "C": "130",
+        "D": "87",
+        "E": "There is no output due to a compile error."
+      },
+      "answer": "C",
+      "explanation": "C Simple expression solving, order of operations will play a part",
+      "code": "int i = 78 % 13 ^ 28;\ni += 212 - 39 | 51 / 2;\ni = 134 & i * 5 + 77;\nout.println(i);"
+    },
+    {
+      "source": "Regional • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "501 99",
+        "B": "500 100",
+        "C": "100",
+        "D": "501",
+        "E": "501 100"
+      },
+      "answer": "D",
+      "explanation": "D | forces both sides to evaluate so y++ fires making y=501 which prints, then -x-- evaluates as -(100) = -100 while decrementing x to 99, and ~99 = -100 making -100 > -100 false so nothing else prints – giving a single line of output: 501.",
+      "code": "int x = 100;\nint y = 500;\nif (x > 'a' | y++ < 501) {\nout.println(y);\n}\nif (-x-- > ~x) {\nout.println(x);\n}"
+    },
+    {
+      "source": "State • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "35",
+        "B": "45",
+        "C": "55",
+        "D": "65",
+        "E": "75"
+      },
+      "answer": "B",
+      "explanation": "B int AA = 20; int BB = 15; int CC = 10; if (AA - BB > CC / 2) false!!!! AA += CC; if (BB % CC == 0) false!!! do the else AA += CC; else AA += BB; AA is now 35 if (AA % CC == 5) true!!! AA += CC; AA is now 45 else if (AA > 100) AA -= 100; out.print(AA);",
+      "code": "int AA = 20;\nint BB = 15;\nint CC = 10;\nif (AA - BB > CC / 2)\n  AA += CC;\nif (BB % CC == 0)\n  AA += CC;\nelse\n  AA += BB;\nif (AA % CC == 5)\n  AA += CC;\nelse if (AA > 100)\n         AA -= 100;\nout.print(AA);"
+    },
+    {
+      "source": "State • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "12",
+        "B": "14",
+        "C": "18",
+        "D": "23",
+        "E": "24"
+      },
+      "answer": "B",
+      "explanation": "B C starts as 6 Going through the loops adds 5, 3, and 0 to C The total is 14",
+      "code": "int[] Numbers = {8,6,7,5,3,0,9};\nint C = Numbers[1];\nint D = C;\nfor(int x=Numbers[4]; x<D; x++)\n   C+=Numbers[x];\nout.print(C);"
+    },
+    {
+      "source": "State • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "54",
+        "B": "63",
+        "C": "31",
+        "D": "22",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "C",
+      "explanation": "C Order of operations with Java expressions.",
+      "code": "int i = 212;\ni &= i - 7 << 4;\ni %= i ^ 123 - 17;\nout.print(i | 13);"
+    },
+    {
+      "source": "State • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "Zoo",
+        "B": "ZooWee",
+        "C": "ZooWeeMama",
+        "D": "Wee",
+        "E": "WeeMama"
+      },
+      "answer": "A",
+      "explanation": "A If either operand is NaN, then the result of == is false https://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.21.1",
+      "code": "double d = 2.0;\nfloat f = 2.0f;\ndouble d2 = Double.NaN;\nfloat f2 = Float.NaN;\nif (d == f)\nout.print(\"Zoo\");\nif (d2 == f2)\nout.print(\"Wee\");\nif (d2 > f2)\nout.print(\"Mama\");"
+    }
+  ]
+}

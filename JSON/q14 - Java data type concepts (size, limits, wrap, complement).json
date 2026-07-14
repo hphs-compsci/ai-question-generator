@@ -1,0 +1,277 @@
+{
+  "question_number": 14,
+  "topic": "Java data type concepts (size, limits, wrap, complement)",
+  "questions": [
+    {
+      "source": "Invitational A • 2023",
+      "stem": "What is the output of the code segment shown on the right?",
+      "choices": {
+        "A": "8",
+        "B": "16",
+        "C": "32",
+        "D": "4",
+        "E": "64"
+      },
+      "answer": "C",
+      "explanation": "C SIZE represents the number of bits used to store a particular data type. Integer.SIZE is 32 Know as many of these as you can. UIL Computer Science Written Test – 2023 Invitational A",
+      "code": "out.println(Integer.SIZE);"
+    },
+    {
+      "source": "Invitational A • 2024",
+      "stem": "What is the output of the code segment shown on the right?",
+      "choices": {
+        "A": "2",
+        "B": "4",
+        "C": "8",
+        "D": "16",
+        "E": "32"
+      },
+      "answer": "C",
+      "explanation": "C 64 / 8 = 8",
+      "code": "out.println(Double.SIZE/Byte.SIZE);"
+    },
+    {
+      "source": "Invitational A • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "8",
+        "B": "64",
+        "C": "16",
+        "D": "32",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "D",
+      "explanation": "D Integer = 32 bits",
+      "code": "out.println(Integer.SIZE);"
+    },
+    {
+      "source": "Invitational A • 2026",
+      "stem": "Which of the following primitive data types can store the largest whole-number value?",
+      "choices": {
+        "A": "byte",
+        "B": "short",
+        "C": "int",
+        "D": "long",
+        "E": "char"
+      },
+      "answer": "D",
+      "explanation": "D Among these, long has the largest range of whole numbers (64-bit vs 32-bit int, 16-bit short, 8- bit byte)."
+    },
+    {
+      "source": "Invitational B • 2023",
+      "stem": "What is the output of the code segment shown on the right?",
+      "choices": {
+        "A": "0",
+        "B": "1",
+        "C": "-1",
+        "D": "127",
+        "E": "-129"
+      },
+      "answer": "C",
+      "explanation": "C Byte values range from -128 to 127 Byte_MIN_VALUE = -128 -128 + 127 = -1",
+      "code": "out.println(Byte.MIN_VALUE + 127);"
+    },
+    {
+      "source": "Invitational B • 2024",
+      "stem": "What is the output of the code segment shown on the right?",
+      "choices": {
+        "A": "1",
+        "B": "2",
+        "C": "3",
+        "D": "7",
+        "E": "8"
+      },
+      "answer": "A",
+      "explanation": "A 3 * 3 & 10 - 3 Multiply first: 9 & 10 - 3 Subtract next: 9 & 7 1001 & 0111 = 0001 = 1",
+      "code": "out.println(3 * 3 & 10 - 3);"
+    },
+    {
+      "source": "Invitational B • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "Option 1",
+        "B": "Option 2",
+        "C": "Option 1 Option 3",
+        "D": "Option 2 Option 4",
+        "E": "The program terminates successfully without creating any output."
+      },
+      "answer": "D",
+      "explanation": "D Note that when you add one to 2147483647 (Integer.MAX_VALUE) when stored as an int, instead of becoming 2147483648, it wraps around to -2147483648 (Integer.MIN_VALUE). UIL Computer Science Written Test – 2024-2025 Invitational B",
+      "code": "int a = Integer.MAX_VALUE;\nint b = Integer.MIN_VALUE;\nint c = a + 1;\nif(c >= a)\n     out.println(\"Option 1\");\nelse if(c >= b);\n     out.println(\"Option 2\");\nif(c == a)\n     out.println(\"Option 3\");\nelse if(c == b)\n     out.println(\"Option 4\");"
+    },
+    {
+      "source": "Invitational B • 2026",
+      "stem": "Which statement is always true in Java for any int x?",
+      "choices": {
+        "A": "~x == -x",
+        "B": "~x == -x - 1",
+        "C": "~x == x ^ 1",
+        "D": "~x == x + 1",
+        "E": "~x == x - 1"
+      },
+      "answer": "B",
+      "explanation": "B In two’s complement, bitwise NOT is equivalent to negating and subtracting one, so ~x always equals -x - 1."
+    },
+    {
+      "source": "District • 2023",
+      "stem": "What is the output of the code segment shown on the right?",
+      "choices": {
+        "A": "8",
+        "B": "16",
+        "C": "32",
+        "D": "64",
+        "E": "128"
+      },
+      "answer": "C",
+      "explanation": "C In Java, 32 bits (4 bytes) are used to store integer data",
+      "code": "out.println(Integer.SIZE);"
+    },
+    {
+      "source": "District • 2024",
+      "stem": "What is the output of the code segment shown on the right?",
+      "choices": {
+        "A": "22",
+        "B": "24",
+        "C": "42",
+        "D": "44",
+        "E": "84"
+      },
+      "answer": "D",
+      "explanation": "D out.print(Long.SIZE/Short.SIZE); 64/16 = 4 out.print(Integer.SIZE/Byte.SIZE); 32/8 = 4",
+      "code": "out.print(Long.SIZE/Short.SIZE);\nout.print(Integer.SIZE/Byte.SIZE);"
+    },
+    {
+      "source": "District • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "8",
+        "B": "64",
+        "C": "4",
+        "D": "32",
+        "E": "There is no output due to a compile error."
+      },
+      "answer": "A",
+      "explanation": "A double = 64 bits = 4 bytes (8 bits each)",
+      "code": "out.println(Double.BYTES);"
+    },
+    {
+      "source": "District • 2026",
+      "stem": "Which of the following statements about Java primitive data types is TRUE?",
+      "choices": {
+        "A": "A byte can store values from -128 to 128.",
+        "B": "When a short with value 32767 is incremented, it becomes 32768.",
+        "C": "A long and a double both use 32 bits of memory.",
+        "D": "When a byte with value -128 is decremented, it becomes 127.",
+        "E": "An int can store any value that a long can store."
+      },
+      "answer": "D",
+      "explanation": "D When a byte at its minimum value -128 is decremented, it underflows and wraps to the maximum value 127; A is false because byte ranges from -128 to 127 (not 128); B is false because 32767 wraps to -32768; C is false because both long and double use 64 bits; E is false because long is 64 bits and can store larger values than the 32-bit int."
+    },
+    {
+      "source": "Regional • 2023",
+      "stem": "What is the output of the code segment shown on the right?",
+      "choices": {
+        "A": "18",
+        "B": "16",
+        "C": "17",
+        "D": "14",
+        "E": "15"
+      },
+      "answer": "E",
+      "explanation": "E Byte.MAX_VALUE = 127 Byte.SIZE = 8 127/8 = 15",
+      "code": "out.println(Byte.MAX_VALUE/Byte.SIZE);"
+    },
+    {
+      "source": "Regional • 2024",
+      "stem": "What is the output of the code segment shown on the right?",
+      "choices": {
+        "A": "-1",
+        "B": "0",
+        "C": "128",
+        "D": "255",
+        "E": "256"
+      },
+      "answer": "D",
+      "explanation": "D int A = Byte.MAX_VALUE; int B = Byte.MIN_VALUE; out.print(A - B); 127 - (-128) = 255",
+      "code": "int A = Byte.MAX_VALUE;\nint B = Byte.MIN_VALUE;\nout print(A - B);"
+    },
+    {
+      "source": "Regional • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "80",
+        "B": "96",
+        "C": "64",
+        "D": "128",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "B",
+      "explanation": "B Need to know that arrays are 0-indexed, and all of the sizes of the data types listed.",
+      "code": "int[] sizes = new int[] {\n     Double.SIZE, Float.SIZE,\n     Long.SIZE, Integer.SIZE,\n     Short.SIZE, Byte.SIZE\n};\nArrays.sort(sizes);\nout.print(sizes[3]+sizes[4]);"
+    },
+    {
+      "source": "Regional • 2026",
+      "stem": "Which of the following is the correct order of floating-point values smallest to largest?",
+      "choices": {
+        "A": "negative infinity, finite negative values, negative zero, zero, finite positive values, infinity",
+        "B": "negative infinity, finite negative values, zero, negative zero, finite positive values, infinity",
+        "C": "Both A and B."
+      },
+      "answer": "C",
+      "explanation": "C Negative zero and zero are treated as equivalent."
+    },
+    {
+      "source": "State • 2023",
+      "stem": "What is the output of the code segment shown on the right?",
+      "choices": {
+        "A": "2",
+        "B": "4",
+        "C": "6",
+        "D": "8",
+        "E": "12"
+      },
+      "answer": "C",
+      "explanation": "C int K = Integer.SIZE; 32 int L = Double.SIZE; 64 int M = Byte.SIZE; 8 out.println(K / M + L / K); 32/8 + 64/32 = 4+2 = 6",
+      "code": "int K = Integer.SIZE;\nint L = Double.SIZE;\nint M = Byte.SIZE;\nout.println(K / M + L / K);"
+    },
+    {
+      "source": "State • 2024",
+      "stem": "What is output by the code segment to the right?",
+      "choices": {
+        "A": "32",
+        "B": "36",
+        "C": "40",
+        "D": "75",
+        "E": "90"
+      },
+      "answer": "C",
+      "explanation": "C int x = 100; while (x>75) x=x-6; x stops at 70 while (x<90) x=x+4; x stops at 90 while (x>40) x=x-10; x stops at 40",
+      "code": "int x = 100;\nwhile (x>75)\n   x=x-6;\nwhile (x<90)\n   x=x+4;\nwhile (x>40)\n   x=x-10;\nout.print(x);"
+    },
+    {
+      "source": "State • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "5",
+        "B": "3",
+        "C": "8",
+        "D": "6",
+        "E": "There is no output due to a compile error."
+      },
+      "answer": "A",
+      "explanation": "A After sorting: [1, 2, 4, 4, 8, 8], bytes is simply size divided by 8, and then it will be sorted. Then 1 and 4 will be chosen from positions 0 and 2.",
+      "code": "int[] sizes = new int[] {\n     Double.BYTES, Float.BYTES,\n     Long.BYTES, Integer.BYTES,\n     Short.BYTES, Byte.BYTES\n};\nArrays.sort(sizes);\nout.print(sizes[0]+sizes[2]);"
+    },
+    {
+      "source": "State • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "true",
+        "B": "false"
+      },
+      "answer": "A",
+      "explanation": "A https://docs.oracle.com/javase/8/docs/api/java/lang/Double.html#MIN_VALUE",
+      "code": "out.println(Double.MIN_VALUE > 0);"
+    }
+  ]
+}

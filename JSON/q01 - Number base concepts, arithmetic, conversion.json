@@ -1,0 +1,260 @@
+{
+  "question_number": 1,
+  "topic": "Number base concepts, arithmetic, conversion",
+  "questions": [
+    {
+      "source": "Invitational A • 2023",
+      "stem": "Which of the following decimal numbers has the largest base 10 value?",
+      "choices": {
+        "A": "100101_2",
+        "B": "56_8",
+        "C": "26_(16)",
+        "D": "46_7",
+        "E": "1A_(12)"
+      },
+      "answer": "B",
+      "explanation": "B Convert all to Base 10 and then compare. 100101_2 = 37_(10) 56_8 = 46_(10) 26_(16) = 38_(10) 46_7 = 34_(10) 1A_(12) = 22_(10)"
+    },
+    {
+      "source": "Invitational A • 2024",
+      "stem": "Which of the following numbers is not equal to the other four?",
+      "choices": {
+        "A": "1111010_2",
+        "B": "750_8",
+        "C": "7A_(16)",
+        "D": "101_(11)",
+        "E": "1322_4"
+      },
+      "answer": "B",
+      "explanation": "B Start converting them all to base 2. You will notice quickly that A and B have different values. After converting C to base 2, you notice that choice B is the \"different\" choice. Converting the last two to binary proves that assumption."
+    },
+    {
+      "source": "Invitational A • 2025",
+      "stem": "Which of the following is not equivalent to the expression 437_8 + 10101_2?",
+      "choices": {
+        "A": "10310_4",
+        "B": "464_8",
+        "C": "134_(16)",
+        "D": "100110100_2",
+        "E": "All are equivalent"
+      },
+      "answer": "E",
+      "explanation": "E All of the values are equivalent"
+    },
+    {
+      "source": "Invitational A • 2026",
+      "stem": "Which of the following is the base 2 representation of 816_(10)?",
+      "choices": {
+        "A": "1100110000_2",
+        "B": "1101101101_2",
+        "C": "1101101000_2",
+        "D": "1100110001_2",
+        "E": "1101101010_2"
+      },
+      "answer": "A",
+      "explanation": "A Simple base conversion."
+    },
+    {
+      "source": "Invitational B • 2023",
+      "stem": "What is the sum of 10010111_2 and 10100011_2?",
+      "choices": {
+        "A": "1410_(16)",
+        "B": "DA_(16)",
+        "C": "13A_(16)",
+        "D": "19A_(16)",
+        "E": "1310_(16)"
+      },
+      "answer": "C",
+      "explanation": "C Convert all to Base 16 and then add. 10010111_2 = 97_(16) 10100011_2 = A3_(16) 7 + 3 = 10 which would be an A 9 + A (10) = 19 which is 13 (3 carry the 1) 97_(16) + A3_(16) = 13A_(16)"
+    },
+    {
+      "source": "Invitational B • 2024",
+      "stem": "Find the product of 14_(16) and 101_2?",
+      "choices": {
+        "A": "1414_(16)",
+        "B": "196_(10)",
+        "C": "420_5",
+        "D": "144_8",
+        "E": "86_(12)"
+      },
+      "answer": "D",
+      "explanation": "D You might recognize that 14_(16) and 101_2convert to the base 10 numbers of 20 and 5. That product would be 100_(10). 1414_(16) - not even close 196_(10) - nope 420_5 - 4*25 + 2*5 + 0*1 = 110 pretty close 144_8 - 1*64 + 4*8 + 4*1 = 100 We have a winner!!! 86_(12) - 8*12 + 6*1 = 102 The runner-up"
+    },
+    {
+      "source": "Invitational B • 2025",
+      "stem": "Which of the following is not equivalent to the expression 12818_9 % 3657_(11)?",
+      "choices": {
+        "A": "1213_(10)",
+        "B": "1273_(10)",
+        "C": "6335_(10)",
+        "D": "3903_(10)",
+        "E": "816_(10)"
+      },
+      "answer": "D",
+      "explanation": "D 12818_9 % 3657_(11) ≡ 8684_(10) % 4781_(10) = 3903_(10)"
+    },
+    {
+      "source": "Invitational B • 2026",
+      "stem": "Find a number ? in base 10 such that when it is written in base 7 and then interpreted as base 5, it results in 345_?. Write your answer in the blank provided on your answer sheet for this question.",
+      "choices": {},
+      "answer": "861",
+      "explanation": "861 Convert 345 from base 10 to base 5 → 2340_. Now treat that number as base 7 → 2340_/ = 861_\b"
+    },
+    {
+      "source": "District • 2023",
+      "stem": "What is the product of 7_(10) and 101011_2?",
+      "choices": {
+        "A": "455_8",
+        "B": "545_8",
+        "C": "544_8",
+        "D": "454_8",
+        "E": "445_8"
+      },
+      "answer": "A",
+      "explanation": "A Convert the base two number to base 10. 101011_2 = 43_(10) 43_(10) * 7_(10) = 301_(10) 301_(10) = 455_8 (4 * 64) + (5 * 8) + (5 * 1) = 256 + 40 + 5 = 301 Actually, a cooler solution is to convert the binary number to octal and do the arithmetic there. If you learn this method, there are fewer chances to make conversion errors."
+    },
+    {
+      "source": "District • 2024",
+      "stem": "Find the product of 110011_2 and 64_(10)",
+      "choices": {
+        "A": "6415_8",
+        "B": "6410_8",
+        "C": "775_8",
+        "D": "6300_8",
+        "E": "6214_8"
+      },
+      "answer": "D",
+      "explanation": "D Change everything to base 8 first. 110011_2 becomes 63_8 and 64_(10) becomes 100_8. 63_8 times 100_8 is 6300_8."
+    },
+    {
+      "source": "District • 2025",
+      "stem": "Which of the following is not equivalent to the expression 2523_7 + AB7_(16)?",
+      "choices": {
+        "A": "2856_(11)",
+        "B": "7153_8",
+        "C": "1161_(15)",
+        "D": "104231_5",
+        "E": "All are equivalent"
+      },
+      "answer": "E",
+      "explanation": "E All of the values are equivalent"
+    },
+    {
+      "source": "District • 2026",
+      "stem": "Which of the following is equivalent to the expression 456_8 + 711_8?",
+      "choices": {
+        "A": "745_(10)",
+        "B": "744_8",
+        "C": "2E7_(16)",
+        "D": "1011100111_2",
+        "E": "1367_8"
+      },
+      "answer": "E",
+      "explanation": "E 456 = 302_(\u000f\u0010). 711 = 457_(\u000f\u0010). 302_(\u000f\u0010) + 457_(\u000f\u0010) = 759_(\u000f\u0010) = 1367 ."
+    },
+    {
+      "source": "Regional • 2023",
+      "stem": "Which of the below has a value different from the other four?",
+      "choices": {
+        "A": "10110101_2",
+        "B": "2311_4",
+        "C": "265_8",
+        "D": "183_(10)",
+        "E": "B5_(16)"
+      },
+      "answer": "D",
+      "explanation": "D Convert the 4 powers-of-two numbers to base 16. 10110101_2 = 1011 0101_2 which is B5_(16) 2311_4 = 10 11 01 01_2 = 1011 0101_2 which also is B5_(16) 265_8 = 010 110 101_2 = 1011 0101_2 which also is B5_(16) Well, B5_(16) is B5_(16) B5_(16) = 11*16 + 5*1 = 181_(10) So, the odd one out is 183_(10)"
+    },
+    {
+      "source": "Regional • 2024",
+      "stem": "Find the product of 111101_2 and 3A_(16)",
+      "choices": {
+        "A": "6423_8",
+        "B": "6512_8",
+        "C": "6722_8",
+        "D": "7002_8",
+        "E": "6572_8"
+      },
+      "answer": "C",
+      "explanation": "C Change everything to base 8 first. 111101_2 becomes 75_8 and 3A_(16) becomes 111010_2 which is 72_8 Multiply 75 and 72 using base 8 rules. 5 x 2 = 12 70 x 2 = 160 70 x 5 = 430 70 x 70 = 6100 6100 + 430 = 6530 6530 + 160 = 6710 6710 + 12 = 6722"
+    },
+    {
+      "source": "Regional • 2025",
+      "stem": "Which of the following is equivalent to the expression 3948_(11) / 222_4?",
+      "choices": {
+        "A": "243_7",
+        "B": "72_8",
+        "C": "A2_(12)",
+        "D": "1330_4",
+        "E": "None are equivalent."
+      },
+      "answer": "C",
+      "explanation": "C Simple base conversion (Convert to base 10 then simple division, convert answers as well)."
+    },
+    {
+      "source": "Regional • 2026",
+      "stem": "What base would 1212 need to be in to ensure that when converted to base 10, the value is between 60_(??) and 150_(??)?",
+      "choices": {
+        "A": "Base 3",
+        "B": "Base 4",
+        "C": "Base 5",
+        "D": "Base 6",
+        "E": "Base 7"
+      },
+      "answer": "B",
+      "explanation": "B Base 4 is the only one that lands in the $60,150& window."
+    },
+    {
+      "source": "State • 2023",
+      "stem": "If the values of the five numbers were converted to a common base and sorted, which one would be in the middle - larger than two numbers and smaller than the other two?",
+      "choices": {
+        "A": "11011101_2",
+        "B": "265_8",
+        "C": "180_(10)",
+        "D": "B9_(16)",
+        "E": "3333_4"
+      },
+      "answer": "D",
+      "explanation": "D Convert all 5 to a common base… I suggest base 8. A)11 011 101_2 = 335_8 B) 265_8 = 265_8 C)180_(10) = 264_8 D)B9_(16) = 271_8 E)3333_4 = 377_8"
+    },
+    {
+      "source": "State • 2024",
+      "stem": "Which of the following has the most 1's in its binary representation?",
+      "choices": {
+        "A": "7654_8",
+        "B": "AAA_(16)",
+        "C": "32132_4",
+        "D": "444444_8",
+        "E": "63_(10)"
+      },
+      "answer": "A",
+      "explanation": "A 7654_8 = 111 110 101 100 (8 ones) AAA_(16) = 1010 1010 1010 (6 ones) 32132_4 = 11 10 01 11 10 (7 ones) 444444_8 = 100 100 100 100 100 100 (6 ones) 63_(10) = 111111(6 ones)"
+    },
+    {
+      "source": "State • 2025",
+      "stem": "Which of the following is equivalent to the expression 2857_9 + 132_5?",
+      "choices": {
+        "A": "2210_(10)",
+        "B": "4230_8",
+        "C": "2814_9",
+        "D": "33300_5",
+        "E": "None are equivalent."
+      },
+      "answer": "B",
+      "explanation": "B Basic base conversion problem."
+    },
+    {
+      "source": "State • 2026",
+      "stem": "How many 1s are in the binary representation of the base 10 number 28,520,985?",
+      "choices": {
+        "A": "12",
+        "B": "13",
+        "C": "11",
+        "D": "10",
+        "E": "14"
+      },
+      "answer": "A",
+      "explanation": "A There is a trick to this where you can continuously do integer division on the number until it reaches 0, and count the number of odd values in the chain."
+    }
+  ]
+}

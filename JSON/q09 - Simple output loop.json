@@ -1,0 +1,285 @@
+{
+  "question_number": 9,
+  "topic": "Simple output loop",
+  "questions": [
+    {
+      "source": "Invitational A • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "1 2 3 4 5 6 7 8 9",
+        "B": "1 3 5 7 9",
+        "C": "1 4 9 16 25 36 49 64 81",
+        "D": "1 4 9",
+        "E": "1 9 25 49 81"
+      },
+      "answer": "E",
+      "explanation": "E The loop would print 1 3 5 7 9 if it was out.print(x + \" \") Since it prints x*x, we get the square of each of those numbers.",
+      "code": "for(int x = 1; x < 10; x=x+2)\n   out.print(x*x + \" \");"
+    },
+    {
+      "source": "Invitational A • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "6 11 16 21",
+        "B": "5 10 15 20 25",
+        "C": "51 101 151 201",
+        "D": "6 12 18 24",
+        "E": "6 11 16 21 26"
+      },
+      "answer": "A",
+      "explanation": "A Since N is 5, the loop would do this: for(int x = 5; x < 25; x=x+5) out.print(x+1 + \" \"); While x has values 5 10 15 20 It prints 6 11 16 21",
+      "code": "int N = 5;\nfor(int x = N; x < N*N; x=x+N)\nout.print(x+1 + \" \");"
+    },
+    {
+      "source": "Invitational A • 2025",
+      "stem": "How many *s are output by the code to the right?",
+      "choices": {
+        "A": "27",
+        "B": "33",
+        "C": "29",
+        "D": "30",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "C",
+      "explanation": "C Simple math problem, tracing the loop",
+      "code": "for(int y = 0; y < 12; y++)\n     for(int c = 1; c < y; c *= 2)\n           out.print(\"*\");\nout.println();"
+    },
+    {
+      "source": "Invitational A • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "0 1 2 3",
+        "B": "1 2 3 4",
+        "C": "0 1 2 3 4",
+        "D": "0 1 2",
+        "E": "1 2 3"
+      },
+      "answer": "E",
+      "explanation": "E Loop runs with i = 1, 2, 3; prints \"1 2 3 \".",
+      "code": "for(int i = 1; i <= 3; i++) {\nout.print(i + \" \");\n}"
+    },
+    {
+      "source": "Invitational B • 2023",
+      "stem": "How many x's will be output of the code segment to the right?",
+      "choices": {
+        "A": "4",
+        "B": "5",
+        "C": "6",
+        "D": "7",
+        "E": "12"
+      },
+      "answer": "C",
+      "explanation": "C x = x / 2 + 1 The values of x in the iterations would be: 50 26 14 8 5 3 then the value 2 would stop the process, but not print a 7th x.",
+      "code": "for(int x = 50; x > 2; x = x / 2 + 1)\nout.print(\"x\");"
+    },
+    {
+      "source": "Invitational B • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "23 20 17 14 11 8 5",
+        "B": "23 20 17 14 11 8 5 2",
+        "C": "23 20 17 14 11 8",
+        "D": "20 17 14 11 8 5",
+        "E": "23 20 17 14 11 8 5 2"
+      },
+      "answer": "A",
+      "explanation": "A for(int x = 23; x>=5; x=x-3) out.print(x + \" \"); x starts at 23, keeps subtracting 3, and prints while x is greater than or equal to 5 It prints 23 20 17 14 11 8 5",
+      "code": "for(int x = 23; x>=5; x=x-3)\n   out.print(x + \" \");"
+    },
+    {
+      "source": "Invitational B • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "66 67 69 73 81 66 67 69 73 81",
+        "B": "66 67 69 73 81 B C E I Q",
+        "C": "B C E I Q 66 67 69 73 81",
+        "D": "B C E I Q B C E I Q",
+        "E": "None of the above."
+      },
+      "answer": "A",
+      "explanation": "A Note that in either case of the character appearing first, or the integer appearing first, since int requires more space than char, Java will automatically cast the result to the larger datatype (int), which is why only integer values of the characters are printed. This can be circumvented by casting the result back to a char, but simply re-arranging the operators does nothing.",
+      "code": "for(int off = 1; off < 25; off *= 2) {\n     out.print(('A' + off) + \" \");\n}\nout.println();\nfor(int off = 1; off < 25; off *= 2) {\n     out.print((off + 'A') + \" \");\n}"
+    },
+    {
+      "source": "Invitational B • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "021|",
+        "B": "0201|",
+        "C": "0210|",
+        "D": "021|10",
+        "E": "0211"
+      },
+      "answer": "E",
+      "explanation": "E It prints 02 on the first pass (i goes 0→1 and j goes 3→2) and 11 on the second (i goes 1→2 and j goes 2→1), then stops because i < j is false and never prints |, so the output is 0211.",
+      "code": "int i = 0, j = 3;\nwhile (i < j) {\nout.print(i++ + \"\" + --j);\nif (i == j) out.print(\"|\");\n}"
+    },
+    {
+      "source": "District • 2023",
+      "stem": "What is the last number printed by the loop to the right?",
+      "choices": {
+        "A": "127",
+        "B": "128",
+        "C": "199",
+        "D": "200",
+        "E": "255"
+      },
+      "answer": "A",
+      "explanation": "A x = x*/ 2 + 1 The values of x that would be printed are: 1 3 7 15 31 63 127 UIL Computer Science Written Test – 2023 District",
+      "code": "for(int x = 1; x < 200; x = x * 2 + 1)\n    out.println(x);"
+    },
+    {
+      "source": "District • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "6",
+        "B": "7",
+        "C": "8",
+        "D": "9",
+        "E": "10"
+      },
+      "answer": "D",
+      "explanation": "D int[] Stuff = {4,2,1,0,3}; int A = Stuff[Stuff[2]]; A= Stuff[1] = 2 int B = Stuff[Stuff[3]]; B= Stuff[0] = 4 int C = Stuff[Stuff[0]]; C= Stuff[4] = 3 out.print(A + B + C); 9",
+      "code": "int[] Stuff = {4,2,1,0,3};\nint A = Stuff[Stuff[2]];\nint B = Stuff[Stuff[3]];\nint C = Stuff[Stuff[0]];\nout.print(A + B + C);"
+    },
+    {
+      "source": "District • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "9",
+        "B": "611",
+        "C": "610",
+        "D": "10",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "D",
+      "explanation": "D else will not happen if ANY if before it is triggered. In a sequence of if-else if-else if- else, only one statement will be activated, no matter how many there are.",
+      "code": "int i = 9;\nif(i < 10)\n     i++;\nelse if(i < 10)\n     i--;\nelse\n     out.print(6);\nout.println(i);"
+    },
+    {
+      "source": "District • 2026",
+      "stem": "On which line of code to the right marked by comments should we place the following loop to center the output pyramid? for(int j = 4; j > i; j--) { out.print(\" \"); }",
+      "choices": {
+        "A": "line 1",
+        "B": "line 2",
+        "C": "line 3",
+        "D": "line 4"
+      },
+      "answer": "A",
+      "explanation": "A The spaces need to be printed before the star in order to center the higher levels of the pyramid with the bottom level.",
+      "code": "for (int i=1; i<=4;i++) {\n//line 1\nfor (int k=1; k<=2*i-1;k++) {\n//line 2\nout.print(\"*\");\n// line 3\n}\n// line 4\nout.println();\n}"
+    },
+    {
+      "source": "Regional • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "125",
+        "B": "12514",
+        "C": "14",
+        "D": "5",
+        "E": "8"
+      },
+      "answer": "A",
+      "explanation": "A The loop goes through the values 1, 2, and 5 before 14 stops the process. Since St is a String, the values are concatenated onto the St producing \"125\"",
+      "code": "String St = \"\";\nfor(int x = 1; x < 10; x = x * 3 - 1)\nSt += x;\nout.println(St);"
+    },
+    {
+      "source": "Regional • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "3",
+        "B": "4",
+        "C": "5",
+        "D": "6",
+        "E": "8"
+      },
+      "answer": ") E",
+      "explanation": "E int[] Numbers = {4,2,1,6,3,5,2,8}; int C = Numbers.length; C = 8 C+=Numbers[Numbers[4]]; C = 8 + 6 = 14 C+=Numbers[Numbers[6]]; C = 14 + 1 = 15 C/=2; C = 7 out.print(Numbers[C]); C[7] = 8",
+      "code": "int[] Numbers = {4,2,1,6,3,5,2,8};\nint C = Numbers.length;\nC+=Numbers[Numbers[4]];\nC+=Numbers[Numbers[6]];\nC/=2;\nout.print(Numbers[C]);"
+    },
+    {
+      "source": "Regional • 2025",
+      "stem": "How many *'s are output by the code to the right?",
+      "choices": {
+        "A": "5",
+        "B": "6",
+        "C": "7",
+        "D": "8",
+        "E": "There is no output due to an infinite loop."
+      },
+      "answer": "B",
+      "explanation": "B Simple output loop tracing.",
+      "code": "for(int y=9; y < 123; y=y * 2 - 7)\n     out.print(\"*\");"
+    },
+    {
+      "source": "Regional • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "10",
+        "B": "12",
+        "C": "0",
+        "D": "There is no output due to a runtime error.",
+        "E": "There is no output due to a compile time error."
+      },
+      "answer": "E",
+      "explanation": "E The total variable cannot be resolved outside of the for loop scope where it is defined.",
+      "code": "for (int i = -1, total = 0; i < 19; i+=3) {\nint x = i / (i % 7);\ntotal += i;\n}\nout.println(total);"
+    },
+    {
+      "source": "State • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "11121314151",
+        "B": "2345",
+        "C": "14",
+        "D": "1021324354",
+        "E": "111213141"
+      },
+      "answer": "E",
+      "explanation": "E for(int x = 1; x <= 50; x += 10) out.print(x / 10 * 10 + x % 10 ); Iteration 1: x is 1 1/10*10 + 1%10 = 0+1=1 Iteration 2: x is 11 11/10*10 + 11%10 = 10+1=11 Iteration 3: x is 21 21/10*10 + 11%10 = 20+1=21 Iteration 4: x is 31 31/10*10 + 11%10 = 30+1=31 Iteration 5: x is 41 41/10*10 + 11%10 = 40+1=41",
+      "code": "for(int x = 1; x <= 50; x += 10)\n    out.print(x / 10 * 10 + x % 10 );"
+    },
+    {
+      "source": "State • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "D",
+        "B": "DEF",
+        "C": "DEFG",
+        "D": "EFG",
+        "E": "DEFGHIJ"
+      },
+      "answer": "C",
+      "explanation": "C \"ABCDEFGHIJ\" With each pass through the loop, we lose an item from the front and from the back. \"BCDEFGHI\" \"CDEFGH\" \"DEFG\"",
+      "code": "String St = \"ABCDEFGHIJ\";\nfor(int x=1; x<=3; x++)\n{\n   int T = St.length();\n   St = St.substring(1,T-1);\n}\nout.print(St);"
+    },
+    {
+      "source": "State • 2025",
+      "stem": "What is output by the line marked //q09 in the code to the right?",
+      "choices": {
+        "A": "[13, 13, 15, 19, 25]",
+        "B": "[8, 8, 10, 14, 20]",
+        "C": "[17, 15, 15, 17, 21]",
+        "D": "[12, 10, 10, 12, 16]",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "A",
+      "explanation": "A Matrix Tracing.",
+      "code": "int[][] mat = new int[3][5];\nfor(int r = 0; r < 3; r++)\n     for(int c = 4; c >= 0; c--)\n     mat[r][c] =\n     (r + 1) * 5 + (c - 1) * c - 2;\nout.println\n     (Arrays.toString(mat[2])); //q09\nfor(int i = 0; i < 4; i ++) {\n     if(i != 3) {\n          mat[i][i] = mat[i][i + 1];\n          mat[i][i]--;\n     } if(i != 0) {\n          mat[i - 1][i + 1] =\n              mat[i - 1][i - 1];\n          mat[i - 1][i]++;\n     }\n     mat[0][i] += i;\n     mat[1][i] -= i;\n}\nout.println\n     (Arrays.toString(mat[1])); //q10"
+    },
+    {
+      "source": "State • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "XYQ61",
+        "B": "XZQ61",
+        "C": "WXYQ63",
+        "D": "XZ71",
+        "E": "XZQ71"
+      },
+      "answer": "E",
+      "explanation": "E First, a % 3 + b = 7 % 3 + 2 = 1 + 2 = 3, so we enter at case 3. case 3: r becomes \"X\". Now the if: c++ is post-increment – c's current value 0 is used in the comparison, then c becomes 1. Since 0 > 0 is false, the && short-circuits and --a is never evaluated, so a stays 7. We take the else branch and r becomes \"XZ\". There is no break on case 3, so we fall through to case 2: r becomes \"XZQ\", then we hit the break. Finally, r + a + c is string concatenation: \"XZQ\" + 7 + 1 → \"XZQ71\".",
+      "code": "int a = 7, b = 2, c = 0;\nString r = \"\";\nswitch (a % 3 + b) {\ncase 4: r += \"W\"; c = 2;\ncase 3: r += \"X\";\nif (c++ > 0 && --a > 5)\nr += \"Y\";\nelse\nr += \"Z\";\ncase 2: r += \"Q\"; break;\ndefault: r += \"R\";\n}\nout.println(r + a + c);"
+    }
+  ]
+}

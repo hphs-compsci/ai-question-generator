@@ -1,0 +1,283 @@
+{
+  "question_number": 4,
+  "topic": "String class methods",
+  "questions": [
+    {
+      "source": "Invitational A • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "niv",
+        "B": "i",
+        "C": "iv",
+        "D": "ive",
+        "E": "v"
+      },
+      "answer": "B",
+      "explanation": "B str.substring(A,B) This will return a string of characters beginning at position A They continue up to, but not including position B. str.substring(2,3) will therefore only contain \"i\"",
+      "code": "String str = \"University\";\nout.print(str.substring(2,3));"
+    },
+    {
+      "source": "Invitational A • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "A",
+        "B": "B",
+        "C": "C",
+        "D": "K",
+        "E": "P"
+      },
+      "answer": "C",
+      "explanation": "C String St = \"BACKPACK\"; The length of St is 8. So T = 7 We are to print the char #6 in St which is the C",
+      "code": "String St = \"BACKPACK\";\nint T = St.length()-1;\nout.print(St.charAt(T-1));"
+    },
+    {
+      "source": "Invitational A • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "BackRiblis",
+        "B": "BackRilis",
+        "C": "yBackRibilis",
+        "D": "yBackRiilis",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "C",
+      "explanation": "C Simple substring problem, substring is inclusive of first value, exclusive of last (if present)",
+      "code": "String a = \"Chilis\";\nString b = \"BabyBackRibs\";\nb = b.substring(3, 11);\na = b + a.substring(2);\nout.println(a);"
+    },
+    {
+      "source": "Invitational A • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "Java",
+        "B": "Roc",
+        "C": "Rocks",
+        "D": "Rock",
+        "E": "ava"
+      },
+      "answer": "C",
+      "explanation": "C Indexing: J(0)a(1)v(2)a(3) (4)R(5)o(6)c(7)k(8)s(9). substring(5, len) gives characters at indices 5–8 → \"Rock\".",
+      "code": "String s = \"Java Rocks\";\nint len = s.length();\nString t = s.substring(5, len);\nout.println(t);"
+    },
+    {
+      "source": "Invitational B • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "1",
+        "B": "2",
+        "C": "7",
+        "D": "8",
+        "E": "9"
+      },
+      "answer": "E",
+      "explanation": "E str.indexOf(\"c\",2) This will find the position of \"c\" if you start looking at position 2. Therefore it \"misses\" the first \"c\" and finds the \"c\" in position 9",
+      "code": "String str = \"Scholastic\";\nout.print(str.indexOf(\"c\",2));"
+    },
+    {
+      "source": "Invitational B • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "O",
+        "B": "ON",
+        "C": "T",
+        "D": "TON",
+        "E": "AN"
+      },
+      "answer": "B",
+      "explanation": "B String St1 = \"MICHIGAN\"; String St2 = \"WASHINGTON\"; out.print(St2.substring(St1.length())); The length of MICHIGAN is 8 WASHINGTON.substring(8) is everything from position 8 until the end: \"ON\"",
+      "code": "String St1 = \"MICHIGAN\";\nString St2 = \"WASHINGTON\";\nout.print(St2.substring(St1.length()));"
+    },
+    {
+      "source": "Invitational B • 2025",
+      "stem": "Assuming that indented lines are continuations of the previous line, what is output by the code to the right?",
+      "choices": {
+        "A": "-6",
+        "B": "-5",
+        "C": "5",
+        "D": "6",
+        "E": "There is no output due to a compile error."
+      },
+      "answer": "C",
+      "explanation": "C arr1 has a length of 6, while arr2 only has a length of 1. Their difference is 5.",
+      "code": "String s1 =\n     \"hEllo thEre... GEnEral KEnobi\";\nString s2 = s1.toLowerCase();\nString[] arr1 = s1.split(\"E\");\nString[] arr2 = s2.split(\"E\");\nint diff = arr1.length -\n     arr2.length;\nout.println(diff);"
+    },
+    {
+      "source": "Invitational B • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "truetruetruetrue",
+        "B": "falsetruetruefalse",
+        "C": "truetruetruefalse",
+        "D": "falsetruefalsefalse",
+        "E": "falsefalsefalsefalse"
+      },
+      "answer": "D",
+      "explanation": "D https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#intern--",
+      "code": "String s = \"Comp Sci Rocks!\";\nString s2 = new String(\"Comp Sci Rocks!\");\nString s3 = new String(\"Comp Sci Rocks!\").intern();\nout.print(s == s2);\nout.print(s == s3);\nout.print(s2 == s3);\nout.print(s.equals(s2)^s2.equals(s3));"
+    },
+    {
+      "source": "District • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "0",
+        "B": "2",
+        "C": "3",
+        "D": "7",
+        "E": "-1"
+      },
+      "answer": "E",
+      "explanation": "E yes.substring(3,7) is \"vers\" (starts at position 3 and stops before position 7) So, there is no \"i\" in yes giving us a value of -1 Cool hint, when you spot a substring with 2 arguments, subtract the numbers. This will tell you how many characters will be returned.",
+      "code": "String str = \"University\";\nString yes = str.substring(3,7);\nout.print(yes.indexOf(\"i\"));"
+    },
+    {
+      "source": "District • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "A",
+        "B": "S",
+        "C": "C",
+        "D": "I",
+        "E": "T"
+      },
+      "answer": "A",
+      "explanation": "A String St3 = St2+St1.substring(0,3); St3 is \"CITYKAN\" out.print(St3.charAt(5)); Character #5 is the A",
+      "code": "String St1 = \"KANSAS\";\nString St2 = \"CITY\";\nString St3 = St2+St1.substring(0,3);\n out.print(St3.charAt(5));"
+    },
+    {
+      "source": "District • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "untDoot",
+        "B": "ntDookt",
+        "C": "ntDookn",
+        "D": "untDoon",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "D",
+      "explanation": "D Simple substring problem, substring is inclusive of first value, exclusive of last (if present)",
+      "code": "String str = \"CountDooku\";\nstr = str.substring(0,8);\nstr += str.charAt(3);\nout.println(str.substring(2));"
+    },
+    {
+      "source": "District • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "hexlo 5",
+        "B": "Hello World 11",
+        "C": "Hexxo 5",
+        "D": "hexxo 5",
+        "E": "hello 5"
+      },
+      "answer": "D",
+      "explanation": "D trim() removes leading/trailing spaces. toLowerCase() makes the string lowercase. Substring makes the string \"hello\". replace() replaces all occurrences of the first character with the second, making the string \"hexxo\". The string is 5 characters long.",
+      "code": "String text = \"  Hello World  \";\nString result = text.trim().toLowerCase()\n.substring(0, 5).replace('l', 'x');\nout.println(result + \" \" +\nresult.length());"
+    },
+    {
+      "source": "Regional • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "Com",
+        "B": "omp",
+        "C": "cie",
+        "D": "nce",
+        "E": "ute"
+      },
+      "answer": "C",
+      "explanation": "C Go = \"ComputerScience\" Fight = \"uterScience\" Win = \"Science\" It prints \"cie\"",
+      "code": "String Go = \"ComputerScience\";\nString Fight = Go.substring(4);\nString Win = Fight.substring(4);\nout print(Win substring(1 4));"
+    },
+    {
+      "source": "Regional • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "M",
+        "B": "MA",
+        "C": "MAD",
+        "D": "MADN",
+        "E": "ADN"
+      },
+      "answer": ") C",
+      "explanation": "C String St1 = \"MARCH\"; String St2 = \"MADNESS\"; int A = St1.indexOf(\"R\"); A=2 int B = St2.indexOf(\"S\"); B=5 out.print(St2.substring(A-2,B-2)); St2.substring(0,3) = \"MAD\"",
+      "code": "String St1 = \"MARCH\";\nString St2 = \"MADNESS\";\nint A = St1.indexOf(\"R\");\nint B = St2.indexOf(\"S\");\n out.print(St2.substring(A-2,B-2));"
+    },
+    {
+      "source": "Regional • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "nityStoit",
+        "B": "InfinityStone207",
+        "C": "nitySto221",
+        "D": "InfinityStonefi",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "B",
+      "explanation": "B Strings are immutable, so both substring calls do not affect the original string, and the characters will be converted to ints and added together before they are appended to the end of the string.",
+      "code": "String s = \"InfinityStone\";\ns.substring(1, s.length() - 2);\ns += s.charAt(2) + s.charAt(5);\ns.substring(3);\nout.println(s);"
+    },
+    {
+      "source": "Regional • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "WorldWorldHelloHello",
+        "B": "HelloHelloHelloHello",
+        "C": "HelloWorldHelloWorld",
+        "D": "WorldHelloHelloWorld",
+        "E": "HelloHelloWorldHello"
+      },
+      "answer": "E",
+      "explanation": "E repeat() duplicates the given string a provided number of times. The rest is simple concatenation.",
+      "code": "String Hello = \"World\";\nString World = \"Hello\";\nString Hello_World = World.repeat(2) +\n             Hello + \"Hello\";\nout.println(Hello_World);"
+    },
+    {
+      "source": "State • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "INAS",
+        "B": "STXA",
+        "C": "USAS",
+        "D": "TIXA",
+        "E": "INXA"
+      },
+      "answer": "A",
+      "explanation": "A String One = \"TEXAS\"; String Two = \"AUSTIN\"; int A = Two.indexOf(\"T\"); A=3 int B = One.indexOf(\"S\"); B=4 String Three = One.substring(A); Three = \"AS\" String Four = Two.substring(B); Four = \"IN\" out.print(Four+Three); \"INAS\"",
+      "code": "String One = \"TEXAS\";\nString Two = \"AUSTIN\";\nint A = Two.indexOf(\"T\");\nint B = One.indexOf(\"S\");\nString Three = One.substring(A);\nString Four = Two.substring(B);\nout.print(Four+Three);"
+    },
+    {
+      "source": "State • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "true",
+        "B": "false"
+      },
+      "answer": "A",
+      "explanation": "A A = true; B = !A || A = true C = !B && A = false B ^ C = true",
+      "code": "boolean A = true;\nboolean B = !A || A;\nboolean C = !B && A;\nout.print(B ^ C);"
+    },
+    {
+      "source": "State • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "-17",
+        "B": "-1",
+        "C": "17",
+        "D": "1",
+        "E": "There is no output due to a compile error."
+      },
+      "answer": "A",
+      "explanation": "A String’s compareTo method will return the ASCII difference between the first two characters that are different between the two Strings.",
+      "code": "String s = \"CaptHanSolo\";\nString r = \"CaptHandsome\";\nint i = s.compareTo(r);\nout.println(i);"
+    },
+    {
+      "source": "State • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "truetrueHello World",
+        "B": "falsefalseHello World",
+        "C": "truefalseHello World",
+        "D": "truefalse[H,e,l,l,o, ,W,o,r,l,d]",
+        "E": "truetrue[H,e,l,l,o, ,W,o,r,l,d]"
+      },
+      "answer": "C",
+      "explanation": "C copyValueOf makes a new string with the contents of the provided CharSequence. The contents are the same but the memory addresses are different. Character array toString prints as a normal String.",
+      "code": "String s = \"Hello World\";\nchar [] helloWorld = s.toCharArray();\nString s2 =\n    String.copyValueOf(helloWorld);\nout.print(s.equals(s2));\nout.print(s == s2);\nout.print(helloWorld);"
+    }
+  ]
+}

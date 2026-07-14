@@ -1,0 +1,286 @@
+{
+  "question_number": 2,
+  "topic": "Simple literal math expression with mixed operations",
+  "questions": [
+    {
+      "source": "Invitational A • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "1",
+        "B": "4",
+        "C": "6",
+        "D": "17",
+        "E": "17.25"
+      },
+      "answer": "D",
+      "explanation": "D Use order of operations. Perform integer division first, then add left to right. 15 + 5 / 4 + 1 15 + 1 + 1 = 17",
+      "code": "out.print(15 + 5 / 4 + 1);"
+    },
+    {
+      "source": "Invitational A • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "4",
+        "B": "7",
+        "C": "8",
+        "D": "10",
+        "E": "12"
+      },
+      "answer": "D",
+      "explanation": "D Use order of operations. Perform integer division first, then do modulus, then add the two values. 22 / 7 + 15 % 8 3 + 7 = 10",
+      "code": "out.print(22 / 7 + 15 % 8);"
+    },
+    {
+      "source": "Invitational A • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "55",
+        "B": "11",
+        "C": "7",
+        "D": "19",
+        "E": "There is no output due to a compile error."
+      },
+      "answer": "D",
+      "explanation": "D Simple order of operations problem",
+      "code": "out.println(3+4 % 1+2 * 5+6);"
+    },
+    {
+      "source": "Invitational A • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "4",
+        "B": "5",
+        "C": "10",
+        "D": "11",
+        "E": "12"
+      },
+      "answer": "E",
+      "explanation": "E Multiplication/division first: 3 ∗4 = 12, 6/3 = 2; so 2 + 12 −2 = 12.",
+      "code": "int result = 2 + 3 * 4 - 6 / 3;\nout.println(result);"
+    },
+    {
+      "source": "Invitational B • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "3",
+        "B": "4",
+        "C": "5",
+        "D": "6",
+        "E": "6.25"
+      },
+      "answer": "D",
+      "explanation": "D Use order of operations. Perform integer modulus first. 1 + 29 % 10 / 4 + 3 1 + 9 / 4 + 3 Next do integer division. 1 + 2 + 3 Now add left to right. 1 + 2 + 3 = 6",
+      "code": "out.print(1 + 29 % 10 / 4 + 3);"
+    },
+    {
+      "source": "Invitational B • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "4",
+        "B": "5",
+        "C": "6",
+        "D": "7",
+        "E": "8"
+      },
+      "answer": "C",
+      "explanation": "C (25 + 7)/(12 % 7) 32 / 5 = 6",
+      "code": "out.print((25 + 7)/(12 % 7));"
+    },
+    {
+      "source": "Invitational B • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "91",
+        "B": "-3",
+        "C": "88",
+        "D": "-91",
+        "E": "There is no output due to a compile error."
+      },
+      "answer": "B",
+      "explanation": "B -17 % 7 = -3 = 11111111111111111111111111111101_2 11 << 3 = 88 = 00000000000000000000000001011000_2 -3 | 88 = -3",
+      "code": "out.println((-17 % 7) | (11 << 3));"
+    },
+    {
+      "source": "Invitational B • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "15.5",
+        "B": "15",
+        "C": "15.0",
+        "D": "NaN",
+        "E": "Infinity"
+      },
+      "answer": "E",
+      "explanation": "E After doing the pre/post increment/decrement the equation look like… 5 + 2.5 * 3 / (0) + 3 - (-2.5); Double division by zero results in Infinity.",
+      "code": "int a = 5;\ndouble b = 2.5;\nint c = 4;\ndouble result = a++ + b * --c / (a % 3)\n+ +c - -b;\nout.println(result);"
+    },
+    {
+      "source": "District • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "8",
+        "B": "4",
+        "C": "5",
+        "D": "6",
+        "E": "56"
+      },
+      "answer": "B",
+      "explanation": "B Use order of operations. 35 % 12 / 4 + 27 * 2 % 4 Perform integer modulus first. 11 / 4 + 27 * 2 % 4 Next do integer division. 2 + 27 * 2 % 4 Now, multiply. 2 + 54 % 4 Again with the integer modulus. 2 + 2 2 + 2 = 4",
+      "code": "out.print(35 % 12 / 4 + 27 * 2 % 4);"
+    },
+    {
+      "source": "District • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "-12",
+        "B": "-8",
+        "C": "-4",
+        "D": "1",
+        "E": "2"
+      },
+      "answer": "A",
+      "explanation": "A 12 - 27 + 17 % 10 / 2 12 - 27 + 7 / 2 12 - 27 + 3 -15 + 3 = -12",
+      "code": "out.print(12 - 27 + 17 % 10 / 2);"
+    },
+    {
+      "source": "District • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "1",
+        "B": "9",
+        "C": "7",
+        "D": "0",
+        "E": "There is no output due to a compile error."
+      },
+      "answer": "C",
+      "explanation": "C Simple order of operations problem",
+      "code": "out.println(1 + 2 * 3 - 4 / 5);"
+    },
+    {
+      "source": "District • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "10.5",
+        "B": "24",
+        "C": "23.25",
+        "D": "23",
+        "E": "25"
+      },
+      "answer": "B",
+      "explanation": "B Simple order of operations.",
+      "code": "int a = 15;\nint b = 4;\nint c = 3;\nint result = a + b * c - a / b;\nout.println(result);"
+    },
+    {
+      "source": "Regional • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "8",
+        "B": "1066",
+        "C": "52",
+        "D": "53",
+        "E": "9"
+      },
+      "answer": "A",
+      "explanation": "A Use order of operations. 800 / 3 % 10 + 800 / 10 % 3 266 % 10 + 800 / 10 % 3 6 + 800 / 10 % 3 6 + 80 % 3 6 + 2 = 8",
+      "code": "out.print(800 / 3 % 10 + 800 / 10 % 3);"
+    },
+    {
+      "source": "Regional • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "5",
+        "B": "15",
+        "C": "25",
+        "D": "35",
+        "E": "45"
+      },
+      "answer": "D",
+      "explanation": "D 23 + 34 % 7 * 2 23 + 6 * 2 23 + 12 = 35",
+      "code": "out.print(23 + 34 % 7 * 2);"
+    },
+    {
+      "source": "Regional • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "-2",
+        "B": "2",
+        "C": "0",
+        "D": "-1",
+        "E": "There is no output due to a compile error."
+      },
+      "answer": "A",
+      "explanation": "A Simple expression solving (PEMDAS)",
+      "code": "out.println(212 / 43 - 394 / 63);"
+    },
+    {
+      "source": "Regional • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "5.5",
+        "B": "6",
+        "C": "5",
+        "D": "6.0",
+        "E": "4.0"
+      },
+      "answer": "D",
+      "explanation": "D a * c gives 24, dividing by double b promotes it to 8.0, 10 % 4 gives 2, and (int)(3.0 + 1.5) truncates 4.5 to 4, giving 8.0 + 2 - 4 = 6.0",
+      "code": "int a = 6;\ndouble b = 3.0;\nint c = 4;\nout.println(a * c / b + 10 % c -\n               (int)(b + 1.5));"
+    },
+    {
+      "source": "State • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "-3",
+        "B": "20",
+        "C": "21",
+        "D": "53",
+        "E": "9"
+      },
+      "answer": "B",
+      "explanation": "B 23 + 37 / 7 % 2 - 24 % 5 23 + 5 %2 - 24 % 5 23 + 1 - 24 % 5 23 + 1 - 4 24 - 4 20",
+      "code": "out.print(23 + 37 / 7 % 2 - 24 % 5);"
+    },
+    {
+      "source": "State • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "6",
+        "B": "8",
+        "C": "10",
+        "D": "11",
+        "E": "12"
+      },
+      "answer": "B",
+      "explanation": "B 22 % 30 * 4 / 10 22 * 4 / 10 88 / 10 8",
+      "code": "out.print(22 % 30 * 4 / 10);"
+    },
+    {
+      "source": "State • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "16",
+        "B": "5",
+        "C": "38",
+        "D": "92",
+        "E": "There is no output due to a compile error."
+      },
+      "answer": "C",
+      "explanation": "C Basic order of operations problem.",
+      "code": "out.print(243+34 / 21-9 * 21-17);"
+    },
+    {
+      "source": "State • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "400",
+        "B": "395",
+        "C": "416",
+        "D": "415",
+        "E": "410"
+      },
+      "answer": "D",
+      "explanation": "D Simple math.",
+      "code": "int x = 123;\nint y = 456;\nout.println(x + (y % x) - x ^ y);"
+    }
+  ]
+}

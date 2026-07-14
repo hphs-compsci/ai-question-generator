@@ -1,0 +1,239 @@
+{
+  "question_number": 5,
+  "topic": "Simple Boolean logic (AND, OR, XOR, NOT)",
+  "questions": [
+    {
+      "source": "Invitational A • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "true",
+        "B": "false"
+      },
+      "answer": "A",
+      "explanation": "A M || true && N First, evaluate true && N which is true && false = false Now evaluate M || false which is true || false = true",
+      "code": "boolean M = true;\nboolean N = false;\nout.print(M || true && N);"
+    },
+    {
+      "source": "Invitational A • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "true",
+        "B": "false"
+      },
+      "answer": "A",
+      "explanation": "A true && (true ||false) Parentheses first - gives us true && true = true",
+      "code": "boolean A = true;\nboolean B = false;\nout.print(A && (true || B));"
+    },
+    {
+      "source": "Invitational A • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "true",
+        "B": "false",
+        "C": "There is no output due to a syntax error."
+      },
+      "answer": "A",
+      "explanation": "A Simple Boolean solving",
+      "code": "boolean a = true;\nboolean b = a ^ !a;\na = a | b & !a | !b;\nout.println(a);"
+    },
+    {
+      "source": "Invitational A • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "false",
+        "B": "true"
+      },
+      "answer": "B",
+      "explanation": "B !false is true. We process && before ||, so : false && true = false, then true || false = true.",
+      "code": "boolean result = true || false && !false;\nout.println(result);"
+    },
+    {
+      "source": "Invitational B • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "true",
+        "B": "false"
+      },
+      "answer": "B",
+      "explanation": "B A is true. B is \"not A\" meaning B is false. Now. !A && (A || B) ^ B First, substitute all the values !true && (true || false) ^ false Next, evaluate !true false && (true || false) ^ false Now, do the parenthesis false && true ^ false Next is \"xor\" false && true Using and false is the final answer",
+      "code": "boolean A = true;\nboolean B = !A;\nout.print(!A && (A || B) ^ B);"
+    },
+    {
+      "source": "Invitational B • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "true",
+        "B": "false"
+      },
+      "answer": "A",
+      "explanation": "A C || B || A false || false || true One true is sufficient for a bunch of expressions separated by or's.",
+      "code": "boolean A = true;\nboolean B = false;\nboolean C = A && B;\nout.print(C || B || A);"
+    },
+    {
+      "source": "Invitational B • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "true",
+        "B": "false",
+        "C": "There is no output due to a compile error.",
+        "D": "There is no output due to a runtime error."
+      },
+      "answer": "C",
+      "explanation": "C Note that even though num3 resolves to the value of 1, which can be represented with a single bit of a boolean, this conversion is not supported in Java using the built-in type casting operator.",
+      "code": "int num1 = 5, num2 = 6;\nint num3 = (num1 & num2) >> 2;\nboolean a = (boolean) num3;\nboolean b = false;\nout.println((a ^ !b) || (b & a));"
+    },
+    {
+      "source": "Invitational B • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "true false",
+        "B": "true true",
+        "C": "false false",
+        "D": "false true",
+        "E": "There is no output due to an error."
+      },
+      "answer": "A",
+      "explanation": "A Boolean evaluation with order of precedence.",
+      "code": "boolean a = false;\nboolean b = true;\nboolean c = false;\nboolean result = a || b && (c = true) ^\n(c = false);\nout.println(result + \" \" + c);"
+    },
+    {
+      "source": "District • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "true",
+        "B": "false"
+      },
+      "answer": "A",
+      "explanation": "A A is not true, or false. B is not A, or true A && B is false (two trues are needed) So, C is false. A ^ B ^ C becomes false ^ true ^ false Work left to right keeping in mind that ^ needs a true and a false to be true. false ^ true ^ false true ^ false = true",
+      "code": "boolean A = !true;\nboolean B = !A;\nboolean C = A && B;\nout.print(A ^ B ^ C);"
+    },
+    {
+      "source": "District • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "true",
+        "B": "false"
+      },
+      "answer": "A",
+      "explanation": "A boolean A = true; A is true boolean B = !A; B is false boolean C = A || B; C is true (Or needs at least 1 true) boolean D = B && C; D is false (And need 2 trues) boolean E = A ^ D; E is true (Xor needs exactly 1 true) out.print(E);",
+      "code": "boolean A = true;\nboolean B = !A;\nboolean C = A || B;\nboolean D = B && C;\nboolean E = A ^ D;\n out.print(E);"
+    },
+    {
+      "source": "District • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "true",
+        "B": "false",
+        "C": "There is no output due to a syntax error."
+      },
+      "answer": "A",
+      "explanation": "A Simple boolean solving",
+      "code": "boolean a = false;\nboolean b = true;\na |= !b & a ^ b & !a;\nout.println(a);"
+    },
+    {
+      "source": "District • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "truetruefalsefalse",
+        "B": "falsetruetruefalse",
+        "C": "truetruetruefalse",
+        "D": "falsetruefalsefalse",
+        "E": "falsefalsefalsefalse"
+      },
+      "answer": "A",
+      "explanation": "A Simple boolean logic.",
+      "code": "boolean a = true;\nboolean b = false;\nboolean c = true;\nboolean r1 = a && b || c;\nboolean r2 = a || b && !c;\nboolean r3 = a ^ c;\nboolean r4 = !(a && c) || b;\nout.println(r1 + \"\" + r2 + r3 + r4);"
+    },
+    {
+      "source": "Regional • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "true",
+        "B": "false"
+      },
+      "answer": "B",
+      "explanation": "B R = true (!false) S = true (true || false) T = true (true && true) U = false (true ^ true)",
+      "code": "boolean R = !false;\nboolean S = R || false;\nboolean T = R && S;\nboolean U = S ^ T;\nout.print(U);"
+    },
+    {
+      "source": "Regional • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "true",
+        "B": "false"
+      },
+      "answer": ") A",
+      "explanation": "A boolean A = true; A is true boolean B = false; B is false boolean C = A && B; C is false boolean D = !(C&&B || A&&B); !(false || false) out.print(D); true",
+      "code": "boolean A = true;\nboolean B = false;\nboolean C = A && B;\nboolean D = !(C&&B || A&&B);\n out.print(D);"
+    },
+    {
+      "source": "Regional • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "true",
+        "B": "false"
+      },
+      "answer": "A",
+      "explanation": "A Simple boolean expression.",
+      "code": "boolean a = true ^ true;\na = a & !a || a ^ !a && a | !a;\nout.println(a);"
+    },
+    {
+      "source": "Regional • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "false",
+        "B": "true"
+      },
+      "answer": "B",
+      "explanation": "B (a ^ b) is true XOR false = true, !(b || c) is !(false || true) = !true = false, so the left side of || is true && false = false, but the right side (a && c) is true && true = true, and since false || true = true, result is true.",
+      "code": "boolean a = true;\nboolean b = false;\nboolean c = true;\nboolean result = (a ^ b) &&\n        !(b || c) || (a && c);\nout.println(result);"
+    },
+    {
+      "source": "State • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "true",
+        "B": "false"
+      },
+      "answer": "A",
+      "explanation": "A int A = 4; int B = 7; int C = 2; boolean D = (A>C) && (B<A); D = false boolean E = (A + B == 10)||(A >= C*2); E = true boolean F = D ^ E; XOR F = true out.print(F);",
+      "code": "int A = 4;\nint B = 7;\nint C = 2;\nboolean D = (A>C) && (B<A);\nboolean E = (A + B == 10)||(A >= C*2);\nboolean F = D ^ E;\nout.print(F);"
+    },
+    {
+      "source": "State • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "24",
+        "B": "28",
+        "C": "31",
+        "D": "50",
+        "E": "64"
+      },
+      "answer": "C",
+      "explanation": "C T = 10 + 20 * 30 / 40 = 10 + 600/40 = 25 R = 40 + 30 * 20 / 10 = 40 + 600/10 = 100 H = T + R >> 2 = 125 >> 2 = 62>>1 = 31",
+      "code": "int T = 10 + 20 * 30 / 40;\nint R = 40 + 30 * 20 / 10;\nint H = T + R >> 2;\nout.print(H);"
+    },
+    {
+      "source": "State • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "true",
+        "B": "false"
+      },
+      "answer": "B",
+      "explanation": "B Simple boolean solving.",
+      "code": "boolean a = false;\nboolean b = true;\na |= a ^ b & !b | a;\nb ^= b ^ !a & a | !b;\nout.print(a ^ b | a);"
+    },
+    {
+      "source": "State • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "false",
+        "B": "true"
+      },
+      "answer": "A",
+      "explanation": "A Simple boolean logic.",
+      "code": "boolean a = true;\nboolean b = false;\nboolean c = a ^ b || a && b;\nout.println(c && (a ^ c || b));"
+    }
+  ]
+}

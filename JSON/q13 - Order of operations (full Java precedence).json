@@ -1,0 +1,284 @@
+{
+  "question_number": 13,
+  "topic": "Order of operations (full Java precedence)",
+  "questions": [
+    {
+      "source": "Invitational A • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "40",
+        "B": "46",
+        "C": "20",
+        "D": "10",
+        "E": "80"
+      },
+      "answer": "D",
+      "explanation": "D a << 2 + b >> 1 + ++c a << 2 + b >> 1 + ++c a << 2 + b >> 1 + 5 a << 2 + b >> 1 + 5 a << 6 >> 1 + 5 a << 6 >> 1 + 5 a << 6 >> 6 a << 6 >> 6 640 >> 6 10",
+      "code": "int a = 10, b = 4, c = 4;\nout.print(a << 2 + b >> 1 + ++c);"
+    },
+    {
+      "source": "Invitational A • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "2048",
+        "B": "2044",
+        "C": "2040",
+        "D": "1024",
+        "E": "1022"
+      },
+      "answer": "B",
+      "explanation": "B int w = 511; w = 511 w = w<<3; w = 4088 w = w>>2; w = 1022 w = w++ + w++; w = 1022 + 1023 = 2045 out.print(--w); This prints 2044",
+      "code": "int w = 511;\nw = w<<3;\nw = w>>2;\nw = w++ + w++;\nout.print(--w);"
+    },
+    {
+      "source": "Invitational A • 2025",
+      "stem": "What is the order of precedence for the operators to the right?",
+      "choices": {
+        "A": "II, IV, III, I",
+        "B": "IV, II, I, III",
+        "C": "IV, II, III, I",
+        "D": "III, II, IV, I",
+        "E": "II, IV, I, III"
+      },
+      "answer": "A",
+      "explanation": "A Simple order of precedence",
+      "code": "I. || (logical)\nII. ++ (post)\nIII. & (bitwise)\nIV. -- (pre)"
+    },
+    {
+      "source": "Invitational A • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "0",
+        "B": "2",
+        "C": "3",
+        "D": "1",
+        "E": "11"
+      },
+      "answer": "D",
+      "explanation": "D Multiplication first: 4 ∗2 = 8, so 3 + 8 = 11. 11 > 10 is true, so ternary gives 1.",
+      "code": "int result = 3 + 4 * 2 > 10 ? 1 : 0;\nout.println(result);"
+    },
+    {
+      "source": "Invitational B • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "11",
+        "B": "12",
+        "C": "13",
+        "D": "14",
+        "E": "15"
+      },
+      "answer": "E",
+      "explanation": "E a = 15, b = 12, c = 9 ; a=1111 b=1100 c=1010 c ^ b | a - c & b ^ a 9 ^ 12 | 15 - 9 & 12 ^ 15 9 ^ 12 | 15 - 9 & 12 ^ 15 (first, subtract) 9 ^ 12 | 6 & 12 ^ 15 (now it is bit-wise time) 1001 ^ 1100 | 0110 & 1100 ^ 1111 1001 ^ 1100 | 0110 & 1100 ^ 1111 (do and) 1001 ^ 1100 | 0100 ^ 1111 1001 ^ 1100 | 0100 ^ 1111 (do leftmost xor) 0101 | 0100 ^ 1111 0101 | 0100 ^ 1111 (do other xor) 0101 | 1011 (finish with the or) 1111 = 15",
+      "code": "int a = 15, b = 12, c = 9 ;\nout.print(c ^ b | a - c & b ^ a);"
+    },
+    {
+      "source": "Invitational B • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "10",
+        "B": "20",
+        "C": "40",
+        "D": "80",
+        "E": "160"
+      },
+      "answer": "A",
+      "explanation": "A int H = 10 << 2; H = 40 int J = H >> 4; J = 2 int K = H >> J; K = 40 >> 2 K=10",
+      "code": "int H = 10 << 2;\nint J = H >> 4;\nint K = H >> J;\nout.print(K);"
+    },
+    {
+      "source": "Invitational B • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "-1",
+        "B": "0",
+        "C": "1",
+        "D": "4",
+        "E": "1073741823"
+      },
+      "answer": "B",
+      "explanation": "B Order of precedence is ~, then >>, then &. ~3 = -4 4 >> 2 = 1 -4 & 1 = 0",
+      "code": "out.println(~3 & 4 >> 2);"
+    },
+    {
+      "source": "Invitational B • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "27",
+        "B": "29",
+        "C": "31",
+        "D": "39",
+        "E": "Compile-time error"
+      },
+      "answer": "C",
+      "explanation": "C x + y << z is (x+y)<<z = 3<<3 = 24, x | y & z is x|(y&z) = 1|(2&3)=3, and the condition is true (due to || / && precedence and short-circuiting) so it adds 4, giving 24 ^ (3+4) = 24 ^ 7 = 31.",
+      "code": "int x = 1, y = 2, z = 3;\nboolean p = false;\nout.println((x + y << z) ^ ((x | y & z)\n+ (p || x++ == 1 && --y > 0\n? 4 : 8)));"
+    },
+    {
+      "source": "District • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "2324696",
+        "B": "2324520",
+        "C": "2324588",
+        "D": "2224696",
+        "E": "2224624"
+      },
+      "answer": "D",
+      "explanation": "D The first print statement prints 22, then adds one to W. The next, adds one more, then prints 24. The next, uses integer division twice, printing the value 6. W does not change. It is still 24. The last, doubles the value 24 twice, printing 96.",
+      "code": "int W = 22;\nout.print(W++);\nout.print(++W);\nout.print(W>>2);\nout.print(W<<2);"
+    },
+    {
+      "source": "District • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "10",
+        "B": "12",
+        "C": "14",
+        "D": "15",
+        "E": "16"
+      },
+      "answer": "E",
+      "explanation": "E 6 + 10 & 4 + 10 << 2; 16 & 4 + 10 << 2 16 & 14 << 2 16 & 56 10000 & 111000 = 0010000 = 16",
+      "code": "int M = 6 + 10 & 4 + 10 << 2;\nout.print(M);"
+    },
+    {
+      "source": "District • 2025",
+      "stem": "What is the order of precedence for the operators to the right?",
+      "choices": {
+        "A": "III, IV, II, I",
+        "B": "IV, III, I, II",
+        "C": "IV, III, II, I",
+        "D": "III, II, IV, I",
+        "E": "III, II, I, IV"
+      },
+      "answer": "D",
+      "explanation": "D Simple order of precedence",
+      "code": "I. ?:\nII. + (additive)\nIII. %\nIV. >>>"
+    },
+    {
+      "source": "District • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "12 3 5 1",
+        "B": "10 3 5 2",
+        "C": "13 3 5 1",
+        "D": "14 3 5 1"
+      },
+      "answer": "C",
+      "explanation": "C ++b increments b to 5 and uses 5, c-- uses 2 then decrements c to 1, b % c uses current values 5 % 1 = 0, then 5 * 2 = 10, and finally 3 + 10 - 0 = 13.",
+      "code": "int a = 3;\nint b = 4;\nint c = 2;\nint result = a + ++b * c-- - b % c;\nout.println(result + \" \" + a + \" \" +\nb + \" \" + c);"
+    },
+    {
+      "source": "Regional • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "44",
+        "B": "321",
+        "C": "41",
+        "D": "322",
+        "E": "324"
+      },
+      "answer": "B",
+      "explanation": "B Follow the order of precedence… Q << 2 + 2 ^ 3 >> 1 20 << 2 + 2 ^ 3 >> 1 20 << 4 ^ 3 >> 1 320 ^ 3 >> 1 320 ^ 1 = 101000000 ^ 000000001 = 101000001 = 321",
+      "code": "int Q = 20;\nout.print(Q << 2 + 2 ^ 3 >> 1);"
+    },
+    {
+      "source": "Regional • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "0",
+        "B": "4",
+        "C": "5",
+        "D": "14",
+        "E": "24"
+      },
+      "answer": "C",
+      "explanation": "C int N = 10; int M = ++N << 2 ^ N++ >> 1 ; N = 12 11 << 2 ^ 11 >> 1 44 ^ 5 101100 ^ 000101 = 101001 M = 41 out.print(M % N); 41 % 12 = 5",
+      "code": "int N = 10;\nint M = ++N << 2 ^ N++ >> 1 ;\nout.print(M % N);"
+    },
+    {
+      "source": "Regional • 2025",
+      "stem": "What is the order of precedence for the operators to the right?",
+      "choices": {
+        "A": "II, I, III, IV",
+        "B": "II, III, IV, I",
+        "C": "III, II, I, IV",
+        "D": "III, II, IV, I",
+        "E": "II, III, I, IV"
+      },
+      "answer": "E",
+      "explanation": "E Java order of precedence.",
+      "code": "I. | (bitwise)\nII. ++(pre)\nIII. *\nIV. || (logical)"
+    },
+    {
+      "source": "Regional • 2026",
+      "stem": "Which of the following is the correct order of precedence from highest to lowest?",
+      "choices": {
+        "A": "++(postfix), ~, *, ==, |(bitwise), &&",
+        "B": "~, ++(postfix), *, ==, |(bitwise), &&",
+        "C": "++(postfix), ~, *, |(bitwise), ==, &&",
+        "D": "++(postfix), *, ~, ==, |(bitwise), &&",
+        "E": "*, ~, ++(postfix), ==, &&, |(bitwise)"
+      },
+      "answer": "A",
+      "explanation": "A https://introcs.cs.princeton.edu/java/11precedence/"
+    },
+    {
+      "source": "State • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "7",
+        "B": "12",
+        "C": "15",
+        "D": "21",
+        "E": "23"
+      },
+      "answer": "A",
+      "explanation": "A int R = 20; int Y = R >> 2 ^ 2 + R & 11; out.print(Y); Order of precedence: + >> & ^ 20 >> 2 ^ 2 + 20 & 11 20 >> 2 ^ 22 & 11 5 ^ 22 & 11 5 ^ 2 101 ^ 010 = 111 = 7",
+      "code": "int R = 20;\nint Y = R >> 2 ^ 2 + R & 11;\nout.print(Y);"
+    },
+    {
+      "source": "State • 2024",
+      "stem": "What is the output of the code segment shown on the right?",
+      "choices": {
+        "A": "30",
+        "B": "32",
+        "C": "35",
+        "D": "36",
+        "E": "40"
+      },
+      "answer": "A",
+      "explanation": "A A = 12345678; B = A % 10 = 8 C = A / 100 = 123456 D = C % 10 = 6 E = C / 100 = 1234 F = E % 10 = 4 G = E / 100 = 12 B+D+F+G = 8+6+4+12 = 30",
+      "code": "int A = 12345678;\nint B = A % 10;\nint C = A / 100;\nint D = C % 10;\nint E = C / 100;\nint F = E % 10;\nint G = E / 100;\nout.print(B+D+F+G);"
+    },
+    {
+      "source": "State • 2025",
+      "stem": "What is the order of precedence for the operators to the right?",
+      "choices": {
+        "A": "III, II, I, IV",
+        "B": "I, III, IV, II",
+        "C": "III, I, II, IV",
+        "D": "III, I, II, IV",
+        "E": "III, I, IV, II"
+      },
+      "answer": "E",
+      "explanation": "E Java Order of Precedence.",
+      "code": "I. ==\nII. +=\nIII. <=\nIV. ?: (ternary)"
+    },
+    {
+      "source": "State • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "3|8",
+        "B": "3|4",
+        "C": "4|8",
+        "D": "2|4",
+        "E": "2|8"
+      },
+      "answer": "A",
+      "explanation": "A ++a pre-increments a to 6 and b-- post-decrements b (using 3 in the expression, then dropping to 2), so d = 6 - 3 = 3, and since a > b (6 > 2) is true the ternary picks a + c = 8, giving 3|8. UIL Computer Science Written Test – 2025-2026 State",
+      "code": "int a = 5, b = 3, c = 2;\nint d = ++a - b--;\nout.print(d + \"|\");\nout.print(a > b ? a + c : b * c);"
+    }
+  ]
+}

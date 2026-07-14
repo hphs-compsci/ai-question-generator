@@ -1,0 +1,286 @@
+{
+  "question_number": 10,
+  "topic": "1D primitive array, basic concepts",
+  "questions": [
+    {
+      "source": "Invitational A • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "26",
+        "B": "4",
+        "C": "221",
+        "D": "33",
+        "E": "85"
+      },
+      "answer": "E",
+      "explanation": "E The first element in an array is at position 0. We are multiplying the elements in positions 1 and 4 17 * 5 = 85",
+      "code": "int[] stuff = {2,17,3,13,5,11,7};\nout.print(stuff[1]*stuff[4]);"
+    },
+    {
+      "source": "Invitational A • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "0",
+        "B": "1",
+        "C": "2",
+        "D": "3",
+        "E": "4"
+      },
+      "answer": "B",
+      "explanation": "B int[] food = {5,2,3,4,1,0}; out.print(food[food[0]-food[4]]); food[0]= 5 food[4]= 1 food[5-1] = food[4] = 1",
+      "code": "int[] food = {5,2,3,4,1,0};\nout.print(food[food[0]-food[4]]);"
+    },
+    {
+      "source": "Invitational A • 2025",
+      "stem": "What is the output by the code to the right?",
+      "choices": {
+        "A": "55",
+        "B": "67",
+        "C": "7",
+        "D": "There is no output due to a compile error.",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "A",
+      "explanation": "A Array problem, no tricks really just trace it out",
+      "code": "int[] i = new int[] {\n17, 12, 9, 8, 39, 3\n};\ni[2] += i[4];\ni[1] -= i[3];\nint b = i[2];\nb += i[1] + i[5];\nout.println(b);"
+    },
+    {
+      "source": "Invitational A • 2026",
+      "stem": "Which of the following correctly creates an int array of length 4 and sets its first element to 10?",
+      "choices": {
+        "A": "int[] a = new int[4];",
+        "B": "int[] a = new int[4]; a[1] = 10;",
+        "C": "int[4] a = {10};",
+        "D": "int a = new int[4];",
+        "E": "int[] a = {10};"
+      },
+      "answer": "B",
+      "explanation": "B Arrays are 0-indexed; first element is index 0. new int[4] creates a length-4 array.",
+      "code": "a[0] = 10;\na[0] = 10;"
+    },
+    {
+      "source": "Invitational B • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "49",
+        "B": "45",
+        "C": "41",
+        "D": "40",
+        "E": "36"
+      },
+      "answer": "A",
+      "explanation": "A The two arrays are the same length, so the else is invoked. Remember the first element in an array has an index of 0. four[5] is 24 five[4] is 25 The sum is 49 UIL Computer Science Written Test – 2023 Invitational B",
+      "code": "int[] four = {4,8,12,16,20,24,28};\nint[] five = {5,10,15,20,25,30,35};\nif (four.length<five.length)\nout.print(four[4]+five[5]);\nelse\nout.print(four[5]+five[4]);"
+    },
+    {
+      "source": "Invitational B • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "11",
+        "B": "14",
+        "C": "28",
+        "D": "31",
+        "E": "42"
+      },
+      "answer": "B",
+      "explanation": "B int[] goat = new int[5]; goat = {0,0,0,0,0] goat[0] = 11; goat = {11,0,0,0,0] goat[1] = 3; goat = {11,3,0,0,0] for(int x=1; x<=4; x++) goat[x] = goat[x] + goat[x-1]; x=1 goat = {11,14,0,0,0] x=2 goat = {11,14,14,0,0] x=3 goat = {11,14,14,14,0] x=4 goat = {11,14,14,14,14] out.print(goat[4]); 14",
+      "code": "int[] goat = new int[5];\ngoat[0] = 11;\ngoat[1] = 3;\nfor(int x=1; x<=4; x++)\n   goat[x] = goat[x] + goat[x-1];\nout.print(goat[4]);"
+    },
+    {
+      "source": "Invitational B • 2025",
+      "stem": "Which of the following best describes the first issue with the code to the right? That is, which error, if any, is both accurate in its description and will cause the code to break at the earliest point possible?",
+      "choices": {
+        "A": "line 1 will cause a compilation error.",
+        "B": "line 2 will cause a compilation error.",
+        "C": "line 2 will cause a runtime error.",
+        "D": "line 3 will cause a runtime error.",
+        "E": "line 4 will cause a compilation error.",
+        "F": "line 4 will cause a runtime error.",
+        "G": "None of the above."
+      },
+      "answer": "C",
+      "explanation": "C All statements will compile just fine. The first statement to cause an error will be line 2 since it attempts to allocate negative space, which is not allowed. Lines 3 and 4 will both cause runtime errors, but since the question asks for the first error, the correct answer is C.",
+      "code": "int[] a = new int[] {}; // line 1\nint[] b = new int[-1];  // line 2\na[0] = 1;               // line 3\nb[-1] = 1;              // line 4"
+    },
+    {
+      "source": "Invitational B • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "30202",
+        "B": "30002",
+        "C": "30022",
+        "D": "20002"
+      },
+      "answer": "B",
+      "explanation": "B a[i]++ uses a[0]=2 as the target index (then makes a[0]=3), the RHS becomes a[1]+a[1]=0, and since b aliases a it assigns a[2]=0, leaving 3 0 0 0 2 → 30002.",
+      "code": "int[] a = {2, 0, 2, 0, 2};\nint[] b = a;\nint i = 0;\nb[a[i]++] = a[++i] + a[i--];\nout.println(a[0] + \"\" + a[1] + \"\" +\na[2] + \"\" + a[3] + \"\" + a[4]);"
+    },
+    {
+      "source": "District • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "4",
+        "B": "7",
+        "C": "22",
+        "D": "25",
+        "E": "28"
+      },
+      "answer": "D",
+      "explanation": "D The array called ten begins with the following values: {0,0,0,0,0,0,0,0,0,0}. With each iteration of x in the loop, the xth position takes on the value of 3x + 4. The array becomes: {4,7,10,13,16,19,22,25,28,31} Therefor ten[7] is 25",
+      "code": "int[] ten = new int[10];\nfor(int x=0; x<10; x++)\n  ten[x] = x * 3 + 4;\nout.print(ten[7]);"
+    },
+    {
+      "source": "District • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "60",
+        "B": "65",
+        "C": "70",
+        "D": "75",
+        "E": "80"
+      },
+      "answer": "C",
+      "explanation": "C elf[10] = 10 * 2 + 5 = 25 elf[20] = 20 * 2 + 5 = 45 70 is printed",
+      "code": "int[] elf = new int[50];\nfor(int x=0; x<=49; x++)\nelf[x] = x * 2 + 5;\nout.print(elf[10] + elf[20]);"
+    },
+    {
+      "source": "District • 2025",
+      "stem": "What is the output by the code to the right?",
+      "choices": {
+        "A": "1",
+        "B": "3",
+        "C": "5",
+        "D": "2",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "A",
+      "explanation": "A Array problem, 25 times you move through the array values, but it cycles every 6. 25 % 6 = 1, so just do the operation once.",
+      "code": "int[] i = new int[] {\n     3, 2, 5, 4, 1, 0\n};\nint j = 3;\nfor(int k = 0; k < 25; k++)\n     j = i[j];\nout.println(i[j]);"
+    },
+    {
+      "source": "District • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "10 6 21",
+        "B": "6 4 15",
+        "C": "10 4 14",
+        "D": "10 4 19"
+      },
+      "answer": "D",
+      "explanation": "D arr[1] becomes 2 + 8 = 10, then arr[4] becomes 10 - 6 = 4, and result is 10 + 4 + 5 = 19.",
+      "code": "int[] arr = {2, 4, 6, 8, 10};\narr[1] = arr[0] + arr[3];\narr[4] = arr[1] - arr[2];\nint result = arr[1] + arr[4] + arr.length;\nout.println(arr[1] + \" \" + arr[4] + \" \" +\nresult);"
+    },
+    {
+      "source": "Regional • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "32",
+        "B": "34",
+        "C": "35",
+        "D": "36",
+        "E": "38"
+      },
+      "answer": "D",
+      "explanation": "D perfect[10] is 99 (10*10-1) perfect[8] is 63 (8*8-1) 99-63 = 36",
+      "code": "int[] perfect = new int[25];\nfor(int x=0; x<24; x++)\nperfect[x] = x * x - 1;\nout.print(perfect[10] - perfect[8]);"
+    },
+    {
+      "source": "Regional • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "9",
+        "B": "11",
+        "C": "15",
+        "D": "16",
+        "E": "21"
+      },
+      "answer": "B",
+      "explanation": "B star[x*2] = x*x; star[x*2-1]=star[x*2]-5; When x is 4, star[8] = 16 star[7] becomes 11",
+      "code": "int[] star = new int[20];\nfor(int x=1; x<10; x++)\n{\nstar[x*2] = x*x;\nstar[x*2-1]=star[x*2]-5;\n}\nout.print(star[7]);"
+    },
+    {
+      "source": "Regional • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "[1, 118, 634, 212]",
+        "B": "[33, 124, 74, 10, 3]",
+        "C": "[0, 118, 634, 212]",
+        "D": "[34, 122, 74, 10, 3]",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "C",
+      "explanation": "C Simple matrix and loop tracing.",
+      "code": "int[][] mat = new int[][] {\n     {23, 5, -9, 212},\n     {34, 89, 74, 10, 3},\n     {341, 895, 284}\n};\nfor(int i = 0; i < 3; i++) {\n     mat[i][i] += mat[i][0]--;\n     mat[0][i] -= mat[i][i]++;\n     mat[0][i] *= -1;\n}\nout.println(\n     Arrays.toString(mat[0]));"
+    },
+    {
+      "source": "Regional • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "[2, 5, 3, 4, 3]",
+        "B": "[1, 3, 3, 4, 3]",
+        "C": "[2, 3, 3, 4, 5]",
+        "D": "[1, 5, 3, 4, 5]",
+        "E": "There is no output due to an error."
+      },
+      "answer": "A",
+      "explanation": "A arr[0] = 1. arr[arr[0]] = 2. The first statement sets the first element of the array to",
+      "code": "int [] arr = new int[] {1, 2, 3, 4, 5};\narr[0] = arr[arr[0]];\narr[1] += arr[4] = arr[2];\nout.println(Arrays.toString(arr));"
+    },
+    {
+      "source": "State • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "14",
+        "B": "18",
+        "C": "21",
+        "D": "23",
+        "E": "30"
+      },
+      "answer": "C",
+      "explanation": "C int[] Miller = {5,1,2,9,2,6,7,4,1,7}; int F = Miller[Miller.length-1]; for(int x=0; x<Miller.length; x++) if (Miller[x]%2==0) F += Miller[x]; out.print(F); F = 7 before the loop begins Then, we add all the even values to F F = 21",
+      "code": "int[] Miller = {5,1,2,9,2,6,7,4,1,7};\nint F = Miller[Miller.length-1];\nfor(int x=0; x<Miller.length; x++)\n  if (Miller[x]%2==0)\n     F += Miller[x];\nout.print(F);"
+    },
+    {
+      "source": "State • 2024",
+      "stem": "What is output by the code segment to the right?",
+      "choices": {
+        "A": "26",
+        "B": "-26",
+        "C": "12",
+        "D": "-12",
+        "E": "-32"
+      },
+      "answer": "E",
+      "explanation": "E (int)'A' - (int)'a' 65 - 97 = -32 UIL Computer Science Written Test – 2024 State",
+      "code": "out.print((int)'A' - (int)'a');"
+    },
+    {
+      "source": "State • 2025",
+      "stem": "What is output by the line marked //q10 in the code to the right?",
+      "choices": {
+        "A": "[8, 6, 9, 3, 20]",
+        "B": "[8, 9, 8, 6, 20]",
+        "C": "[12, 8, 9, 5, 16]",
+        "D": "[8, 8, 9, 5, 20]",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "D",
+      "explanation": "D Matrix Tracing.",
+      "code": "int[][] mat = new int[3][5];\nfor(int r = 0; r < 3; r++)\n     for(int c = 4; c >= 0; c--)\n     mat[r][c] =\n     (r + 1) * 5 + (c - 1) * c - 2;\nout.println\n     (Arrays.toString(mat[2])); //q09\nfor(int i = 0; i < 4; i ++) {\n     if(i != 3) {\n          mat[i][i] = mat[i][i + 1];\n          mat[i][i]--;\n     } if(i != 0) {\n          mat[i - 1][i + 1] =\n              mat[i - 1][i - 1];\n          mat[i - 1][i]++;\n     }\n     mat[0][i] += i;\n     mat[1][i] -= i;\n}\nout.println\n     (Arrays.toString(mat[1])); //q10"
+    },
+    {
+      "source": "State • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "0034",
+        "B": "7004",
+        "C": "4034",
+        "D": "7034",
+        "E": "4004"
+      },
+      "answer": "B",
+      "explanation": "B First, b = a makes b an alias of a. The loop builds a difference array in c: c becomes {3, -2, 6, -5, 0}. Note c[4] stays 0 because the loop runs to a.length - 1 exclusive, so only indices 0–3 are written. Then b = c breaks b's alias to a and makes b point at c instead. Now b and c reference the same object, while a is independent. a[0] += b[0] + c[0]: since b and c are the same array, b[0] and c[0] are both 3. So a[0] = 1 + 3 + 3 = 7. b[0] = 0: this also sets c[0] to 0 since they're the same array. a is unaffected. Final state: a = {7, 4, 2, 8, 3}, b = c = {0, -2, 6, -5, 0}. String concatenation: \"7\" + \"0\" + \"0\" + \"4\" → \"7004\".",
+      "code": "int[] a = {1, 4, 2, 8, 3};\nint[] b = a;\nint[] c = new int[a.length];\nfor (int i = 0; i < a.length - 1; i++)\nc[i] = a[i + 1] - a[i];\nb = c;\na[0] += b[0] + c[0];\nb[0] = 0;\nout.println(a[0] + \"\" + b[0] +\nc[0] + a[1]);"
+    }
+  ]
+}

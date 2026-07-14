@@ -1,0 +1,286 @@
+{
+  "question_number": 12,
+  "topic": "Accumulation loop (summation, product, etc.)",
+  "questions": [
+    {
+      "source": "Invitational A • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "100",
+        "B": "400",
+        "C": "210",
+        "D": "110",
+        "E": "81"
+      },
+      "answer": "A",
+      "explanation": "A This loop finds the sum of all odd numbers in the range 1 to 20 1+3+5+7+9+11+13+15+17+19 = 100 Fun fact: The sum of all consecutive odd numbers starting with 1 is always a perfect square.",
+      "code": "int h = 0;\nfor(int i = 1; i <= 20; i = i + 2)\n     h += i;\nout.print(h);"
+    },
+    {
+      "source": "Invitational A • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "3 6 9 12 15 18 21 24 27 30",
+        "B": "1 4 7 10 13 16 19 22 25 28",
+        "C": "3 6 9 12 15 18 21 24 27 30",
+        "D": "3 9 15 21 27",
+        "E": "6 12 18 24 30"
+      },
+      "answer": "D",
+      "explanation": "D for(int i = 1; i <= 30; i = i + 2) if (i%3==0) out.print(i+\" \"); The loop goes through all odd numbers 1 through 29. It only prints those odd numbers that are evenly divisible by 3. 3 9 15 21 27",
+      "code": "for(int i = 1; i <= 30; i = i + 2)\nif (i%3==0)\n       out.print(i+\" \");"
+    },
+    {
+      "source": "Invitational A • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "456",
+        "B": "106",
+        "C": "561",
+        "D": "121",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "A",
+      "explanation": "A Just trace the loop, you could also estimate and knock out the wrong answers",
+      "code": "int sum = 1;\nfor(int y = 0; y < 15; y++)\n     for(int x = 0; x < y; x++)\n           sum += x;\nout.println(sum);"
+    },
+    {
+      "source": "Invitational A • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "10",
+        "B": "11",
+        "C": "15",
+        "D": "6",
+        "E": "9"
+      },
+      "answer": "A",
+      "explanation": "A 1 + 2 + 3 + 4 = 10.",
+      "code": "int sum = 0;\nfor(int i = 1; i <= 4; i++) {\nsum += i;\n}\nout.println(sum);"
+    },
+    {
+      "source": "Invitational B • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "113",
+        "B": "123",
+        "C": "73",
+        "D": "197",
+        "E": "63"
+      },
+      "answer": "B",
+      "explanation": "B The loop itself runs through the values 1 2 4 8 16 32. The accumulator adds these values one by one. That gets a total of 63 But with every iteration, 10 more is added, for a total of 60. The output is 63 + 60 = 123",
+      "code": "int sum = 0;\nfor(int x = 1; x <= 50; x = x * 2 )\n     sum += x + 10;\nout.print(sum);"
+    },
+    {
+      "source": "Invitational B • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "10 13 16 19",
+        "B": "10 13 16 19 22 19 16 13 10",
+        "C": "10 13 16 19 16 13 10",
+        "D": "10 13 16 19 20 17 14 11",
+        "E": "10 13 16 19 22 20 17 14 11 8"
+      },
+      "answer": "D",
+      "explanation": "D First loop prints 10 13 16 19 Second loop prints 20 17 14 11",
+      "code": "for(int i=10; i<=20; i=i+3)\n   out.print(i + \" \");\nfor(int i=20; i>=10; i=i-3)\n   out.print(i + \" \");"
+    },
+    {
+      "source": "Invitational B • 2025",
+      "stem": "You may assume that the line commented with // cont. is a continuation of the line above it. What is output by the code to the right?",
+      "choices": {
+        "A": "4",
+        "B": "26",
+        "C": "32",
+        "D": "36",
+        "E": "59"
+      },
+      "answer": "D",
+      "explanation": "D pre = {1, 3, 6, 10, 15, 21, 28, 36, 45, 55} pre[7] - pre[3] + arr[9] ≡ 36 - 10 + 10 = 36",
+      "code": "int[] arr = new int[] {1, 2, 3, 4,\n     5, 6, 7, 8, 9, 10}; // cont.\nint[] pre = new int[arr.length];\npre[0] = arr[0];\nfor(int i = 1; i < arr.length; i++) {\n     pre[i] = pre[i-1] + arr[i];\n}\nout.println(pre[7] - pre[3] + arr[9]);"
+    },
+    {
+      "source": "Invitational B • 2026",
+      "stem": "/* Code for Q11 */ File f = new File(\"dir\" + File.separator + \"nums.txt\"); Scanner sc = new Scanner(f); sc.useRadix(8); int sum = sc.nextInt() + sc.nextInt() + sc.nextInt(10); int last; if (sc.hasNextInt()) last = sc.nextInt(); else last = sc.nextInt(10); sum += last; out.println(f.getParent() + \"|\" + f.getName() + \"|\" + sum); sc.close(); What is output by the code to the right?",
+      "choices": {
+        "A": "12|54",
+        "B": "11|54",
+        "C": "12|45",
+        "D": "13|54",
+        "E": "12|60"
+      },
+      "answer": "A",
+      "explanation": "A Processing digits 8, 0, 5, the parity check happens before the d==0 correction, so prod becomes 1→9→9→54 and sum ends 0→8→7→12, prinRng 12|54.",
+      "code": "int n = 508;\nint sum = 0, prod = 1;\nwhile (n > 0) {\nint d = n % 10;\nsum += d;\nif (sum % 2 == 0) prod *= (d + 1);\nelse              prod += n % 7;\nn /= 10;\nif (d == 0) sum--;\n}\nout.println(sum + \"|\" + prod);"
+    },
+    {
+      "source": "District • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "0",
+        "B": "4",
+        "C": "6",
+        "D": "7",
+        "E": "55"
+      },
+      "answer": "A",
+      "explanation": "A The loop runs through the values -10 -9 -8 -7 -6 -5 -4 -3 -2 -1 0 1 2 3 4 5 6 7 8 9 10 If an x is larger than -3 and smaller than 3, it is added to the total. -2 -1 0 1 and 2 are added to that total. The sum is zero.",
+      "code": "int total = 0;\nfor(int x = -10; x <= 10; x++ )\n   if (x > -3 && x < 3)\n     total += x;\nout.print(total);"
+    },
+    {
+      "source": "District • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "-5 -4 -3 -2 -1 0 1 2 3 4 5",
+        "B": "-5 -2 1 4",
+        "C": "-10 -6 4 20",
+        "D": "-5 -4 3 16",
+        "E": "-5 -6 4 20"
+      },
+      "answer": "D",
+      "explanation": "D for(int i=-5, T=1; i<=5; i=i+3, T++) out.print(i*T + \" \"); Pass #1 i = -5 T=1 i*T = -5 Pass #2 i = -2 T=2 i*T = -4 Pass #3 i = 1 T=3 i*T = 3 Pass #4 i = 4 T=4 i*T = 16",
+      "code": "for(int i=-5, T=1; i<=5; i=i+3, T++)\nout.print(i*T + \" \");"
+    },
+    {
+      "source": "District • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "109",
+        "B": "97",
+        "C": "128",
+        "D": "115",
+        "E": "There is no output due to a runtime error."
+      },
+      "answer": "B",
+      "explanation": "B Just trace the loop, you could also estimate and knock out the wrong answers",
+      "code": "int sum = 1;\nfor(int y = 0; y < 12; y++) {\n     sum += y;\n     for(int x = 0; x < y / 2; x++)\n           sum ++;\n}\nout.println(sum);"
+    },
+    {
+      "source": "District • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "15 12",
+        "B": "12 15",
+        "C": "12 8",
+        "D": "20 15",
+        "E": "6 15"
+      },
+      "answer": "B",
+      "explanation": "B Even numbers (2, 4, 6) are added to sum giving 2 + 4 + 6 = 12, odd numbers (3, 5) are multiplied into product giving 1 ⋅3 ⋅5 = 15.",
+      "code": "int[] nums = {3, 5, 2, 4, 6};\nint sum = 0;\nint product = 1;\nfor (int n : nums) {\nif (n % 2 == 0) {\nsum += n;\n} else {\nproduct *= n;\n}\n}\nout.println(sum + \" \" + product);"
+    },
+    {
+      "source": "Regional • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "50",
+        "B": "25",
+        "C": "4",
+        "D": "33",
+        "E": "17"
+      },
+      "answer": "C",
+      "explanation": "C This divides 100 by 2 to get 50 Then it divides 50 by 3 to get 16 Then it divides 16 by 4 to get 4",
+      "code": "int strange = 100;\nfor(int x = 2; x <= 4; x++)\nstrange /= x;\nout print(strange);"
+    },
+    {
+      "source": "Regional • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "-5",
+        "B": "7",
+        "C": "12",
+        "D": "15",
+        "E": "17"
+      },
+      "answer": "A",
+      "explanation": "A int A=5; int B=12; int C=7; int D = (C>B) ? A+B : C-B; Translated int D; if(C>B) D=A+B; else D=C-B; D is -5",
+      "code": "int A=5; int B=12; int C=7;\nint D = (C>B) ? A+B : C-B;\nout.print(D);"
+    },
+    {
+      "source": "Regional • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "245",
+        "B": "185",
+        "C": "266",
+        "D": "336",
+        "E": "There is no output due to an infinite loop."
+      },
+      "answer": "A",
+      "explanation": "A Simple loop tracing.",
+      "code": "int sum = 0;\nfor(int y = 5; y < 16; y++)\n     for(int x = y; x >= 10; x--)\n           sum += x;\nout.println(sum);"
+    },
+    {
+      "source": "Regional • 2026",
+      "stem": "Which of the following values is output on its own line by the code to the right?",
+      "choices": {
+        "A": "899",
+        "B": "18",
+        "C": "101",
+        "D": "50",
+        "E": "99"
+      },
+      "answer": "B",
+      "explanation": "B The values output are 900, 648, 448, 294, 180, 100, 48, 18, 4, 0.",
+      "code": "for (int i = 10; i >= 1; i--) {\nint product = i * (i - 1);\nfor (int j = 1; j < i; j++) {\nproduct += product / j;\n}\nout.println(product);\n}"
+    },
+    {
+      "source": "State • 2023",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "201",
+        "B": "209",
+        "C": "219",
+        "D": "221",
+        "E": "229"
+      },
+      "answer": "C",
+      "explanation": "C int G = 0; 41 iterations for (int x=10; x<=50; x++) 10-12 Add 3 3*3 = 9 G += (int)(Math.sqrt(x)+0.5); 13-20 Add 4 8*4=32 out.print(G); 21-30 Add 5 10*5=50 31-42 Add 6 12*6=72 43-50 Add 7 8*7=56 G = 219",
+      "code": "int G = 0;\nfor (int x=10; x<=50; x++)\n   G += (int)(Math.sqrt(x)+0.5);\nout.print(G);"
+    },
+    {
+      "source": "State • 2024",
+      "stem": "What is the output of the code segment to the right?",
+      "choices": {
+        "A": "15",
+        "B": "28",
+        "C": "29",
+        "D": "30",
+        "E": "31"
+      },
+      "answer": "B",
+      "explanation": "B A = 30 & 29; 11110 & 11101 = 11100 B = 29 & 28; 11101 & 11100 = 11100 C = A | B; 11100 | 11100 = 11100 = 28",
+      "code": "int A = 30 & 29;\nint B = 29 & 28;\nint C = A | B;\nout.print(C);"
+    },
+    {
+      "source": "State • 2025",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "4",
+        "B": "104",
+        "C": "15",
+        "D": "105",
+        "E": "There is no output due to a compile error."
+      },
+      "answer": "B",
+      "explanation": "B Literals are allowed in switches, but since none of the cases are true only the default statement will execute.",
+      "code": "int i = 4;\nswitch(5) {\n     case 4: i += 10;\n     case 2: i++;\n           break;\n     default: i += 100;\n}\nout.print(i);"
+    },
+    {
+      "source": "State • 2026",
+      "stem": "What is output by the code to the right?",
+      "choices": {
+        "A": "12|9|9",
+        "B": "9|12|9",
+        "C": "5|6|0",
+        "D": "12|6|9",
+        "E": "6|12|5"
+      },
+      "answer": "A",
+      "explanation": "A i=2: 2%4=2. case 2: p*=2 → p=2. Falls through to case 3: t=0, s=2, p=0. Break. i=3: 3%4=3. case 3: t=2, s=0, p=2. Break. i=4: 4%4=0. case 0: s*=4 → 0. Falls through to case 1: s+=4 → 4. Break. i=5: 5%4=1. case 1: s+=5 → 9. Break. i=6: 6%4=2. case 2: p*=6 → 12. Falls through to case 3: t=9, s=12, p=9. Break.",
+      "code": "int s = 0, p = 1, t = 0;\nfor (int i = 2; i <= 6; i++) {\nswitch (i % 4) {\ncase 0: s *= i;\ncase 1: s += i; break;\ncase 2: p *= i;\ncase 3: t = s; s = p; p = t;\nbreak;\n}\n}\nout.println(s + \"|\" + p + \"|\" + t);"
+    }
+  ]
+}
