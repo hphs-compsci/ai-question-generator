@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { verifyQuestion, __test } from "../src/verify.js";
+import { verifyQuestion, findStructuralProblem, __test } from "../src/verify.js";
 
 const { evaluateSnippet } = __test;
 
@@ -72,6 +72,44 @@ describe("evaluateSnippet — Java semantics", () => {
   });
 });
 
+describe("findStructuralProblem — checks that apply to every question", () => {
+  const good = { choices: { A: "1", B: "2", C: "3", D: "4", E: "5" }, answer: "A" };
+
+  it("passes a well-formed question", () => {
+    expect(findStructuralProblem(good)).toBeNull();
+  });
+
+  it("catches duplicate choices", () => {
+    const q = { ...good, choices: { A: "45", B: "2", C: "3", D: "4", E: "45" } };
+    expect(findStructuralProblem(q)).toMatch(/duplicate choices A and E/);
+  });
+
+  it("catches duplicates that differ only in whitespace", () => {
+    const q = { ...good, choices: { A: "10 20", B: "2", C: "3", D: "4", E: "10  20" } };
+    expect(findStructuralProblem(q)).toMatch(/duplicate/);
+  });
+
+  it("catches missing or blank choices", () => {
+    expect(findStructuralProblem({ ...good, choices: { A: "1", B: "2", C: "3", D: "4" } })).toMatch(/missing choice/);
+    expect(findStructuralProblem({ ...good, choices: { A: "1", B: "", C: "3", D: "4", E: "5" } })).toMatch(/missing choice/);
+  });
+
+  it("catches an answer outside A-E", () => {
+    expect(findStructuralProblem({ ...good, answer: "F" })).toMatch(/not one of A-E/);
+  });
+
+  it("rejects a question with duplicate choices even if the code is unverifiable", () => {
+    const q = {
+      code: "ArrayList<Integer> list = new ArrayList<>();\nout.println(list);",
+      choices: { A: "[]", B: "[]", C: "x", D: "y", E: "z" },
+      answer: "A",
+    };
+    // Structural check runs before evaluation, so this is rejected rather than
+    // passed through as unverifiable.
+    expect(verifyQuestion(q)).toMatchObject({ status: "wrong" });
+  });
+});
+
 describe("verifyQuestion — reconciliation", () => {
   const base = {
     code: "out.print(8 / 2 + 3 * 4 - 6);", // = 10
@@ -95,7 +133,11 @@ describe("verifyQuestion — reconciliation", () => {
   });
 
   it("returns unverifiable for code outside the supported subset", () => {
-    const q = { code: 'out.print("x".repeat(3));', choices: { A: "xxx" }, answer: "A" };
+    const q = {
+      code: 'out.print("x".repeat(3));',
+      choices: { A: "xxx", B: "xx", C: "x", D: "xxxx", E: "error" },
+      answer: "A",
+    };
     expect(verifyQuestion(q)).toMatchObject({ status: "unverifiable" });
   });
 

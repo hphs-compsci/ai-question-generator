@@ -1,2 +1,4 @@
 # Copy to .dev.vars and fill in. Never commit real keys.
+# npx wrangler secret put OPENROUTER_API_KEY
+
 OPENROUTER_API_KEY=sk-or-v1-...

@@ -599,12 +599,40 @@ function evaluateSnippet(code) {
 
 // --- Public API ------------------------------------------------------------
 
+// Structural problems that make a question invalid no matter what the code
+// evaluates to. Checked for every question, including ones whose code the
+// evaluator can't run — a duplicated choice is broken either way.
+// Returns a reason string, or null if the question is structurally sound.
+export function findStructuralProblem(q) {
+  const choices = q?.choices;
+  if (!choices || typeof choices !== "object") return "missing choices";
+
+  const letters = ["A", "B", "C", "D", "E"];
+  const missing = letters.filter((l) => typeof choices[l] !== "string" || choices[l].trim() === "");
+  if (missing.length) return `missing choice(s): ${missing.join(", ")}`;
+
+  const seen = new Map();
+  for (const letter of letters) {
+    const key = normalize(choices[letter]);
+    if (seen.has(key)) return `duplicate choices ${seen.get(key)} and ${letter} (both "${choices[letter]}")`;
+    seen.set(key, letter);
+  }
+
+  if (!letters.includes(q.answer)) return `answer '${q.answer}' is not one of A-E`;
+  return null;
+}
+
 // Verify one generated question. Returns:
 //   { status: "ok" }                       stated answer matches the true output
 //   { status: "corrected", answer, ... }   another choice matches; answer fixed
-//   { status: "wrong", expected }          no choice matches the true output
+//   { status: "wrong", expected|reason }   structurally broken, or no choice matches
 //   { status: "unverifiable" }             code is outside the supported subset
 export function verifyQuestion(q) {
+  // Structural checks first: they apply even when the code can't be evaluated,
+  // and a question with duplicate or missing choices is unusable regardless.
+  const structural = findStructuralProblem(q);
+  if (structural) return { status: "wrong", reason: structural };
+
   let expected;
   try {
     expected = evaluateSnippet(q.code || "");
@@ -613,7 +641,7 @@ export function verifyQuestion(q) {
     return { status: "unverifiable", note: String(err) };
   }
 
-  const choices = q.choices || {};
+  const choices = q.choices;
   const matches = Object.keys(choices).filter(
     (letter) => normalize(choices[letter]) === normalize(expected),
   );

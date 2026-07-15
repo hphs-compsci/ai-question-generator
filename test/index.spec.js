@@ -1,6 +1,6 @@
 import { env, createExecutionContext, waitOnExecutionContext } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
-import worker, { specToJobs } from "../src";
+import worker, { specToJobs, parseQuestions } from "../src";
 
 // These cover request validation only. Generation itself calls the remote AI
 // binding (slow + billable), so it is exercised manually / in integration, not
@@ -51,6 +51,35 @@ describe("question generator — validation", () => {
     );
     await waitOnExecutionContext(ctx);
     expect(res.status).toBe(400);
+  });
+});
+
+describe("parseQuestions — tolerant parsing of model output", () => {
+  const payload = { questions: [{ stem: "s", code: "c", choices: {}, answer: "A", explanation: "e" }] };
+
+  it("parses clean JSON", () => {
+    expect(parseQuestions(JSON.stringify(payload))).toEqual(payload);
+  });
+
+  it("unwraps a ```json markdown fence", () => {
+    expect(parseQuestions("```json\n" + JSON.stringify(payload) + "\n```")).toEqual(payload);
+  });
+
+  it("unwraps a bare ``` fence", () => {
+    expect(parseQuestions("```\n" + JSON.stringify(payload) + "\n```")).toEqual(payload);
+  });
+
+  it("recovers JSON surrounded by prose", () => {
+    expect(parseQuestions("Sure! Here you go:\n" + JSON.stringify(payload) + "\nHope that helps.")).toEqual(payload);
+  });
+
+  it("returns null for truncated JSON", () => {
+    expect(parseQuestions('{"questions":[{"stem":"s","code":"out.print(')).toBeNull();
+  });
+
+  it("returns null when there is no questions array", () => {
+    expect(parseQuestions('{"foo":1}')).toBeNull();
+    expect(parseQuestions("not json at all")).toBeNull();
   });
 });
 

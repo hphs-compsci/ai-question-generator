@@ -96,6 +96,51 @@ function badRequest(message) {
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+// The response schema, with the array length pinned to what was asked for.
+// Without min/maxItems the model freely returns fewer (or more) than requested.
+function buildResponseSchema(quantity) {
+  return {
+    ...RESPONSE_SCHEMA,
+    properties: {
+      questions: { ...RESPONSE_SCHEMA.properties.questions, minItems: quantity, maxItems: quantity },
+    },
+  };
+}
+
+// Parse the model's completion into { questions: [...] }, tolerating the two
+// ways providers deviate from strict JSON: wrapping it in a markdown fence, and
+// padding it with prose. Returns null if nothing usable can be recovered.
+export function parseQuestions(content) {
+  const attempt = (text) => {
+    try {
+      const obj = JSON.parse(text);
+      return Array.isArray(obj?.questions) ? obj : null;
+    } catch {
+      return null;
+    }
+  };
+
+  const direct = attempt(content);
+  if (direct) return direct;
+
+  // ```json ... ``` (or a bare ``` fence)
+  const fenced = content.match(/```(?:json)?\s*([\s\S]*?)```/);
+  if (fenced) {
+    const inner = attempt(fenced[1].trim());
+    if (inner) return inner;
+  }
+
+  // Fall back to the outermost {...} span, in case of leading/trailing prose.
+  const first = content.indexOf("{");
+  const last = content.lastIndexOf("}");
+  if (first !== -1 && last > first) {
+    const span = attempt(content.slice(first, last + 1));
+    if (span) return span;
+  }
+
+  return null;
+}
+
 // Trim each example down to the fields that matter for generation. `source` is
 // contest-specific and would only encourage the model to invent fake sources.
 function toExample(q) {
@@ -133,15 +178,20 @@ async function generateTopic(env, questionNumber, quantity) {
     `Every question you write is on the topic: "${bank.topic}".`,
     "You are given existing questions as examples. Write brand-new original questions in the exact same style and difficulty.",
     "Rules:",
+    `- Return EXACTLY ${quantity} question${quantity === 1 ? "" : "s"} — no more, no fewer.`,
     "- Each question must have a stem, a Java 'code' snippet, five choices A-E, one correct 'answer', and an 'explanation' that shows the work.",
     "- The 'code' is the Java segment the question asks about. Use '\\n' for newlines. Output statements use out.print / out.println / out.printf.",
     "- Exactly one of the five choices must be correct and equal to the true result of the code. Make the other four plausible distractors.",
+    "- The five choices must be FIVE DISTINCT values. Never repeat a value across two letters.",
+    "- Distractors must be wrong. Never include a second choice that is also equal to the true result.",
     "- Do NOT copy the example questions. Change the values, expressions, and structure so each question is genuinely new.",
+    "- Keep each 'code' snippet short and self-contained, and keep 'explanation' brief.",
     "Accuracy is critical. For each question, before writing the choices:",
     "  1. Mentally execute the code step by step, exactly as Java would (integer vs. double division, operator precedence, %, bit ops, overflow).",
     "  2. Determine the single true result.",
     "  3. Put that exact result as one of the five choices and set 'answer' to that choice's letter.",
     "  4. Verify that choices[answer] equals the value your explanation computes. They MUST match.",
+    "  5. Check the other four choices: each must be DIFFERENT from the answer and from each other.",
     "The explanation must show the step-by-step evaluation and end at the value in the chosen answer.",
   ].join("\n");
 
@@ -160,24 +210,25 @@ async function generateTopic(env, questionNumber, quantity) {
       { role: "system", content: systemPrompt },
       { role: "user", content: userPrompt },
     ],
-    // Budget roughly one question's worth of tokens per requested item, plus
-    // headroom for the reasoning tokens this model emits before its answer.
-    max_tokens: Math.min(8192, 1000 + quantity * 700),
+    // Token budget. Reasoning tokens count against this and vary a lot by
+    // provider (measured 0 on some, >2000 on others), so leave generous
+    // headroom: running out truncates the JSON mid-object and it won't parse.
+    max_tokens: Math.min(16384, 3000 + quantity * 1200),
     response_format: {
       type: "json_schema",
-      json_schema: { name: "questions", strict: true, schema: RESPONSE_SCHEMA },
+      json_schema: { name: "questions", strict: true, schema: buildResponseSchema(quantity) },
     },
   };
 
-  // Fireworks intermittently returns 429 ("temporarily rate-limited upstream"),
-  // and requests can otherwise fail transiently, so retry with a short backoff
-  // before giving up on the topic.
-  let content;
+  // One attempt at the whole round-trip: request, then parse. Parsing lives
+  // inside the retry loop on purpose — a truncated or fenced response is just
+  // as transient as a 429, and retrying is what keeps a topic from being lost.
+  let generated;
   let lastErr;
   for (let attempt = 0; attempt < AI_MAX_ATTEMPTS; attempt++) {
     if (attempt > 0) {
       // Exponential backoff with jitter. Jitter matters here: without it the
-      // concurrent topic workers retry in lockstep and re-trigger the limit.
+      // concurrent topic workers retry in lockstep and re-trigger rate limits.
       const backoff = AI_RETRY_BASE_MS * 2 ** (attempt - 1);
       await sleep(backoff + Math.random() * 1000);
     }
@@ -199,11 +250,24 @@ async function generateTopic(env, questionNumber, quantity) {
         continue;
       }
       const payload = await res.json();
-      content = payload.choices?.[0]?.message?.content;
+      const choice = payload.choices?.[0];
+      const content = choice?.message?.content;
       if (!content) {
         lastErr = "empty completion";
         continue;
       }
+      // finish_reason "length" means the model was cut off mid-JSON. Don't
+      // bother parsing; just retry.
+      if (choice.finish_reason === "length") {
+        lastErr = "response truncated (hit max_tokens)";
+        continue;
+      }
+      const parsed = parseQuestions(content);
+      if (!parsed) {
+        lastErr = "malformed JSON from model";
+        continue;
+      }
+      generated = parsed;
       lastErr = null;
       break;
     } catch (err) {
@@ -216,17 +280,6 @@ async function generateTopic(env, questionNumber, quantity) {
       topic: bank.topic,
       error: "AI generation failed.",
       detail: lastErr,
-    };
-  }
-
-  let generated;
-  try {
-    generated = JSON.parse(content);
-  } catch {
-    return {
-      question_number: questionNumber,
-      topic: bank.topic,
-      error: "AI returned malformed JSON.",
     };
   }
 
