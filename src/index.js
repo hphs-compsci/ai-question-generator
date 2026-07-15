@@ -22,23 +22,38 @@ const BANKS = {
   11: q11, 12: q12, 13: q13, 14: q14, 15: q15,
 };
 
-const MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast";
+const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
+const MODEL = "deepseek/deepseek-v4-flash";
+// Preference-ordered providers with fallback. All of these were measured
+// returning valid strict json_schema output; ordering is by observed latency.
+// Fallbacks are essential rather than optional: Fireworks rate-limits (429)
+// even on single sequential calls, so pinning one provider fails most requests.
+const PROVIDER = {
+  order: ["DeepInfra", "Parasail", "AtlasCloud", "Alibaba", "Fireworks"],
+  allow_fallbacks: true,
+};
+// The model already emits reasoning tokens by default; forcing an explicit
+// `reasoning.effort` measured slower with no accuracy gain, so we leave it off.
+
 const MAX_QUANTITY = 10;
 // Cap on few-shot examples sent to the model. The banks hold ~20 questions
 // each; sending all of them makes the prompt large and the request slow, so we
 // sample a spread of them instead.
 const MAX_EXAMPLES = 4;
 // In `all=true` mode we generate for every topic. Fan them out, but cap how
-// many inference calls are in flight at once so we don't trip Workers AI rate
+// many inference calls are in flight at once so we don't trip upstream rate
 // limits — each wave is ~one call's worth of latency.
 const TOPIC_NUMBERS = Object.keys(BANKS).map(Number).sort((a, b) => a - b);
-const ALL_CONCURRENCY = 4;
-// Total attempts per topic before giving up (initial try + retries). Guards
-// against transient upstream 504s, which are common under concurrent load.
+const ALL_CONCURRENCY = 5;
+// Total attempts per topic before giving up (initial try + retries). Provider
+// fallback handles most rate limiting upstream, so this only needs to cover a
+// transient failure across the whole provider pool.
 const AI_MAX_ATTEMPTS = 3;
+const AI_RETRY_BASE_MS = 1000;
 
-// JSON Schema describing a single generated question. Passed to Workers AI so
-// the model is constrained to return well-formed output.
+// JSON Schema constraining the model's output. Strict mode requires every
+// object to declare `additionalProperties: false` and list all keys in
+// `required`, so keep those in sync when editing.
 const QUESTION_SCHEMA = {
   type: "object",
   properties: {
@@ -54,11 +69,13 @@ const QUESTION_SCHEMA = {
         E: { type: "string" },
       },
       required: ["A", "B", "C", "D", "E"],
+      additionalProperties: false,
     },
     answer: { type: "string", enum: ["A", "B", "C", "D", "E"] },
     explanation: { type: "string" },
   },
   required: ["stem", "code", "choices", "answer", "explanation"],
+  additionalProperties: false,
 };
 
 const RESPONSE_SCHEMA = {
@@ -70,11 +87,14 @@ const RESPONSE_SCHEMA = {
     },
   },
   required: ["questions"],
+  additionalProperties: false,
 };
 
 function badRequest(message) {
   return Response.json({ error: message }, { status: 400 });
 }
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Trim each example down to the fields that matter for generation. `source` is
 // contest-specific and would only encourage the model to invent fake sources.
@@ -133,32 +153,61 @@ async function generateTopic(env, questionNumber, quantity) {
     `Now generate ${quantity} NEW original question(s) on the same topic, in the same JSON format.`,
   ].join("\n");
 
-  const runArgs = {
+  const body = {
+    model: MODEL,
+    provider: PROVIDER,
     messages: [
       { role: "system", content: systemPrompt },
       { role: "user", content: userPrompt },
     ],
-    // Budget roughly one question's worth of tokens per requested item,
-    // clamped so a single-question request returns quickly.
-    max_tokens: Math.min(4096, 400 + quantity * 350),
+    // Budget roughly one question's worth of tokens per requested item, plus
+    // headroom for the reasoning tokens this model emits before its answer.
+    max_tokens: Math.min(8192, 1000 + quantity * 700),
     response_format: {
       type: "json_schema",
-      json_schema: RESPONSE_SCHEMA,
+      json_schema: { name: "questions", strict: true, schema: RESPONSE_SCHEMA },
     },
   };
 
-  // Inference calls occasionally time out (upstream 504), especially when
-  // several run concurrently in an all-topics request. These are usually
-  // transient, so retry a couple of times before giving up on the topic.
-  let aiResponse;
+  // Fireworks intermittently returns 429 ("temporarily rate-limited upstream"),
+  // and requests can otherwise fail transiently, so retry with a short backoff
+  // before giving up on the topic.
+  let content;
   let lastErr;
   for (let attempt = 0; attempt < AI_MAX_ATTEMPTS; attempt++) {
+    if (attempt > 0) {
+      // Exponential backoff with jitter. Jitter matters here: without it the
+      // concurrent topic workers retry in lockstep and re-trigger the limit.
+      const backoff = AI_RETRY_BASE_MS * 2 ** (attempt - 1);
+      await sleep(backoff + Math.random() * 1000);
+    }
     try {
-      aiResponse = await env.AI.run(MODEL, runArgs);
+      const res = await fetch(OPENROUTER_URL, {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${env.OPENROUTER_API_KEY}`,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) {
+        lastErr = `HTTP ${res.status}: ${(await res.text()).slice(0, 200)}`;
+        // 4xx other than 429 won't fix themselves (bad key, bad request).
+        if (res.status !== 429 && res.status < 500) break;
+        const retryAfter = Number(res.headers.get("retry-after"));
+        if (retryAfter > 0) await sleep(Math.min(retryAfter * 1000, 15000));
+        continue;
+      }
+      const payload = await res.json();
+      content = payload.choices?.[0]?.message?.content;
+      if (!content) {
+        lastErr = "empty completion";
+        continue;
+      }
       lastErr = null;
       break;
     } catch (err) {
-      lastErr = err;
+      lastErr = String(err);
     }
   }
   if (lastErr) {
@@ -166,23 +215,19 @@ async function generateTopic(env, questionNumber, quantity) {
       question_number: questionNumber,
       topic: bank.topic,
       error: "AI generation failed.",
-      detail: String(lastErr),
+      detail: lastErr,
     };
   }
 
-  // With json_schema response_format, the model returns a parsed object in
-  // `response`. Fall back to parsing a raw string if needed.
-  let generated = aiResponse.response;
-  if (typeof generated === "string") {
-    try {
-      generated = JSON.parse(generated);
-    } catch {
-      return {
-        question_number: questionNumber,
-        topic: bank.topic,
-        error: "AI returned malformed JSON.",
-      };
-    }
+  let generated;
+  try {
+    generated = JSON.parse(content);
+  } catch {
+    return {
+      question_number: questionNumber,
+      topic: bank.topic,
+      error: "AI returned malformed JSON.",
+    };
   }
 
   const rawQuestions = Array.isArray(generated?.questions)
@@ -311,6 +356,17 @@ export function specToJobs(spec) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    // Fail loudly on a misconfigured deploy rather than retrying into a 401.
+    if (!env.OPENROUTER_API_KEY) {
+      return Response.json(
+        {
+          error:
+            "OPENROUTER_API_KEY is not configured. Set it with: npx wrangler secret put OPENROUTER_API_KEY",
+        },
+        { status: 500 },
+      );
+    }
 
     // Fine-grained mode: a JSON body maps topic -> how many questions to make.
     // e.g. { "1": 1, "2": 2, "13": 3 }  (topics set to 0/omitted are skipped).

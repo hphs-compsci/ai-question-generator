@@ -13,10 +13,13 @@
 	"upload_source_maps": true,
 	"compatibility_flags": [
 		"nodejs_compat"
-	],
-	"ai": {
-		"binding": "AI"
-	}
+	]
+	/**
+	 * Inference runs through OpenRouter over plain fetch(), so no AI binding is
+	 * needed. The API key is a secret, set it with:
+	 *   npx wrangler secret put OPENROUTER_API_KEY
+	 * For local dev, put OPENROUTER_API_KEY=... in .dev.vars (gitignored).
+	 */
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
