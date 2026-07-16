@@ -599,6 +599,32 @@ function evaluateSnippet(code) {
 
 // --- Public API ------------------------------------------------------------
 
+// Parse a base-N literal as the question banks write them: 1101_2, 26_(16),
+// 3A_(12), 0x1F, 0b1011. Returns its decimal value, or null if the text isn't a
+// base literal (or has digits illegal in its own base, e.g. 243_3).
+export function parseBaseLiteral(text) {
+  const s = String(text ?? "").trim();
+  const m = s.match(/^([0-9A-Za-z]+)_\(?(\d{1,2})\)?$/);
+  if (!m) return null;
+  const [, digits, baseStr] = m;
+  const base = Number(baseStr);
+  if (base < 2 || base > 36) return null;
+  const value = parseInt(digits, base);
+  if (!Number.isFinite(value)) return null;
+  // parseInt stops at the first illegal digit, so round-trip to reject e.g.
+  // "243_3" (the 4 is not a base-3 digit) rather than silently reading "2".
+  if (value.toString(base).toUpperCase() !== digits.toUpperCase().replace(/^0+(?=.)/, "")) {
+    return null;
+  }
+  return value;
+}
+
+// Stems that deliberately rely on several choices being equal — "which is NOT
+// equivalent to the other four?", "which has a different value?", "are all of
+// these the same?". For these, equal-valued choices are the question, not a bug.
+const EQUIVALENCE_IS_INTENDED =
+  /\b(not|isn't|is not)\b[^?]*\b(equal|equivalent|same)\b|\b(differ|different|differs)\b|\ball\s+(are|of\s+these)\b/i;
+
 // Structural problems that make a question invalid no matter what the code
 // evaluates to. Checked for every question, including ones whose code the
 // evaluator can't run — a duplicated choice is broken either way.
@@ -616,6 +642,27 @@ export function findStructuralProblem(q) {
     const key = normalize(choices[letter]);
     if (seen.has(key)) return `duplicate choices ${seen.get(key)} and ${letter} (both "${choices[letter]}")`;
     seen.set(key, letter);
+  }
+
+  // Two choices can be textually different but numerically identical when
+  // written in different bases (221_8 and 91_(16) are both 145). On a question
+  // with a unique answer that means two correct options, so it's broken even
+  // though the text differs.
+  //
+  // But a whole genre of base questions asks "which is NOT equal to the other
+  // four?" or "which is different?" — there, equivalent choices are the entire
+  // point. Only apply this check when the stem implies a unique answer.
+  if (!EQUIVALENCE_IS_INTENDED.test(q?.stem ?? "")) {
+    const byValue = new Map();
+    for (const letter of letters) {
+      const value = parseBaseLiteral(choices[letter]);
+      if (value === null) continue;
+      if (byValue.has(value)) {
+        const other = byValue.get(value);
+        return `choices ${other} ("${choices[other]}") and ${letter} ("${choices[letter]}") are both ${value} in decimal`;
+      }
+      byValue.set(value, letter);
+    }
   }
 
   if (!letters.includes(q.answer)) return `answer '${q.answer}' is not one of A-E`;

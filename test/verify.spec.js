@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { verifyQuestion, findStructuralProblem, __test } from "../src/verify.js";
+import { verifyQuestion, findStructuralProblem, parseBaseLiteral, __test } from "../src/verify.js";
 
 const { evaluateSnippet } = __test;
 
@@ -107,6 +107,59 @@ describe("findStructuralProblem — checks that apply to every question", () => 
     // Structural check runs before evaluation, so this is rejected rather than
     // passed through as unverifiable.
     expect(verifyQuestion(q)).toMatchObject({ status: "wrong" });
+  });
+});
+
+describe("parseBaseLiteral", () => {
+  it("reads the notations the banks use", () => {
+    expect(parseBaseLiteral("1101_2")).toBe(13);
+    expect(parseBaseLiteral("221_8")).toBe(145);
+    expect(parseBaseLiteral("91_(16)")).toBe(145);
+    expect(parseBaseLiteral("1B_(16)")).toBe(27);
+    expect(parseBaseLiteral("3A_(12)")).toBe(46);
+  });
+
+  it("rejects digits illegal in their own base", () => {
+    // parseInt would silently read "243_3" as 2; we must not.
+    expect(parseBaseLiteral("243_3")).toBeNull();
+    expect(parseBaseLiteral("192_2")).toBeNull();
+  });
+
+  it("returns null for anything that isn't a base literal", () => {
+    expect(parseBaseLiteral("27")).toBeNull();
+    expect(parseBaseLiteral("Base 5")).toBeNull();
+    expect(parseBaseLiteral("")).toBeNull();
+  });
+});
+
+describe("findStructuralProblem — cross-base equivalence", () => {
+  it("catches two choices that are the same number in different bases", () => {
+    const q = {
+      stem: "Which of the following is equivalent to the sum of 3A_(16) and 127_8?",
+      choices: { A: "221_8", B: "91_(16)", C: "10010010_2", D: "110_(12)", E: "145_9" },
+      answer: "A",
+    };
+    // 221_8 and 91_(16) are both 145 -> two correct answers.
+    expect(findStructuralProblem(q)).toMatch(/both 145 in decimal/);
+  });
+
+  it("allows equivalent choices when the stem is asking which one differs", () => {
+    // A real UIL genre: four choices are equal on purpose.
+    const q = {
+      stem: "Which of the following numbers is not equal to the other four?",
+      choices: { A: "1111010_2", B: "750_8", C: "7A_(16)", D: "101_(11)", E: "1322_4" },
+      answer: "B",
+    };
+    expect(findStructuralProblem(q)).toBeNull();
+  });
+
+  it("leaves normal base questions alone", () => {
+    const q = {
+      stem: "Which of the following octal numbers, when converted to base 10, is the smallest?",
+      choices: { A: "173_8", B: "256_8", C: "107_8", D: "314_8", E: "220_8" },
+      answer: "C",
+    };
+    expect(findStructuralProblem(q)).toBeNull();
   });
 });
 

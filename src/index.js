@@ -64,25 +64,31 @@ const AI_RETRY_BASE_MS = 1000;
 // `required`, so keep those in sync when editing.
 //
 // Field ORDER matters and is deliberate. The model emits keys in this order, so
-// putting `work` and `output` before `choices`/`answer` forces it to trace the
-// code and commit to a computed result *before* it can name a letter. With
-// `answer` ahead of the reasoning the model picks a letter first and
-// rationalises after, which is exactly how a wrong answer ends up next to a
-// correct explanation.
+// putting `work` and `correct_choice_text` before `choices`/`answer` forces it
+// to derive the result *before* it can name a letter. With `answer` ahead of the
+// reasoning the model picks a letter first and rationalises after, which is
+// exactly how a wrong answer ends up next to a correct explanation.
+//
+// `code` is intentionally NOT always required in spirit: several topics (most of
+// all number bases) are prose questions with no snippet, so it may be empty.
 const QUESTION_SCHEMA = {
   type: "object",
   properties: {
     stem: { type: "string" },
-    code: { type: "string" },
+    code: {
+      type: "string",
+      description:
+        "The Java snippet the question asks about, or an empty string for concept questions that have no code (e.g. base-conversion problems where the values live in the choices).",
+    },
     work: {
       type: "string",
       description:
-        "Step-by-step trace of executing the code exactly as Java would, one line per step. Write this BEFORE deciding the choices.",
+        "Step-by-step derivation of the correct answer, one line per step. For code questions, trace the code exactly as Java would. Write this BEFORE deciding the choices.",
     },
-    output: {
+    correct_choice_text: {
       type: "string",
       description:
-        "The exact literal text this code prints, derived from 'work'. This is the single correct value.",
+        "The exact text of the correct choice, derived from 'work'. It must appear verbatim as one of the five choices below, written in the SAME notation the question uses (e.g. keep base-N literals such as 1101_2 in base-N form; do NOT convert them to decimal).",
     },
     choices: {
       type: "object",
@@ -99,11 +105,11 @@ const QUESTION_SCHEMA = {
     answer: {
       type: "string",
       enum: ["A", "B", "C", "D", "E"],
-      description: "The letter whose choice text is exactly equal to 'output'.",
+      description: "The letter whose choice text is exactly equal to 'correct_choice_text'.",
     },
     explanation: { type: "string" },
   },
-  required: ["stem", "code", "work", "output", "choices", "answer", "explanation"],
+  required: ["stem", "code", "work", "correct_choice_text", "choices", "answer", "explanation"],
   additionalProperties: false,
 };
 
@@ -129,25 +135,27 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 // output with spaces instead of literal newlines.
 const normalizeText = (s) => String(s ?? "").replace(/\s+/g, " ").trim();
 
-// For questions the Java evaluator can't run, use the model's own `output`
-// field (which it derived from its step-by-step trace before picking a letter)
-// as a weaker cross-check against `choices[answer]`.
+// For questions the Java evaluator can't run, use the model's own
+// `correct_choice_text` (which it derived from its step-by-step 'work' before
+// picking a letter) as a weaker cross-check against `choices[answer]`.
 //
-// This is deliberately conservative: `output` is still the model's word, not
-// ground truth, so it is only trusted to detect a *self-contradiction*.
-//   - output matches choices[answer]      -> consistent, leave alone
-//   - output matches a different choice   -> the letter is wrong, fix it
-//   - output matches no choice at all     -> can't tell which is wrong; leave
-//     it flagged rather than dropping a possibly-fine question
+// This is deliberately conservative: it is still the model's word, not ground
+// truth, so it is only trusted to detect a *self-contradiction*.
+//   - it matches choices[answer]      -> consistent, leave alone
+//   - it matches a different choice   -> the letter is wrong, fix it
+//   - it matches no choice at all     -> the model derived a value it never put
+//     in the choices, so no option is correct; drop the question
 // Returns { status: "consistent" | "corrected" | "wrong", answer? }.
 export function reconcileWithSelfReport(q) {
-  const output = normalizeText(q?.output);
-  if (!output) return { status: "consistent" };
+  const derived = normalizeText(q?.correct_choice_text);
+  if (!derived) return { status: "consistent" };
 
   const choices = q?.choices ?? {};
-  const matches = Object.keys(choices).filter((l) => normalizeText(choices[l]) === output);
+  const matches = Object.keys(choices).filter((l) => normalizeText(choices[l]) === derived);
 
-  if (matches.length === 0) return { status: "consistent" };
+  // The model computed an answer that isn't among its own options — exactly the
+  // "222_3 = 26, so base 3 works" case, where 30 appears nowhere. Unsalvageable.
+  if (matches.length === 0) return { status: "wrong", derived };
   if (matches.includes(q.answer)) return { status: "consistent" };
   return { status: "corrected", answer: matches[0] };
 }
@@ -229,40 +237,75 @@ async function generateTopic(env, questionNumber, quantity, reasoning) {
   const bank = BANKS[questionNumber];
   const examples = sampleExamples(bank.questions, MAX_EXAMPLES).map(toExample);
 
+  // Not every topic is "trace this snippet". Topic 1 (number bases) is entirely
+  // prose questions whose values live in the choices, and several topics mix
+  // both. Forcing a `code` field on those pushes the model to invent one and to
+  // mangle the choices into whatever that fake code would print, so tell it
+  // plainly which shape this topic actually takes.
+  const codeCount = bank.questions.filter((q) => (q.code || "").trim()).length;
+  const codeStyle =
+    codeCount === 0 ? "none" : codeCount === bank.questions.length ? "all" : "mixed";
+
+  const shapeRules =
+    codeStyle === "none"
+      ? [
+          "- This topic's questions have NO code. Set 'code' to an empty string.",
+          "  The question is posed entirely in the stem and the choices.",
+        ]
+      : codeStyle === "mixed"
+        ? [
+            "- Most questions on this topic show a Java 'code' snippet, but some are",
+            "  concept questions with no code. Follow the examples: if a question needs",
+            "  no code, set 'code' to an empty string rather than inventing one.",
+            "- When there is code, use '\\n' for newlines; output via out.print / out.println.",
+          ]
+        : [
+            "- Each question shows a Java 'code' snippet the question asks about.",
+            "  Use '\\n' for newlines. Output statements use out.print / out.println / out.printf.",
+          ];
+
   const systemPrompt = [
     "You are an author of UIL Computer Science multiple-choice questions for Java.",
     `Every question you write is on the topic: "${bank.topic}".`,
     "You are given existing questions as examples. Write brand-new original questions in the exact same style and difficulty.",
     "Rules:",
     `- Return EXACTLY ${quantity} question${quantity === 1 ? "" : "s"} — no more, no fewer.`,
-    "- Each question must have a stem, a Java 'code' snippet, five choices A-E, one correct 'answer', and an 'explanation' that shows the work.",
-    "- The 'code' is the Java segment the question asks about. Use '\\n' for newlines. Output statements use out.print / out.println / out.printf.",
-    "- Exactly one of the five choices must be correct and equal to the true result of the code. Make the other four plausible distractors.",
+    "- Each question needs a stem, five choices A-E, one correct 'answer', and an 'explanation'.",
+    ...shapeRules,
+    "- Exactly one of the five choices must be correct. Make the other four plausible distractors.",
     "- The five choices must be FIVE DISTINCT values. Never repeat a value across two letters.",
-    "- Distractors must be wrong. Never include a second choice that is also equal to the true result.",
-    "- Do NOT copy the example questions. Change the values, expressions, and structure so each question is genuinely new.",
-    "- Keep each 'code' snippet short and self-contained, and keep 'explanation' brief.",
+    "- Distractors must be wrong. Never include a second choice that is also correct.",
+    "- Do NOT copy the example questions. Change the values and structure so each question is genuinely new.",
+    "- Keep 'explanation' brief.",
+    "",
+    "NOTATION: write the choices in the same notation the stem asks about, and",
+    "match the notation used in the examples. If the question compares numbers in",
+    "different bases, the choices must stay in those bases (e.g. 1101_2, 23_4,",
+    "1B_(16)) — never replace them with their decimal values, or the question",
+    "loses its point and becomes trivial.",
     "",
     "Work in this exact order for every question. Do not skip ahead:",
-    "  1. 'code'   — write the Java snippet first.",
-    "  2. 'work'   — trace it line by line, exactly as the JVM would. Show each",
-    "                intermediate value. Be pedantic about: integer division",
+    "  1. 'code'   — the Java snippet, or an empty string if this topic has none.",
+    "  2. 'work'   — derive the answer step by step. For code, trace it exactly as",
+    "                the JVM would and be pedantic about: integer division",
     "                truncating toward zero, operator precedence, % keeping the",
     "                sign of the dividend, int overflow wrapping at 32 bits,",
     "                int-vs-double promotion, and println adding a newline.",
+    "                For concept questions, show the conversion/derivation for",
+    "                EVERY choice, not just the one you think is right.",
     "                Slow down here — this is where mistakes happen.",
-    "  3. 'output' — copy the final literal text the code prints, straight from",
-    "                the last line of 'work'. Do not re-derive it from memory.",
-    "  4. 'choices'— put 'output' verbatim into one of A-E. Fill the other four",
-    "                with DISTINCT wrong values (plausible near-misses: the",
-    "                un-truncated division, wrong precedence, an off-by-one).",
-    "  5. 'answer' — the letter you just placed 'output' into. It must satisfy",
-    "                choices[answer] === output, character for character.",
+    "  3. 'correct_choice_text' — the exact text of the correct choice, taken",
+    "                straight from 'work', in the question's own notation.",
+    "  4. 'choices'— put 'correct_choice_text' verbatim into one of A-E. Fill the",
+    "                other four with DISTINCT wrong values (plausible near-misses).",
+    "  5. 'answer' — the letter you just placed it into. It must satisfy",
+    "                choices[answer] === correct_choice_text, character for character.",
     "  6. 'explanation' — restate the reasoning from 'work' concisely.",
     "",
-    "CRITICAL: 'answer' is decided by where you put 'output', never by guessing.",
-    "If your explanation arrives at a value different from choices[answer], the",
-    "question is WRONG — recompute and fix it before returning.",
+    "CRITICAL: 'answer' is decided by where you put 'correct_choice_text', never",
+    "by guessing. Before returning, re-read your 'work': if it arrives at a value",
+    "different from choices[answer], the question is WRONG — fix it. If no choice",
+    "is actually correct, rewrite the choices.",
   ].join("\n");
 
   const userPrompt = [
@@ -372,7 +415,8 @@ async function generateTopic(env, questionNumber, quantity, reasoning) {
 
   // `work` is scratch space the model needed in order to reason before
   // answering; it isn't part of the question, so keep it out of the response.
-  // `output` is kept — it's small and useful for debugging a disputed answer.
+  // `correct_choice_text` is kept — it's small and useful for debugging a
+  // disputed answer.
   const present = ({ work, ...rest }) => rest;
 
   for (const q of rawQuestions) {

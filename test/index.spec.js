@@ -83,34 +83,46 @@ describe("parseQuestions — tolerant parsing of model output", () => {
   });
 });
 
-describe("reconcileWithSelfReport — model's own output vs its chosen letter", () => {
+describe("reconcileWithSelfReport — model's derived answer vs its chosen letter", () => {
   const base = { choices: { A: "10", B: "15", C: "20", D: "25", E: "30" } };
 
   it("leaves a self-consistent question alone", () => {
-    expect(reconcileWithSelfReport({ ...base, output: "15", answer: "B" }))
+    expect(reconcileWithSelfReport({ ...base, correct_choice_text: "15", answer: "B" }))
       .toMatchObject({ status: "consistent" });
   });
 
-  it("fixes the letter when output points at a different choice", () => {
+  it("fixes the letter when the derived value points at a different choice", () => {
     // The 'wrong letter, right explanation' case: it computed 15 but said C.
-    expect(reconcileWithSelfReport({ ...base, output: "15", answer: "C" }))
+    expect(reconcileWithSelfReport({ ...base, correct_choice_text: "15", answer: "C" }))
       .toMatchObject({ status: "corrected", answer: "B" });
   });
 
   it("ignores whitespace differences", () => {
-    const q = { choices: { A: "306 2", B: "x", C: "y", D: "z", E: "w" }, output: "306\n2", answer: "B" };
+    const q = { choices: { A: "306 2", B: "x", C: "y", D: "z", E: "w" }, correct_choice_text: "306\n2", answer: "B" };
     expect(reconcileWithSelfReport(q)).toMatchObject({ status: "corrected", answer: "A" });
   });
 
-  it("stays hands-off when output matches no choice", () => {
-    // Can't tell whether output or the choices are at fault; don't guess.
-    expect(reconcileWithSelfReport({ ...base, output: "99", answer: "A" }))
+  it("rejects a question whose derived answer is in none of the choices", () => {
+    // The real "222_3 = 26, so base 3 works" failure: the model's own work
+    // lands on a value it never offered, so no option is correct.
+    expect(reconcileWithSelfReport({ ...base, correct_choice_text: "99", answer: "A" }))
+      .toMatchObject({ status: "wrong" });
+  });
+
+  it("stays hands-off when the model derived nothing", () => {
+    expect(reconcileWithSelfReport({ ...base, answer: "A" })).toMatchObject({ status: "consistent" });
+    expect(reconcileWithSelfReport({ ...base, correct_choice_text: "  ", answer: "A" }))
       .toMatchObject({ status: "consistent" });
   });
 
-  it("stays hands-off when the model reported no output", () => {
-    expect(reconcileWithSelfReport({ ...base, answer: "A" })).toMatchObject({ status: "consistent" });
-    expect(reconcileWithSelfReport({ ...base, output: "  ", answer: "A" })).toMatchObject({ status: "consistent" });
+  it("preserves base-N notation rather than matching decimal conversions", () => {
+    // The '1101_2 became 13' failure: choices in base-N, derived value in base-N.
+    const q = {
+      choices: { A: "1101_2", B: "23_4", C: "1B_(16)", D: "32_5", E: "101_3" },
+      correct_choice_text: "1B_(16)",
+      answer: "A",
+    };
+    expect(reconcileWithSelfReport(q)).toMatchObject({ status: "corrected", answer: "C" });
   });
 });
 
