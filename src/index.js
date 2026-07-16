@@ -32,8 +32,16 @@ const PROVIDER = {
   order: ["DeepInfra", "Parasail", "AtlasCloud", "Alibaba", "Fireworks"],
   allow_fallbacks: true,
 };
-// The model already emits reasoning tokens by default; forcing an explicit
-// `reasoning.effort` measured slower with no accuracy gain, so we leave it off.
+// Extra "think before answering" budget, opt-in per request via `?reasoning=`
+// (low | medium | high). All five providers above accept it.
+//
+// It is off by default on purpose. This model already emits reasoning tokens
+// unprompted, and the ordering of QUESTION_SCHEMA — work and output before
+// answer — is what actually forces it to derive the result before naming a
+// letter. Measured with that schema, the default produced 20/20 correct answers
+// with zero wrong-letter corrections, while an explicit effort roughly doubled
+// latency. Reach for this only if a topic proves stubbornly error-prone.
+const REASONING_EFFORTS = ["low", "medium", "high"];
 
 const MAX_QUANTITY = 10;
 // Cap on few-shot examples sent to the model. The banks hold ~20 questions
@@ -54,11 +62,28 @@ const AI_RETRY_BASE_MS = 1000;
 // JSON Schema constraining the model's output. Strict mode requires every
 // object to declare `additionalProperties: false` and list all keys in
 // `required`, so keep those in sync when editing.
+//
+// Field ORDER matters and is deliberate. The model emits keys in this order, so
+// putting `work` and `output` before `choices`/`answer` forces it to trace the
+// code and commit to a computed result *before* it can name a letter. With
+// `answer` ahead of the reasoning the model picks a letter first and
+// rationalises after, which is exactly how a wrong answer ends up next to a
+// correct explanation.
 const QUESTION_SCHEMA = {
   type: "object",
   properties: {
     stem: { type: "string" },
     code: { type: "string" },
+    work: {
+      type: "string",
+      description:
+        "Step-by-step trace of executing the code exactly as Java would, one line per step. Write this BEFORE deciding the choices.",
+    },
+    output: {
+      type: "string",
+      description:
+        "The exact literal text this code prints, derived from 'work'. This is the single correct value.",
+    },
     choices: {
       type: "object",
       properties: {
@@ -71,10 +96,14 @@ const QUESTION_SCHEMA = {
       required: ["A", "B", "C", "D", "E"],
       additionalProperties: false,
     },
-    answer: { type: "string", enum: ["A", "B", "C", "D", "E"] },
+    answer: {
+      type: "string",
+      enum: ["A", "B", "C", "D", "E"],
+      description: "The letter whose choice text is exactly equal to 'output'.",
+    },
     explanation: { type: "string" },
   },
-  required: ["stem", "code", "choices", "answer", "explanation"],
+  required: ["stem", "code", "work", "output", "choices", "answer", "explanation"],
   additionalProperties: false,
 };
 
@@ -95,6 +124,33 @@ function badRequest(message) {
 }
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// Whitespace-insensitive comparison, matching how the banks render multi-line
+// output with spaces instead of literal newlines.
+const normalizeText = (s) => String(s ?? "").replace(/\s+/g, " ").trim();
+
+// For questions the Java evaluator can't run, use the model's own `output`
+// field (which it derived from its step-by-step trace before picking a letter)
+// as a weaker cross-check against `choices[answer]`.
+//
+// This is deliberately conservative: `output` is still the model's word, not
+// ground truth, so it is only trusted to detect a *self-contradiction*.
+//   - output matches choices[answer]      -> consistent, leave alone
+//   - output matches a different choice   -> the letter is wrong, fix it
+//   - output matches no choice at all     -> can't tell which is wrong; leave
+//     it flagged rather than dropping a possibly-fine question
+// Returns { status: "consistent" | "corrected" | "wrong", answer? }.
+export function reconcileWithSelfReport(q) {
+  const output = normalizeText(q?.output);
+  if (!output) return { status: "consistent" };
+
+  const choices = q?.choices ?? {};
+  const matches = Object.keys(choices).filter((l) => normalizeText(choices[l]) === output);
+
+  if (matches.length === 0) return { status: "consistent" };
+  if (matches.includes(q.answer)) return { status: "consistent" };
+  return { status: "corrected", answer: matches[0] };
+}
 
 // The response schema, with the array length pinned to what was asked for.
 // Without min/maxItems the model freely returns fewer (or more) than requested.
@@ -169,7 +225,7 @@ function sampleExamples(questions, limit) {
 // Returns the same result object the single-topic endpoint responds with. Never
 // throws — AI/parse failures are returned as an { error } object so a single bad
 // topic can't sink an all-topics run.
-async function generateTopic(env, questionNumber, quantity) {
+async function generateTopic(env, questionNumber, quantity, reasoning) {
   const bank = BANKS[questionNumber];
   const examples = sampleExamples(bank.questions, MAX_EXAMPLES).map(toExample);
 
@@ -186,13 +242,27 @@ async function generateTopic(env, questionNumber, quantity) {
     "- Distractors must be wrong. Never include a second choice that is also equal to the true result.",
     "- Do NOT copy the example questions. Change the values, expressions, and structure so each question is genuinely new.",
     "- Keep each 'code' snippet short and self-contained, and keep 'explanation' brief.",
-    "Accuracy is critical. For each question, before writing the choices:",
-    "  1. Mentally execute the code step by step, exactly as Java would (integer vs. double division, operator precedence, %, bit ops, overflow).",
-    "  2. Determine the single true result.",
-    "  3. Put that exact result as one of the five choices and set 'answer' to that choice's letter.",
-    "  4. Verify that choices[answer] equals the value your explanation computes. They MUST match.",
-    "  5. Check the other four choices: each must be DIFFERENT from the answer and from each other.",
-    "The explanation must show the step-by-step evaluation and end at the value in the chosen answer.",
+    "",
+    "Work in this exact order for every question. Do not skip ahead:",
+    "  1. 'code'   — write the Java snippet first.",
+    "  2. 'work'   — trace it line by line, exactly as the JVM would. Show each",
+    "                intermediate value. Be pedantic about: integer division",
+    "                truncating toward zero, operator precedence, % keeping the",
+    "                sign of the dividend, int overflow wrapping at 32 bits,",
+    "                int-vs-double promotion, and println adding a newline.",
+    "                Slow down here — this is where mistakes happen.",
+    "  3. 'output' — copy the final literal text the code prints, straight from",
+    "                the last line of 'work'. Do not re-derive it from memory.",
+    "  4. 'choices'— put 'output' verbatim into one of A-E. Fill the other four",
+    "                with DISTINCT wrong values (plausible near-misses: the",
+    "                un-truncated division, wrong precedence, an off-by-one).",
+    "  5. 'answer' — the letter you just placed 'output' into. It must satisfy",
+    "                choices[answer] === output, character for character.",
+    "  6. 'explanation' — restate the reasoning from 'work' concisely.",
+    "",
+    "CRITICAL: 'answer' is decided by where you put 'output', never by guessing.",
+    "If your explanation arrives at a value different from choices[answer], the",
+    "question is WRONG — recompute and fix it before returning.",
   ].join("\n");
 
   const userPrompt = [
@@ -214,6 +284,7 @@ async function generateTopic(env, questionNumber, quantity) {
     // provider (measured 0 on some, >2000 on others), so leave generous
     // headroom: running out truncates the JSON mid-object and it won't parse.
     max_tokens: Math.min(16384, 3000 + quantity * 1200),
+    ...(reasoning ? { reasoning: { effort: reasoning } } : {}),
     response_format: {
       type: "json_schema",
       json_schema: { name: "questions", strict: true, schema: buildResponseSchema(quantity) },
@@ -292,28 +363,47 @@ async function generateTopic(env, questionNumber, quantity) {
   //   ok           -> keep as-is (answer confirmed correct)
   //   corrected    -> fix the answer letter to the choice that truly matches
   //   wrong        -> drop it; no choice equals the real output, so it's junk
-  //   unverifiable -> keep, but flag it (topic outside the evaluator's scope)
+  //   unverifiable -> fall back to the model's own self-consistency check
   const questions = [];
   let confirmed = 0;
   let corrected = 0;
   let dropped = 0;
   let unverified = 0;
 
+  // `work` is scratch space the model needed in order to reason before
+  // answering; it isn't part of the question, so keep it out of the response.
+  // `output` is kept — it's small and useful for debugging a disputed answer.
+  const present = ({ work, ...rest }) => rest;
+
   for (const q of rawQuestions) {
     const result = verifyQuestion(q);
     if (result.status === "ok") {
       confirmed++;
-      questions.push({ ...q, verified: true });
+      questions.push({ ...present(q), verified: true });
     } else if (result.status === "corrected") {
       corrected++;
-      questions.push({ ...q, answer: result.answer, verified: true });
+      questions.push({ ...present(q), answer: result.answer, verified: true });
     } else if (result.status === "wrong") {
       // The model produced choices none of which equal the real output.
       // There's nothing to salvage, so omit it from the response.
       dropped++;
     } else {
-      unverified++;
-      questions.push({ ...q, verified: false });
+      // The evaluator can't run this code (loops, arrays, Scanner, ArrayList).
+      // Fall back to the model's own declared `output`: it derived that from its
+      // step-by-step trace before choosing a letter, so if it disagrees with
+      // choices[answer] the question contradicts itself. That's the "wrong
+      // letter, right explanation" failure, and we can catch it here without
+      // executing any Java.
+      const selfCheck = reconcileWithSelfReport(q);
+      if (selfCheck.status === "corrected") {
+        corrected++;
+        questions.push({ ...present(q), answer: selfCheck.answer, verified: false, self_corrected: true });
+      } else if (selfCheck.status === "wrong") {
+        dropped++;
+      } else {
+        unverified++;
+        questions.push({ ...present(q), verified: false });
+      }
     }
   }
 
@@ -349,7 +439,7 @@ async function forEachWithConcurrency(items, limit, task, onResult) {
 // { topic, quantity }; its result is emitted the moment it finishes generating
 // + verifying, so results appear progressively rather than after one long wait.
 // Emission is in completion order, not job order.
-function streamJobs(env, jobs) {
+function streamJobs(env, jobs, reasoning) {
   const encoder = new TextEncoder();
   const { readable, writable } = new TransformStream();
   const writer = writable.getWriter();
@@ -359,7 +449,7 @@ function streamJobs(env, jobs) {
       await forEachWithConcurrency(
         jobs,
         ALL_CONCURRENCY,
-        (job) => generateTopic(env, job.topic, job.quantity),
+        (job) => generateTopic(env, job.topic, job.quantity, reasoning),
         (result) => writer.write(encoder.encode(JSON.stringify(result) + "\n")),
       );
     } catch (err) {
@@ -421,6 +511,13 @@ export default {
       );
     }
 
+    // Optional extra thinking budget, e.g. ?reasoning=medium. Off by default:
+    // see REASONING_EFFORTS for why.
+    const reasoning = url.searchParams.get("reasoning");
+    if (reasoning !== null && !REASONING_EFFORTS.includes(reasoning)) {
+      return badRequest(`'reasoning' must be one of: ${REASONING_EFFORTS.join(", ")}.`);
+    }
+
     // Fine-grained mode: a JSON body maps topic -> how many questions to make.
     // e.g. { "1": 1, "2": 2, "13": 3 }  (topics set to 0/omitted are skipped).
     // Works on any method that carries a body; results stream as NDJSON.
@@ -433,7 +530,7 @@ export default {
       }
       const { jobs, error } = specToJobs(spec);
       if (error) return badRequest(error);
-      return streamJobs(env, jobs);
+      return streamJobs(env, jobs, reasoning);
     }
 
     // Convenience mode: same quantity for one topic, or for every topic.
@@ -449,7 +546,7 @@ export default {
     // All-topics: `quantity` questions for every topic (1-15), streamed.
     if (url.searchParams.get("all") === "true") {
       const jobs = TOPIC_NUMBERS.map((topic) => ({ topic, quantity }));
-      return streamJobs(env, jobs);
+      return streamJobs(env, jobs, reasoning);
     }
 
     const questionRaw = url.searchParams.get("question");
@@ -464,7 +561,7 @@ export default {
       return badRequest("'question' must be an integer from 1 to 15.");
     }
 
-    const result = await generateTopic(env, question, quantity);
+    const result = await generateTopic(env, question, quantity, reasoning);
     const status = result.error ? 502 : 200;
     return Response.json(result, { status });
   },

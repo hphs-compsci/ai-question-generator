@@ -1,6 +1,6 @@
 import { env, createExecutionContext, waitOnExecutionContext } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
-import worker, { specToJobs, parseQuestions } from "../src";
+import worker, { specToJobs, parseQuestions, reconcileWithSelfReport } from "../src";
 
 // These cover request validation only. Generation itself calls the remote AI
 // binding (slow + billable), so it is exercised manually / in integration, not
@@ -80,6 +80,37 @@ describe("parseQuestions — tolerant parsing of model output", () => {
   it("returns null when there is no questions array", () => {
     expect(parseQuestions('{"foo":1}')).toBeNull();
     expect(parseQuestions("not json at all")).toBeNull();
+  });
+});
+
+describe("reconcileWithSelfReport — model's own output vs its chosen letter", () => {
+  const base = { choices: { A: "10", B: "15", C: "20", D: "25", E: "30" } };
+
+  it("leaves a self-consistent question alone", () => {
+    expect(reconcileWithSelfReport({ ...base, output: "15", answer: "B" }))
+      .toMatchObject({ status: "consistent" });
+  });
+
+  it("fixes the letter when output points at a different choice", () => {
+    // The 'wrong letter, right explanation' case: it computed 15 but said C.
+    expect(reconcileWithSelfReport({ ...base, output: "15", answer: "C" }))
+      .toMatchObject({ status: "corrected", answer: "B" });
+  });
+
+  it("ignores whitespace differences", () => {
+    const q = { choices: { A: "306 2", B: "x", C: "y", D: "z", E: "w" }, output: "306\n2", answer: "B" };
+    expect(reconcileWithSelfReport(q)).toMatchObject({ status: "corrected", answer: "A" });
+  });
+
+  it("stays hands-off when output matches no choice", () => {
+    // Can't tell whether output or the choices are at fault; don't guess.
+    expect(reconcileWithSelfReport({ ...base, output: "99", answer: "A" }))
+      .toMatchObject({ status: "consistent" });
+  });
+
+  it("stays hands-off when the model reported no output", () => {
+    expect(reconcileWithSelfReport({ ...base, answer: "A" })).toMatchObject({ status: "consistent" });
+    expect(reconcileWithSelfReport({ ...base, output: "  ", answer: "A" })).toMatchObject({ status: "consistent" });
   });
 });
 
